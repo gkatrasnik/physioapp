@@ -1,14 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {AuthProvider} from "./auth";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Login from "./components/login/Login";
+import Signup from './components/login/Signup';
+import App from './components/App';
+import UpdatePassword from './components/login/UpdatePassword';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+        <BrowserRouter>
+            <Routes>                
+                <Route index element={<ProtectedRoute><App/></ProtectedRoute>}/>
+                <Route path={"login"} element={<Login/>}/>
+                <Route path={"signup"} element={<Signup/>}/>          
+                <Route path={"update-password"} element={<UpdatePassword/>}/>
+      
+                
+            </Routes>
+        </BrowserRouter>
+    </AuthProvider>,
   </React.StrictMode>
 );
 

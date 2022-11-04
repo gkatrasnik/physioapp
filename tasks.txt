@@ -18,8 +18,12 @@ Tech stack:
 
 --------------------------------//phase 1//--------------------------------
 FIRST WORKING PROTOTYPE. BASIC FUNCTIONALITY
+
+!- create login with magic link auth supabase --- switched to email + password
+!- create login with email + password
+!- create forgot password 
+!- implement react router dom 
 - create frontend components with dummy data
-- create login with magic link auth supabase
 - link frontend components with supabase (allow user to see items created with auth.user_id)
 
 - CRUD operations on patients, issues, symptoms, interventions
@@ -27,8 +31,6 @@ FIRST WORKING PROTOTYPE. BASIC FUNCTIONALITY
 
 --------------------------------//phase 2//--------------------------------
 ADD FEATURES
-- create login with email + password
-- create forgot password 
 
 - add appointments calendar 
 - take photos, add pictures to issues(storage)
@@ -41,6 +43,7 @@ ADD FEATURES
 
 --------------------------------//phase 3//--------------------------------
 MAKE THINGS PRODUCTION READY, SECURITY
+- change hardcoded reset password link with .env variable
 db RLS:
 - add custom permission levels to users(admin, not admin)
 - what can users do(crud)
@@ -61,4 +64,4 @@ db RLS:
 --------------------------------//OTHER//--------------------------------
 
 Db pass: ".[geslo]"
-3h,2h, 1h, 1h
+3h,2h, 1h, 1h, 2h
