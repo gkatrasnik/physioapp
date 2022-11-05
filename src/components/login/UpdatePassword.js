@@ -1,45 +1,79 @@
 import React, {useState} from 'react';
-import Layout from "../Layout";
 import {useAuth} from "../../auth";
+import { useNavigate } from "react-router-dom";
+import { Form, Button, Card} from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const UpdatePassword = () => {
-    const auth = useAuth()
-    const [password, setPassword] = useState("")
-    const [passwordConfirmation, setPasswordConfirmation] = useState("")
-    const [message, setMessage] = useState("")
+    const auth = useAuth();
+    const [password, setPassword] = useState("");
+    const [passwordConfirmation, setPasswordConfirmation] = useState("");
+    const navigate = useNavigate();
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         if (password !== passwordConfirmation) {
-            return setMessage("Password confirmation does not match")
+            return alert("Password confirmation does not match");
         }
 
-        const passwordReset = await auth.updatePassword(password)            
+        const passwordReset = await auth.updatePassword(password);       
 
         if(passwordReset.error) {
-            setMessage(passwordReset.error.message)
+            alert(passwordReset.error.message);
         } else {
-            setMessage("Your password was updated successfuly")
+            alert("Your password was updated successfuly");
         }
 
-        setPassword("")
-        setPasswordConfirmation("")
+        setPassword("");
+        setPasswordConfirmation("");
+        navigate("/");
     }
 
     return (
-        <Layout>
-            {message && message}
-            <h1>Update Password</h1>
+    <>
+      <Card
+        style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "10em" }}
+        className="box-shadow"
+      >
+        <Card.Body>
+          <h1 className="text-center">Update Password</h1>
+          <Form
+            onSubmit={handleSubmit}
+            style={{ width: "90%", maxWidth: "32rem", margin: "auto" }}
+          >
 
-            <form onSubmit={handleSubmit}>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
-                <input type="password" value={passwordConfirmation} onChange={e => setPasswordConfirmation(e.target.value)}/>
-                <button type={"submit"}>Update Password</button>
-            </form>
-        </Layout>
-    );
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>New Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter new password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="passwordConfirmation">
+              <Form.Label>Confirm New Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password confirmation"
+                onChange={(e) => {
+                  setPasswordConfirmation(e.target.value);
+                }}
+              />
+            </Form.Group>
+
+            <Button variant="primary" type="submit" className="float-end mx-3">
+              Set New Password
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
+    </>
+  );
 };
 
 export default UpdatePassword;

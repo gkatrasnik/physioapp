@@ -23,6 +23,8 @@ FIRST WORKING PROTOTYPE. BASIC FUNCTIONALITY
 !- create login with email + password
 !- create forgot password 
 !- implement react router dom 
+!- do not make source maps on build to hide source
+- implement loading component/icon on async actions
 - create frontend components with dummy data
 - link frontend components with supabase (allow user to see items created with auth.user_id)
 
@@ -31,7 +33,7 @@ FIRST WORKING PROTOTYPE. BASIC FUNCTIONALITY
 
 --------------------------------//phase 2//--------------------------------
 ADD FEATURES
-
+- create new user, create trigger to add entry to users table
 - add appointments calendar 
 - take photos, add pictures to issues(storage)
 - add, record voice memos to issues(storage)
@@ -48,7 +50,6 @@ db RLS:
 - add custom permission levels to users(admin, not admin)
 - what can users do(crud)
 
-- do not make source maps on build to hide source
 - versioning, major_v(breaking db changes), minor_v(new features)
 - error loging to db
 - user settings - table query on app load...in app set db values onchange

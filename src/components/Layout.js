@@ -1,44 +1,47 @@
-//top navbar with burger
-//left drawer menu
-//active component
-//signup/login/forgot password is not in layout
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../auth';
 
-import React from 'react';
-import {Link} from "react-router-dom";
-import {useAuth} from "../auth";
-
-const Layout = ({children}) => {
+function Layout({children}) {
     const auth = useAuth();
 
-    const handleResetPassword = () => {
-        auth.resetPassword(auth.user.email)
-    }
-
-    return (
+  return (
+    <>
+        <Navbar key={false} bg="light" expand={false} className="mb-3">
+          <Container fluid>
+            <Navbar.Brand href="#">PhysioApp</Navbar.Brand>
+            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-false`} />
+            <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-false`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-false`}
+              placement="end"
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-false`}>
+                  PhysioApp
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <Link to={"/"}>Home</Link>
+                  <Link to={"/patients"}>Patients</Link>
+                  <Link to={"/patient"}>Patient Profile</Link>
+                  <Link to={"/appointments"}>Appointments</Link>
+                  <Link onClick={auth.logout}>Logout</Link>
+                  
+                </Nav>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
         <div>
-            <header>
-                <ul>
-                    <li><Link to={"/"}>App</Link></li>
-                    <li><Link to={"/signup"}>Signup</Link></li>
-                    <li><button onClick={handleResetPassword}>Reset Password</button></li>
-
-
-                    {auth.user ?
-                        <li>
-                            <button onClick={auth.logout}>Logout</button>
-                        </li>
-                        :
-                        <li><Link to={"/login"}>Login</Link></li>
-                    }
-                </ul>
-            </header>
-
-            <main>
-                {children}
-            </main>
-
-        </div>
-    );
-};
+           {children} 
+        </div>      
+    </>
+  );
+}
 
 export default Layout;

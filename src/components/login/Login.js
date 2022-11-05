@@ -2,44 +2,87 @@
 //magic link login
 
 import React, {useState} from 'react';
-import Layout from "../Layout";
+import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../auth";
+import { Form, Button, Card, Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { BoxArrowInUp } from "react-bootstrap-icons";
 
 const Login = () => {
-    const auth = useAuth()
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [message, setMessage] = useState("")
+    const auth = useAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
+
+    const handleResetPassword = () => {
+        auth.resetPassword(auth.user.email);
+        alert("Reset password link was set to your email");
+    }
 
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        const signIn = await auth.login(email, password)
+        const signIn = await auth.login(email, password);
 
         if(signIn.error) {
-            setMessage(signIn.error.message)
-        } else {
-            setMessage("Login successful")
-        }
+            alert(signIn.error.message);
+        } 
 
-        setEmail("")
-        setPassword("")
+        setEmail("");
+        setPassword("");
+        navigate("/");
     }
 
     return (
-        <Layout>
-            {message && message}
-            <h1>Login</h1>
+    <>
+      <Card
+        style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "10em" }}
+        className="box-shadow"
+      >
+        <Card.Body>
+          <h1 className="text-center">Login</h1>
+          <Form
+            onSubmit={handleSubmit}
+            style={{ width: "90%", maxWidth: "32rem", margin: "auto" }}
+          >
+            <Form.Group className="mb-3" controlId="email">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-            <form onSubmit={handleSubmit}>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)}/>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)}/>
+            <Form.Group className="mb-3" controlId="password">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+            </Form.Group>
 
-                <button type={"submit"}>Login</button>
-            </form>
-        </Layout>
-    );
+            <Button variant="primary" type="submit" className="float-end mx-3">
+              Login
+            </Button>
+          </Form>
+          <Link to="/signup" className="float-start mx-4">
+             <BoxArrowInUp/> Sign up
+          </Link>
+          <Link to="/send-reset-password" className="float-start mx-4">
+             Forgot Password?
+          </Link>
+
+        </Card.Body>
+      </Card>
+    </>
+  );
 };
 
 export default Login;

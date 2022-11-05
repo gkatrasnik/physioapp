@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import './index.css';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
@@ -8,26 +10,33 @@ import {AuthProvider} from "./auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/login/Login";
 import Signup from './components/login/Signup';
-import App from './components/App';
+import Home from './components/Home';
 import UpdatePassword from './components/login/UpdatePassword';
+import PatientSearchView from './components/PatientSearchView';
+import Appointments from './components/Appointments';
+import SendResetPassword from './components/login/SendResetPassword';
+import PatientProfileView from './components/PatientProfileView';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  //<React.StrictMode>
     <AuthProvider>
         <BrowserRouter>
             <Routes>                
-                <Route index element={<ProtectedRoute><App/></ProtectedRoute>}/>
+                <Route index element={<ProtectedRoute><Home/></ProtectedRoute>}/>
+                <Route path={"patients"} element={<ProtectedRoute><PatientSearchView/></ProtectedRoute>}/>
+                <Route path={"appointments"} element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
+                <Route path={"patient"} element={<ProtectedRoute><PatientProfileView/></ProtectedRoute>}/>
+
                 <Route path={"login"} element={<Login/>}/>
                 <Route path={"signup"} element={<Signup/>}/>          
-                <Route path={"update-password"} element={<UpdatePassword/>}/>
-      
-                
+                <Route path={"send-reset-password"} element={<SendResetPassword/>}/>    
+                <Route path={"update-password"} element={<UpdatePassword/>}/>    
             </Routes>
         </BrowserRouter>
     </AuthProvider>,
-  </React.StrictMode>
+ // </React.StrictMode>
 );
 
 // If you want your app to work offline and load faster, you can change
