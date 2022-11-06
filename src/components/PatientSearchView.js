@@ -68,7 +68,7 @@ const PatientSearchView = () => {
                     <Row className="align-items-center">
                         <Col>
                             <Form.Group  controlId="patientSearch">
-                                <Form.Control type="text" placeholder="Search by name, phone, email..." 
+                                <Form.Control type="text" placeholder="Search by name" 
                                 onChange={(e) => {
                                 setSearchQuery(e.target.value);
                                 }}/>                
@@ -97,7 +97,7 @@ const PatientSearchView = () => {
                     </thead>
                     <tbody>
                         
-                       {patientsData.length ? patientsData.map((patient, index) => {
+                       {patientsData && patientsData.length ? patientsData.map((patient, index) => {
                         return (
                             <tr key={index} onClick={()=>{toPatientProfile(patient)}}>
                             <td>{patient.id}</td>
