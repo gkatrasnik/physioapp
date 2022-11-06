@@ -6,14 +6,16 @@
 // current (open) issues (maybe show only those on bodyPicture?)
 
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
+import { Container, Button } from 'react-bootstrap';
 
 const PatientProfileView = () => {
    // const auth = useAuth();
    // const [userData, setUserData] = useState();
     const location = useLocation();
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -21,11 +23,29 @@ const PatientProfileView = () => {
     
     }, [])
 
+    const deletePatient = async () => {      
+
+        const queryData = await supabase
+            .from('patients')
+            .delete()
+            .eq('id',location.state.patientData.id)
+
+        if (queryData.error) {
+            console.log(queryData.error.message);
+        }      
+        
+        navigate("/patients");
+    }
+    
+
 
     return (
         <Layout>
-            <h1>Patient Profile View</h1>
-            <div>{location.state.patientData.name}</div>
+            <Container>
+                <h1 className="text-center">Patient Profile View</h1>
+                <div>{location.state.patientData.name}</div>
+                <Button variant="danger" onClick={deletePatient}>Delete Patient</Button>
+            </Container>
         </Layout>
     );
 };

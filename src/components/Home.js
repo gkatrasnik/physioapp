@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import {useAuth} from "../auth";
 import Layout from "./Layout";
+import { Container } from 'react-bootstrap';
 
 const Home = () => {
     const auth = useAuth();
@@ -25,7 +26,9 @@ const Home = () => {
 
     return (
         <Layout>
-            <h1>Home</h1>
+            <Container>
+                <h1 className='text-center'>Home</h1>
+            </Container>
         </Layout>
     );
 };

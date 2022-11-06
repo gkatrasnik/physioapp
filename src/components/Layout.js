@@ -28,10 +28,8 @@ function Layout({children}) {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   <Link to={"/"}>Home</Link>
                   <Link to={"/patients"}>Patients</Link>
-                  <Link to={"/patient"}>Patient Profile</Link>
                   <Link to={"/appointments"}>Appointments</Link>
-                  <Link onClick={auth.logout}>Logout</Link>
-                  
+                  <Link onClick={auth.logout}>Logout</Link>                  
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
