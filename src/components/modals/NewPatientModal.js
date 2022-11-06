@@ -162,10 +162,10 @@ const NewPatientModal = (props) => {
                     }}
                 />                
                 </Form.Group>
-                <Button variant="secondary" onClick={props.handleToggleModal}>
+                <Button className="m-2 " variant="secondary" onClick={props.handleToggleModal}>
                     Close
                 </Button>
-                <Button variant="primary" type="submit" onClick={props.handleToggleModal}>
+                <Button className="m-2" variant="primary" type="submit" onClick={props.handleToggleModal}>
                     Add Patient
                 </Button>                
 

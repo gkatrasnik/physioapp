@@ -77,13 +77,10 @@ function useProvideAuth() {
 
         const auth = supabase.auth.onAuthStateChange(async (event, session) => {
             if (event === 'SIGNED_IN') {
-                console.log("Signed in!")
                 setUser(session.user)
             }
 
             if (event === 'SIGNED_OUT') {
-                console.log("Signed out!")
-
                 setUser(null)
             }            
             

@@ -14,43 +14,59 @@ const PatientSearchView = () => {
    const auth = useAuth();
    const [searchQuery, setSearchQuery] = useState("");
    const [showNewPatientModal, setShowNewPatientModal] = useState(false);
-
-   const [patientsData, setPatientsData] = useState([]);   
-
+   const [patientsData, setPatientsData] = useState([]);  
    const navigate = useNavigate();
 
    const handleSearch = (e) => {
-    e.preventDefault();
-    getPatients(auth.user.id, searchQuery);
+    if(e) {
+        e.preventDefault();
+    }
+
+    if (searchQuery === "") {
+        getPatients(auth.user.id, searchQuery, false);
+    } else {
+        getPatients(auth.user.id, searchQuery, true);
+    }
+    
    }
 
    const toggleModal = () => {
     showNewPatientModal ? setShowNewPatientModal(false) : setShowNewPatientModal(true);
    }
 
-   const handleAddPatient = (e) => {
-        e.preventDefault();
+   const getPatients = async (user_id, searchString, getAll) => {
+        let queryData;   
 
-   }
-
-   const getPatients = async (user_id, searchString) => {
-        const queryData = await supabase
+        if (getAll){
+            queryData = await supabase
             .from('patients')
             .select("id, name, birthdate")
-            .textSearch('name', searchString)
+            .textSearch('name', searchString, {type:'websearch'})
+            .eq("user_id", auth.user.id)
+        } else {
+            queryData = await supabase
+            .from('patients')
+            .select("id, name, birthdate")
+            .eq("user_id", auth.user.id)
+        }        
 
         if (queryData.error) {
             console.log(queryData.error.message);
         }
         
-        setPatientsData(queryData.data);
-        
-        
+        setPatientsData(queryData.data);               
     }
 
-   const toPatientProfile=(patient)=>{
-    navigate('/patient',{state:{patientData:patient}});
-   }
+
+    const toPatientProfile=(patient)=>{
+     navigate('/patient',{state:{patientData:patient}});
+    }
+
+    //on component mount search all patients
+    useEffect(() => {
+      handleSearch();
+    }, [])
+    
    
 
 
