@@ -53,6 +53,7 @@ const NewPatientModal = (props) => {
                 occupation: occupation,
                 user_id: auth.user.id
             })
+             .eq('id', )
 
         if (queryData.error) {
             console.log(queryData.error.message);
