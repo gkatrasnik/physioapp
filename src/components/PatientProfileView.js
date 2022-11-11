@@ -9,14 +9,17 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
-import { Container, Button, Form } from 'react-bootstrap';
+import { Container, Button, Form, Table } from 'react-bootstrap';
+import IssueView from './IssueView';
 import { useAuth } from '../auth';
+import NewIssueModal from './modals/NewIssueModal';
 
 const PatientProfileView = () => {
     const auth = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
+    const [showNewIssue, setShowNewIssue] = useState(false);
 
     //patient profile editing state
     const [name, setName] = useState("");
@@ -28,6 +31,8 @@ const PatientProfileView = () => {
     const [birthDate, setBirdhDate] = useState();
     const [occupation, setOccupation] = useState("");
 
+    // issue data state
+    const [issuesData, setIssuesData] = useState([])
 
     const getPatientData = async () => {
          const queryData = await supabase
@@ -97,19 +102,41 @@ const PatientProfileView = () => {
         setEditing(!editing);
     }
 
-    
+    // issues logic 
+
+    const getIssuesData = async () => {
+         const queryData = await supabase
+            .from('issues')
+            .select()
+            .eq('patient_id',location.state.patientData.id)
+        if (queryData.error) {
+            alert(queryData.error.message);
+        }else {
+            setIssuesData(queryData.data)
+        }     
+    }
+
+    const toggleShowNewIssue = () => {
+        setShowNewIssue(!showNewIssue);
+    }
+
+
+    // useEffects
     useEffect(() => {
     console.log("patient location state", location.state)
     getPatientData();    
+    getIssuesData();
     }, [])
 
 
     return (
         <Layout>
             <Container>
+                <NewIssueModal patientData={location.state.patientData} showNewIssue={showNewIssue} getIssuesData={getIssuesData} toggleShowNewIssue={toggleShowNewIssue}/>
                 <h1 className="text-center">Patient Profile View</h1>
-                <div>{location.state.patientData.name}</div>
-                 <Form >
+                
+                <Form className="mt-4">
+                <h2 className='text-center'>{location.state.patientData.name}</h2>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -214,16 +241,51 @@ const PatientProfileView = () => {
                     }}
                 />                
                 </Form.Group>
-                <Button disabled={!editing} className="m-2 mx-5"variant="danger" onClick={deletePatient}>
+                {editing && <Button className="m-2 mr-5" variant="danger" onClick={deletePatient}>
                     Delete Patient
-                </Button>
+                </Button>}                
+                {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                    Update Patient
+                </Button> }   
                 <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
                     {editing ? "Cancel" : "Edit Patient"}
-                </Button>
-                <Button disabled={!editing} className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                    Update Patient
-                </Button>                
+                </Button>             
             </Form>
+
+            <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                        <th>Id</th>
+                        <th>Issue</th>
+                        <th>Date</th>
+                        <th>Diagnosis</th>
+                        <th>Resolved</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                       {issuesData && issuesData.length ? issuesData.map((issue, index) => {
+                        return (
+                            <tr key={index} onClick={()=>{/*toIssueView(issue)*/}}>
+                            <td>{issue.id}</td>
+                            <td>{issue.name}</td>
+                            <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
+                            <td>{issue.diagnosis}</td>
+                            <td>{issue.resolved}</td>
+                            </tr>
+                            )
+                        }):                     
+                            <tr>
+                                <td colSpan={5}>
+                                     No results
+                                </td>                               
+                            </tr>
+                    }   
+                    </tbody>
+                </Table>     
+                <Button  className="m-2" variant="primary" type="submit" onClick={toggleShowNewIssue}>
+                    New Issue
+                </Button>
             </Container>
         </Layout>
     );

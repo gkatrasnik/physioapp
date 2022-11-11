@@ -106,7 +106,7 @@ const PatientSearchView = () => {
                 <Table striped bordered hover>
                     <thead>
                         <tr>
-                        <th>Id</th>
+                        <th>Patient Id</th>
                         <th>Name</th>
                         <th>Birth Date</th>
                         </tr>

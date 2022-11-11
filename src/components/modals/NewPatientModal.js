@@ -26,16 +26,7 @@ const NewPatientModal = (props) => {
     const handleNewPatient = (e) => {
         e.preventDefault();
         addPatient();
-        //reset  form fields   
-        /*
-        setName("");
-        setEmail("");
-        setPhone("");
-        setAddress("");
-        setCity("");
-        setZip();
-        setBirdhDate();
-        setOccupation(""); */
+        props.handleToggleModal();
     }
 
     const addPatient = async () => {        
@@ -53,7 +44,6 @@ const NewPatientModal = (props) => {
                 occupation: occupation,
                 user_id: auth.user.id
             })
-             .eq('id', )
 
         if (queryData.error) {
             console.log(queryData.error.message);
@@ -71,7 +61,7 @@ const NewPatientModal = (props) => {
     return (        
         <Modal centered backdrop="static" show={props.show} onHide={props.handleToggleModal}>
             <Modal.Header className="py-2" closeButton>
-            <Modal.Title>Add New Patient</Modal.Title>
+            <Modal.Title className='text-center'>Add New Patient</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
             <Form onSubmit={handleNewPatient}>
@@ -166,7 +156,7 @@ const NewPatientModal = (props) => {
                 <Button className="m-2 " variant="secondary" onClick={props.handleToggleModal}>
                     Close
                 </Button>
-                <Button className="m-2" variant="primary" type="submit" onClick={props.handleToggleModal}>
+                <Button className="m-2" variant="primary" type="submit">
                     Add Patient
                 </Button>                
 
