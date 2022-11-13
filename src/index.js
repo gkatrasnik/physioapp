@@ -16,6 +16,7 @@ import PatientSearchView from './components/PatientSearchView';
 import Appointments from './components/Appointments';
 import SendResetPassword from './components/login/SendResetPassword';
 import PatientProfileView from './components/PatientProfileView';
+import IssueView from './components/IssueView';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -28,6 +29,8 @@ root.render(
                 <Route path={"patients"} element={<ProtectedRoute><PatientSearchView/></ProtectedRoute>}/>
                 <Route path={"appointments"} element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
                 <Route path={"patient"} element={<ProtectedRoute><PatientProfileView/></ProtectedRoute>}/>
+                <Route path={"issue"} element={<ProtectedRoute><IssueView/></ProtectedRoute>}/>
+
 
                 <Route path={"login"} element={<Login/>}/>
                 <Route path={"signup"} element={<Signup/>}/>          

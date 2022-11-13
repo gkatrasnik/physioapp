@@ -10,7 +10,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
 import { Container, Button, Form, Table } from 'react-bootstrap';
-import IssueView from './IssueView';
 import { useAuth } from '../auth';
 import NewIssueModal from './modals/NewIssueModal';
 
@@ -62,7 +61,7 @@ const PatientProfileView = () => {
             .eq('id',location.state.patientData.id)
 
         if (queryData.error) {
-            console.log(queryData.error.message);
+            alert(queryData.error.message);
         }      
         
         navigate("/patients");
@@ -86,9 +85,8 @@ const PatientProfileView = () => {
             .eq('id', location.state.patientData.id)
 
         if (queryData.error) {
-            console.log(queryData.error.message);
+            alert(queryData.error.message);
         }else {
-            console.log(queryData)
         }            
         
     }
@@ -103,6 +101,10 @@ const PatientProfileView = () => {
     }
 
     // issues logic 
+
+    const toIssueView=(issue)=>{
+     navigate('/issue',{state:{issueData:issue}});
+    }
 
     const getIssuesData = async () => {
          const queryData = await supabase
@@ -123,10 +125,9 @@ const PatientProfileView = () => {
 
     // useEffects
     useEffect(() => {
-    console.log("patient location state", location.state)
     getPatientData();    
     getIssuesData();
-    }, [])
+    }, []);
 
 
     return (
@@ -136,123 +137,115 @@ const PatientProfileView = () => {
                 <h1 className="text-center">Patient Profile View</h1>
                 
                 <Form className="mt-4">
-                <h2 className='text-center'>{location.state.patientData.name}</h2>
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                    defaultValue = {name}
-                    disabled = {!editing}
-                    type="text"
-                    placeholder="John Doe"
-                    autoFocus
-                    onChange={(e) => {
-                    setName(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <h2 className='text-center'>{location.state.patientData.name}</h2>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                        defaultValue = {name}
+                        disabled = {!editing}
+                        type="text"
+                        autoFocus
+                        onChange={(e) => {
+                        setName(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control
-                    defaultValue = {email}
-                    disabled = {!editing}
-                    type="email"
-                    placeholder="name@example.com"
-                    onChange={(e) => {
-                    setEmail(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
+                    <Form.Label>Email Address</Form.Label>
+                    <Form.Control
+                        defaultValue = {email}
+                        disabled = {!editing}
+                        type="email"
+                        onChange={(e) => {
+                        setEmail(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                <Form.Label>Phone Number</Form.Label>
-                <Form.Control
-                    defaultValue = {phone}
-                    disabled = {!editing}
-                    type="tel"
-                    placeholder="00386 40 000 000"
-                    onChange={(e) => {
-                    setPhone(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                        defaultValue = {phone}
+                        disabled = {!editing}
+                        type="tel"
+                        onChange={(e) => {
+                        setPhone(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                    defaultValue = {address}
-                    disabled = {!editing}
-                    type="text"
-                    placeholder="Main Street 42"
-                    onChange={(e) => {
-                    setAddress(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                    <Form.Label>Address</Form.Label>
+                    <Form.Control
+                        defaultValue = {address}
+                        disabled = {!editing}
+                        type="text"
+                        onChange={(e) => {
+                        setAddress(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
-                <Form.Label>City</Form.Label>
-                <Form.Control
-                    defaultValue = {city}
-                    disabled = {!editing}
-                    type="text"
-                    placeholder="Big City"
-                    onChange={(e) => {
-                    setCity(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
+                    <Form.Label>City</Form.Label>
+                    <Form.Control
+                        defaultValue = {city}
+                        disabled = {!editing}
+                        type="text"
+                        onChange={(e) => {
+                        setCity(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput6">
-                <Form.Label>ZIP Code</Form.Label>
-                <Form.Control
-                    defaultValue = {zip}
-                    disabled = {!editing}
-                    type="number"
-                    placeholder="1000"
-                    onChange={(e) => {
-                    setZip(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput6">
+                    <Form.Label>ZIP Code</Form.Label>
+                    <Form.Control
+                        defaultValue = {zip}
+                        disabled = {!editing}
+                        type="number"
+                        onChange={(e) => {
+                        setZip(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
-                <Form.Label>Birth Date</Form.Label>
-                <Form.Control
-                    defaultValue = {birthDate}
-                    disabled = {!editing}
-                    type="date"
-                    placeholder="1.1.2000"
-                    onChange={(e) => {
-                    setBirdhDate(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
+                    <Form.Label>Birth Date</Form.Label>
+                    <Form.Control
+                        defaultValue = {birthDate}
+                        disabled = {!editing}
+                        type="date"
+                        onChange={(e) => {
+                        setBirdhDate(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
-                <Form.Label>Occupation</Form.Label>
-                <Form.Control
-                    defaultValue = {occupation}
-                    disabled = {!editing}
-                    type="text"
-                    placeholder="Plumber"
-                    onChange={(e) => {
-                    setOccupation(e.target.value);
-                    }}
-                />                
-                </Form.Group>
-                {editing && <Button className="m-2 mr-5" variant="danger" onClick={deletePatient}>
-                    Delete Patient
-                </Button>}                
-                {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                    Update Patient
-                </Button> }   
-                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                    {editing ? "Cancel" : "Edit Patient"}
-                </Button>             
-            </Form>
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
+                    <Form.Label>Occupation</Form.Label>
+                    <Form.Control
+                        defaultValue = {occupation}
+                        disabled = {!editing}
+                        type="text"
+                        onChange={(e) => {
+                        setOccupation(e.target.value);
+                        }}
+                    />                
+                    </Form.Group>
+                    {editing && <Button className="m-2 mr-5" variant="danger" onClick={deletePatient}>
+                        Delete Patient
+                    </Button>}                
+                    {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                        Update Patient
+                    </Button> }   
+                    <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                        {editing ? "Cancel" : "Edit Patient"}
+                    </Button>             
+                </Form>
 
-            <Table striped bordered hover>
+                <Table striped bordered hover>
                     <thead>
                         <tr>
                         <th>Id</th>
@@ -266,12 +259,12 @@ const PatientProfileView = () => {
                         
                        {issuesData && issuesData.length ? issuesData.map((issue, index) => {
                         return (
-                            <tr key={index} onClick={()=>{/*toIssueView(issue)*/}}>
+                            <tr key={index} onClick={()=>{toIssueView(issue)}}>
                             <td>{issue.id}</td>
                             <td>{issue.name}</td>
                             <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
                             <td>{issue.diagnosis}</td>
-                            <td>{issue.resolved}</td>
+                            <td>{issue.resolved ? "True" : "False"}</td>
                             </tr>
                             )
                         }):                     

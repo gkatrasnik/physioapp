@@ -14,8 +14,10 @@ const NewIssueModal = (props) => {
    // const auth = useAuth();
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
-    const [resolved, setResolved] = useState();
+    const [resolved, setResolved] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
+    const [leadTherapistId, setLeadTherapistId] = useState("")
+
     
     const [therapistsData, setTherapistsData] = useState([]);
 
@@ -58,7 +60,6 @@ const NewIssueModal = (props) => {
             alert(queryData.error.message);
         }else {
             setTherapistsData(queryData.data)
-            console.log("therapists",queryData)
         }     
     }
 
@@ -78,7 +79,6 @@ const NewIssueModal = (props) => {
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Knee Pain"
                     autoFocus
                     onChange={(e) => {
                     setTitle(e.target.value);
@@ -90,9 +90,18 @@ const NewIssueModal = (props) => {
                 <Form.Label>Description</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Problem descritption"
                     onChange={(e) => {
                     setNotes(e.target.value);
+                    }}
+                />                
+                </Form.Group>
+
+                <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
+                <Form.Label>Lead Therapist</Form.Label>
+                <Form.Control
+                    type="text"
+                    onChange={(e) => {
+                    setLeadTherapistId(e.target.value);
                     }}
                 />                
                 </Form.Group>
@@ -101,7 +110,6 @@ const NewIssueModal = (props) => {
                 <Form.Label>Diagnosis</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Iliotibial Tract Syndrome"
                     onChange={(e) => {
                     setDiagnosis(e.target.value);
                     }}
@@ -109,15 +117,15 @@ const NewIssueModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Resolved</Form.Label>
-                <Form.Control
-                    type="text"
-                    placeholder="False"
-                    onChange={(e) => {
-                    setResolved(e.target.value);
-                    }}
-                />                
-                </Form.Group>
+                    <Form.Label>Resolved</Form.Label>
+                    <Form.Check
+                        checked = {resolved && resolved}
+                        type="checkbox"
+                        onChange={(e) => {
+                        setResolved(e.target.checked);
+                        }}
+                    />                
+                    </Form.Group>
 
                 <Button className="m-2 " variant="secondary" onClick={props.toggleShowNewIssue}>
                     Close

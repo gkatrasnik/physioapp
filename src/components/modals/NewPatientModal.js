@@ -27,6 +27,7 @@ const NewPatientModal = (props) => {
         e.preventDefault();
         addPatient();
         props.handleToggleModal();
+        props.getPatients();
     }
 
     const addPatient = async () => {        
@@ -69,7 +70,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="John Doe"
                     autoFocus
                     onChange={(e) => {
                     setName(e.target.value);
@@ -81,7 +81,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>Email Address</Form.Label>
                 <Form.Control
                     type="email"
-                    placeholder="name@example.com"
                     onChange={(e) => {
                     setEmail(e.target.value);
                     }}
@@ -92,7 +91,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>Phone Number</Form.Label>
                 <Form.Control
                     type="tel"
-                    placeholder="00386 40 000 000"
                     onChange={(e) => {
                     setPhone(e.target.value);
                     }}
@@ -103,7 +101,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>Address</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Main Street 42"
                     onChange={(e) => {
                     setAddress(e.target.value);
                     }}
@@ -114,7 +111,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>City</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Big City"
                     onChange={(e) => {
                     setCity(e.target.value);
                     }}
@@ -125,7 +121,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>ZIP Code</Form.Label>
                 <Form.Control
                     type="number"
-                    placeholder="1000"
                     onChange={(e) => {
                     setZip(e.target.value);
                     }}
@@ -136,7 +131,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>Birth Date</Form.Label>
                 <Form.Control
                     type="date"
-                    placeholder="1.1.2000"
                     onChange={(e) => {
                     setBirdhDate(e.target.value);
                     }}
@@ -147,7 +141,6 @@ const NewPatientModal = (props) => {
                 <Form.Label>Occupation</Form.Label>
                 <Form.Control
                     type="text"
-                    placeholder="Plumber"
                     onChange={(e) => {
                     setOccupation(e.target.value);
                     }}

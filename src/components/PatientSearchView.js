@@ -76,7 +76,9 @@ const PatientSearchView = () => {
              
             <NewPatientModal 
                 show={showNewPatientModal} 
-                handleToggleModal={toggleModal}/>
+                handleToggleModal={toggleModal}
+                getPatients={getPatients}
+            />
             <Container>
                 <h1 className='text-center'>Patient Search View</h1>
 
@@ -84,7 +86,9 @@ const PatientSearchView = () => {
                     <Row className="align-items-center">
                         <Col>
                             <Form.Group  controlId="patientSearch">
-                                <Form.Control type="text" placeholder="Search by name" 
+                                <Form.Control 
+                                type="search" 
+                                placeholder="Search by name" 
                                 onChange={(e) => {
                                 setSearchQuery(e.target.value);
                                 }}/>                
