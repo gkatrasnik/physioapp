@@ -6,6 +6,8 @@ import Layout from "./Layout";
 import { useAuth } from '../auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, Form, Table } from 'react-bootstrap';
+import SymptomsList from './SymptomsList';
+import InterventionsList from './InterventionsList';
 
 
 const IssueView = () => {
@@ -237,77 +239,9 @@ const IssueView = () => {
                     </Button>             
                 </Form>
 
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                        <th>Id</th>
-                        <th>Issue</th>
-                        <th>Date</th>
-                        <th>Diagnosis</th>
-                        <th>Resolved</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                       {InterventionsData && InterventionsData.length ? InterventionsData.map((issue, index) => {
-                        return (
-                            <tr key={index} onClick={()=>{/*toIssueView(issue)*/}}>
-                            <td>{issue.id}</td>
-                            <td>{issue.name}</td>
-                            <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
-                            <td>{issue.diagnosis}</td>
-                            <td>{issue.resolved}</td>
-                            </tr>
-                            )
-                        }):                     
-                            <tr>
-                                <td colSpan={5}>
-                                     No results
-                                </td>                               
-                            </tr>
-                    }   
-                    </tbody>
-                </Table> 
+                <SymptomsList issueData={location.state.issueData}/>
+                <InterventionsList issueData={location.state.issueData}/>
 
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                        <th>Id</th>
-                        <th>Issue</th>
-                        <th>Date</th>
-                        <th>Diagnosis</th>
-                        <th>Resolved</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                       {symptomsData && symptomsData.length ? symptomsData.map((issue, index) => {
-                        return (
-                            <tr key={index} onClick={()=>{/*toIssueView(issue)*/}}>
-                            <td>{issue.id}</td>
-                            <td>{issue.name}</td>
-                            <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
-                            <td>{issue.diagnosis}</td>
-                            <td>{issue.resolved}</td>
-                            </tr>
-                            )
-                        }):                     
-                            <tr>
-                                <td colSpan={5}>
-                                     No results
-                                </td>                               
-                            </tr>
-                    }   
-                    </tbody>
-                </Table> 
-
-
-                <Button  className="m-2" variant="primary" type="submit" onClick={toggleShowNewIntervention}>
-                    Add Intervention
-                </Button>
-                <Button  className="m-2" variant="primary" type="submit" onClick={toggleShowNewSymptom}>
-                    Add Symptom
-                </Button>
             </Container>
             
         </Layout>
