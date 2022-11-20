@@ -92,7 +92,7 @@ const IssueView = () => {
     //therapists data
     const getTherapistData = async () => {
          const queryData = await supabase
-            .from('therapists')
+            .from('users')
             .select() 
             .eq('id', location.state.issueData.lead_therapist_id)           
         if (queryData.error) {
@@ -212,7 +212,7 @@ const IssueView = () => {
                     </Form.Group>     
 
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
-                    <Form.Label>Therapist</Form.Label>
+                    <Form.Label>Lead Therapist</Form.Label>
                     <Form.Control
                         defaultValue = {therapistData && therapistData.name}
                         disabled = {true}

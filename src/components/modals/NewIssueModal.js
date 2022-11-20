@@ -54,7 +54,7 @@ const NewIssueModal = (props) => {
 
     const getTherapists = async () => {
          const queryData = await supabase
-            .from('therapists')
+            .from('users')
             .select()            
         if (queryData.error) {
             alert(queryData.error.message);

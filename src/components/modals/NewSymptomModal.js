@@ -5,7 +5,7 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 
-const SymptomModal = (props) => {
+const NewSymptomModal = (props) => {
     const [name, setName] = useState("");
     const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
@@ -13,23 +13,17 @@ const SymptomModal = (props) => {
 
     const auth = useAuth();
 
-    const handleUpdateSymptom = (e) => {
+    const handleNewSymptom = (e) => {
         e.preventDefault();
-        updateSymptom();
-        props.hideModal();   
-           
+        addSymptom();
+        props.toggleModal();              
     }
 
-    const handleDeleteSymptom = (e) => {
-         e.preventDefault();
-        deleteSymptom();
-        props.hideModal();            
-    }
 
-    const updateSymptom = async () => {        
+    const addSymptom = async () => {        
         const queryData = await supabase
             .from('symptoms')
-            .update({
+            .insert({
                 name: name,
                 intensity: intensity,
                 duration: duration,
@@ -37,47 +31,30 @@ const SymptomModal = (props) => {
                 issue_id: props.issueData.id,
                 user_id: auth.user.id,
             })
-            .eq('id', props.symptomData.id)
 
         if (queryData.error) {
             alert(queryData.error.message);
         } else {
-            props.getSymptomsData(); 
+            props.getSymptomsData();  
         }
     }
 
-     const deleteSymptom = async () => {
-        const queryData = await supabase
-            .from('symptoms')
-            .delete()
-            .eq('id', props.symptomData.id)
-
-        if (queryData.error) {
-            alert(queryData.error.message);
-        } else {
-            props.getSymptomsData();    
-        }     
-                
-    }
-
-    useEffect(() => {       
-        if (props.symptomData) {
-            setName(props.symptomData.name);
-            setIntensity(props.symptomData.intensity)
-            setDuration(props.symptomData.duration)
-            setBodypartId(props.symptomData.bodypart_id)
-        } 
-        
-    }, [props.symptomData]);
+   
+    useEffect(() => {
+         setName("");
+        setIntensity(0)
+        setDuration("")
+        setBodypartId(0)
+    }, []);
 
 
     return (        
-        <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
             <Modal.Header className="py-2" closeButton>
-            <Modal.Title className='text-center'>Edit Symptom</Modal.Title>
+            <Modal.Title className='text-center'>Add New Symptom</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={handleUpdateSymptom}>
+            <Form disabled={true} onSubmit={handleNewSymptom} >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -123,18 +100,14 @@ const SymptomModal = (props) => {
                 />                
                 </Form.Group>
                 
-                <Button className="m-2 " variant="secondary" onClick={props.hideModal}>
+                <Button className="m-2 " variant="secondary" onClick={props.toggleModal}>
                     Close
                 </Button>
-               
-                <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteSymptom}>
-                    Delete Symptom
+                
+                <Button className="m-2" variant="primary" type="submit">
+                    Add Symptom
                 </Button>     
-
-                <Button  className="m-2" variant="primary" type="submit">
-                    Update Symptom
-                </Button> 
-
+               
             </Form>
             </Modal.Body>
         </Modal>
@@ -142,4 +115,4 @@ const SymptomModal = (props) => {
 };
 
 
-export default SymptomModal;
+export default NewSymptomModal;

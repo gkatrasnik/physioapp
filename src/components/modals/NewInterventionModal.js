@@ -4,31 +4,25 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 
-const InterventionModal = (props) => {
+const NewInterventionModal = (props) => {
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState(null);
     const [notes, setNotes] = useState("");    
-    const [therapistId, setTherapistId] = useState(1);      
+    const [therapistId, setTherapistId] = useState(1);    
 
     const auth = useAuth();
 
-    const handleUpdateIntervention = (e) => {
+    const handleNewIntervention = (e) => {
         e.preventDefault();
-        updateIntervention();
-        props.hideModal();   
-           
+        addIntervention();
+        props.toggleModal();                
     }
 
-    const handleDeleteIntervention = (e) => {
-         e.preventDefault();
-        deleteIntervention();
-        props.hideModal();            
-    }
 
-    const updateIntervention = async () => {        
+    const addIntervention = async () => {        
         const queryData = await supabase
             .from('interventions')
-            .update({               
+            .insert({
                 treatment: treatment,
                 duration: duration,
                 notes: notes,
@@ -36,48 +30,30 @@ const InterventionModal = (props) => {
                 user_id: auth.user.id,
                 issue_id: props.issueData.id
             })
-            .eq('id', props.interventionData.id)
 
         if (queryData.error) {
             alert(queryData.error.message);
         } else {
-            props.getInterventionsData(); 
+            props.getInterventionsData();
         }
     }
 
-     const deleteIntervention = async () => {
-        const queryData = await supabase
-            .from('interventions')
-            .delete()
-            .eq('id', props.interventionData.id)
-
-        if (queryData.error) {
-            alert(queryData.error.message);
-        } else {
-            props.getInterventionsData();    
-        }     
-                
-    }
-
-    useEffect(() => {       
-        if (props.interventionData) {         
-
-            setTreatment(props.interventionData.treatment);
-            setNotes(props.interventionData.notes);
-            setDuration(props.interventionData.duration);
-            setTherapistId(props.interventionData.therapistId);
-        } 
-        
-    }, [props.interventionData]);
+   
+    useEffect(() => {
+        setTreatment("");
+        setNotes("");
+        setDuration(null);
+        setTherapistId(1);
+    }, []);
 
 
     return (        
-        <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
             <Modal.Header className="py-2" closeButton>
-            <Modal.Title className='text-center'>Edit Intervention</Modal.Title>
+            <Modal.Title className='text-center'>Add New Intervention</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={handleUpdateIntervention}>
+            <Form disabled={true} onSubmit={handleNewIntervention} >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Treatment</Form.Label>
                 <Form.Control
@@ -124,18 +100,14 @@ const InterventionModal = (props) => {
                 />                
                 </Form.Group>
                 
-                <Button className="m-2 " variant="secondary" onClick={props.hideModal}>
+                <Button className="m-2 " variant="secondary" onClick={props.toggleModal}>
                     Close
                 </Button>
-               
-                <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIntervention}>
-                    Delete Symptom
+                
+                <Button className="m-2" variant="primary" type="submit">
+                    Add Intervention
                 </Button>     
-
-                <Button  className="m-2" variant="primary" type="submit">
-                    Update Symptom
-                </Button> 
-
+               
             </Form>
             </Modal.Body>
         </Modal>
@@ -143,4 +115,4 @@ const InterventionModal = (props) => {
 };
 
 
-export default InterventionModal;
+export default NewInterventionModal;

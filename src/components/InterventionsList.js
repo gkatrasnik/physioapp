@@ -1,29 +1,35 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
-import Layout from "./Layout";
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth';
 import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
 import InterventionModal from './modals/InterventionModal';
+import NewInterventionModal from './modals/NewInterventionModal';
 
 
 const InterventionsList = (props) => {
-   const auth = useAuth();
-   const [showInterventionsModal, setShowInterventionsModal] = useState(false);
-   const [interventionsData, setInterventionsData] = useState([]);  
-   const navigate = useNavigate();
+    const [showInterventionModal, setShowInterventionModal] = useState(false);
+    const [showNewInterventionModal, setShowNewInterventionModal] = useState(false);
+    const [interventionsData, setInterventionsData] = useState([]);  
+    const [therapistsData, setTherapistsData] = useState([]);  
+    const [currentInterventionData, setCurrentInterventionData] = useState(null)
 
-   
+    const showUpdateInterventionModal = (interventionObj) => { 
+        setCurrentInterventionData(interventionObj);                      
+    }
 
-   const toggleModal = () => {
-    setShowInterventionsModal(!showInterventionsModal);
-   }
+    const hideUpdateInterventionModal = () => {
+        setShowInterventionModal(false);
+        setCurrentInterventionData(null);    
+    }
 
+
+    const toggleNewInterventionModal = () => {
+        setShowNewInterventionModal(!showNewInterventionModal);
+    }
    
     const getInterventionsData = async () => {
-         const queryData = await supabase
-            .from('Interventions')
+            const queryData = await supabase
+            .from('interventions')
             .select()
             .eq('issue_id',props.issueData.id)
         if (queryData.error) {
@@ -33,22 +39,60 @@ const InterventionsList = (props) => {
         }     
     }
 
-    
+    const getTherapistsData = async () => {
+            const queryData = await supabase
+            .from('users')
+            .select()            
+        if (queryData.error) {
+            alert(queryData.error.message);
+        }else {
+            setTherapistsData(queryData.data)
+        }     
+    }
 
-    //on component mount find all symptoms for this issue
+    const getTherapistName = (therapistId) => {
+        if (!therapistsData.length) {
+            return "No data";
+        }
+        const therapistObj = therapistsData.find(therapist => therapist.id === therapistId);
+        return therapistObj.name ? therapistObj.name : "No data";
+    }
+   
+    //on component mount find all interventions for this issue
     useEffect(() => {
       getInterventionsData();
+      getTherapistsData();
     }, [])
+
+    // only show intervention modal afer current intervention data is updated
+    useEffect(() => {
+        if (currentInterventionData) {
+            setShowInterventionModal(true); 
+        }      
+    }, [currentInterventionData])
     
-   
+    
     return (
         
         <>
             <InterventionModal 
-                show={showInterventionsModal} 
-                handleToggleModal={toggleModal}                
-            />            
-            <h1 className='text-center'>Interventions View</h1>
+                show={showInterventionModal} 
+                hideModal={hideUpdateInterventionModal}                  
+                issueData = {props.issueData}    
+                interventionData = {currentInterventionData}
+                getInterventionsData = {getInterventionsData}
+            />
+
+            <NewInterventionModal 
+                show={showNewInterventionModal} 
+                toggleModal={toggleNewInterventionModal}  
+                issueData = {props.issueData}    
+                interventionData = {currentInterventionData}
+                getInterventionsData = {getInterventionsData}
+            />
+
+
+            <h1 className='text-center'>Interventions</h1>
 
 
             <Table striped bordered hover>
@@ -56,33 +100,35 @@ const InterventionsList = (props) => {
                     <tr>
                     <th>Id</th>
                     <th>Intervention</th>
-                    <th>Date</th>
-                    <th>Bla</th>
-                    <th>Bla</th>
+                    <th>Date</th>                    
+                    <th>Duration</th>
+                    <th>Notes</th>
+                    <th>Therapist</th>
                     </tr>
                 </thead>
                 <tbody>
                     
-                    {interventionsData.length ? interventionsData.map((issue, index) => {
-                    return (
-                        <tr key={index} onClick={()=>{/*toIssueView(issue)*/}}>
-                        <td>{issue.id}</td>
-                        <td>{issue.name}</td>
-                        <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
-                        <td>{issue.diagnosis}</td>
-                        <td>{issue.resolved}</td>
-                        </tr>
+                    {interventionsData.length ? interventionsData.map((intervention, index) => {
+                        return (
+                            <tr key={index} onClick={()=>{showUpdateInterventionModal(intervention)}}>
+                            <td>{intervention.id}</td>
+                            <td>{intervention.treatment}</td>
+                            <td>{new Date(intervention.created_at).toLocaleDateString("sl")}</td>
+                            <td>{intervention.duration}</td>
+                            <td>{intervention.notes ? intervention.notes : "Empty"}</td>
+                            <td>{getTherapistName(intervention.therapist_id)}</td>
+                            </tr>
                         )
                     }):                     
                         <tr>
                             <td colSpan={5}>
-                                    No Interventions
+                                No Interventions
                             </td>                               
                         </tr>
-                }   
+                    }   
                 </tbody>
             </Table> 
-            <Button  className="m-2" variant="primary" type="submit" onClick={toggleModal}>
+            <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
                     Add Intervention
             </Button>
         </>
