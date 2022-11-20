@@ -121,7 +121,7 @@ const InterventionsList = (props) => {
                         )
                     }):                     
                         <tr>
-                            <td colSpan={5}>
+                            <td colSpan={6}>
                                 No Interventions
                             </td>                               
                         </tr>

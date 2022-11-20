@@ -28,8 +28,15 @@ FIRST WORKING PROTOTYPE. BASIC FUNCTIONALITY
 ! create frontend components with dummy data
 ! link frontend components with supabase (allow user to see items created with auth.user_id)
 
-- CRUD operations on patients, issues, symptoms, interventions
+! CRUD operations on patients, issues, symptoms, interventions
 - start app mobile first, but MUST be good for desktop!
+
+- implement checking organisation id for setting what user can see, (dropdown on therapist, show therapists with same organization_id)
+-add organization field to alltables 
+-for now alow crud for user_id = auth.user_id, 
+-later implement how data that have .organization_id = user.organization_id
+
+- validating forms - required fields, add dropdowns for therpaists, body parts, duration, intensity
 
 --------------------------------//phase 2//--------------------------------
 ADD FEATURES
@@ -57,9 +64,7 @@ db RLS:
 
 --------------------------------//BACKLOG//--------------------------------
 
--add organization field to alltables 
--for now alow crud for user_id = auth.user_id, 
--later implement how data that have .organization_id = user.organization_id
+
 
 
 --------------------------------//OTHER//--------------------------------

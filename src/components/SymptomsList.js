@@ -126,7 +126,7 @@ const SymptomsList = (props) => {
                         )
                     }):                     
                         <tr>
-                            <td colSpan={5}>
+                            <td colSpan={6}>
                                 No Symptoms
                             </td>                               
                         </tr>

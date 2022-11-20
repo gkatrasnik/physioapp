@@ -6,6 +6,8 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 
 const SymptomModal = (props) => {
+    const [editing, setEditing] = useState(false);
+
     const [name, setName] = useState("");
     const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
@@ -13,17 +15,27 @@ const SymptomModal = (props) => {
 
     const auth = useAuth();
 
+    const toggleEditing = () => {
+        setEditing(!editing)
+    }
+
+    const handleClose = () => {
+        props.hideModal();
+        setEditing(false);
+    }
+
     const handleUpdateSymptom = (e) => {
         e.preventDefault();
         updateSymptom();
         props.hideModal();   
-           
+        setEditing(false);   
     }
 
     const handleDeleteSymptom = (e) => {
          e.preventDefault();
         deleteSymptom();
-        props.hideModal();            
+        props.hideModal();
+        setEditing(false);            
     }
 
     const updateSymptom = async () => {        
@@ -77,12 +89,13 @@ const SymptomModal = (props) => {
             <Modal.Title className='text-center'>Edit Symptom</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={handleUpdateSymptom}>
+            <Form onSubmit={handleUpdateSymptom}>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                     type="text"
                     defaultValue={name}
+                    disabled={!editing}
                     autoFocus
                     onChange={(e) => {
                     setName(e.target.value);
@@ -95,6 +108,7 @@ const SymptomModal = (props) => {
                 <Form.Control
                     type="number"
                     defaultValue={intensity}
+                    disabled={!editing}
                     onChange={(e) => {
                     setIntensity(e.target.value);
                     }}
@@ -106,6 +120,7 @@ const SymptomModal = (props) => {
                 <Form.Control
                     type="text"
                     defaultValue={duration}
+                    disabled={!editing}
                     onChange={(e) => {
                     setDuration(e.target.value);
                     }}
@@ -117,23 +132,30 @@ const SymptomModal = (props) => {
                 <Form.Control
                     type="number"
                     defaultValue={bodypartId}
+                    disabled={!editing}
                     onChange={(e) => {
                     setBodypartId(e.target.value);
                     }}
                 />                
                 </Form.Group>
                 
-                <Button className="m-2 " variant="secondary" onClick={props.hideModal}>
-                    Close
+                <Button className="m-2 " variant="secondary" onClick={handleClose}>
+                    {!editing ? "Close" : "Cancel"}
                 </Button>
-               
-                <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteSymptom}>
-                    Delete Symptom
-                </Button>     
+                {editing ? <> 
+                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteSymptom}>
+                            Delete Symptom
+                        </Button>     
 
-                <Button  className="m-2" variant="primary" type="submit">
-                    Update Symptom
-                </Button> 
+                        <Button  className="m-2" variant="primary" type="submit">
+                            Update Symptom
+                        </Button> 
+                    </> :
+                    <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
+                        Edit
+                    </Button>
+                }
+                
 
             </Form>
             </Modal.Body>

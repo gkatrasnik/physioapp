@@ -5,6 +5,8 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 
 const InterventionModal = (props) => {
+    const [editing, setEditing] = useState(false);
+
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState(null);
     const [notes, setNotes] = useState("");    
@@ -12,17 +14,27 @@ const InterventionModal = (props) => {
 
     const auth = useAuth();
 
+    const toggleEditing = () => {
+        setEditing(!editing)
+    }
+
+    const handleClose = () => {
+        props.hideModal();
+        setEditing(false);
+    }
+
     const handleUpdateIntervention = (e) => {
         e.preventDefault();
         updateIntervention();
         props.hideModal();   
-           
+        setEditing(false);    
     }
 
     const handleDeleteIntervention = (e) => {
          e.preventDefault();
         deleteIntervention();
-        props.hideModal();            
+        props.hideModal();  
+        setEditing(false);          
     }
 
     const updateIntervention = async () => {        
@@ -77,12 +89,13 @@ const InterventionModal = (props) => {
             <Modal.Title className='text-center'>Edit Intervention</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={handleUpdateIntervention}>
+            <Form onSubmit={handleUpdateIntervention}>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Treatment</Form.Label>
                 <Form.Control
                     type="text"
                     defaultValue={treatment}
+                    disabled={!editing}
                     autoFocus
                     onChange={(e) => {
                     setTreatment(e.target.value);
@@ -95,6 +108,7 @@ const InterventionModal = (props) => {
                 <Form.Control
                     type="number"
                     defaultValue={duration}
+                    disabled={!editing}
                     onChange={(e) => {
                     setDuration(e.target.value);
                     }}
@@ -107,6 +121,7 @@ const InterventionModal = (props) => {
                     type="text"
                     as="textarea" rows={4}
                     defaultValue={notes}
+                    disabled={!editing}
                     onChange={(e) => {
                     setNotes(e.target.value);
                     }}
@@ -118,23 +133,29 @@ const InterventionModal = (props) => {
                 <Form.Control
                     type="number"
                     defaultValue={1}
+                    disabled={!editing}
                     onChange={(e) => {
                     setTherapistId(e.target.value);
                     }}
                 />                
                 </Form.Group>
-                
-                <Button className="m-2 " variant="secondary" onClick={props.hideModal}>
-                    Close
+                 
+                <Button className="m-2 " variant="secondary" onClick={handleClose}>
+                    {!editing ? "Close" : "Cancel"}
                 </Button>
-               
-                <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIntervention}>
-                    Delete Symptom
-                </Button>     
+               {editing ? <> 
+                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIntervention}>
+                            Delete Symptom
+                        </Button>     
 
-                <Button  className="m-2" variant="primary" type="submit">
-                    Update Symptom
-                </Button> 
+                        <Button  className="m-2" variant="primary" type="submit">
+                            Update Symptom
+                        </Button> 
+                    </> :                
+                    <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
+                            Edit
+                    </Button>
+                }
 
             </Form>
             </Modal.Body>

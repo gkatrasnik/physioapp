@@ -28,6 +28,12 @@ const Home = () => {
         <Layout>
             <Container>
                 <h1 className='text-center'>Home</h1>
+                <h2 className='text-center'>Organization Info</h2>
+                <div className='m-5'>
+                    <p>Basic Info:</p>
+                    <p>Contact: </p>
+                    <p>Adress:</p>                
+                </div>
             </Container>
         </Layout>
     );
