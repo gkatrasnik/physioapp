@@ -4,16 +4,17 @@ import {useState, useEffect, useContext, createContext} from "react";
 const authContext = createContext();
 
 export const AuthProvider = ({children}) => {
-    const auth = useProvideAuth()
+    const auth = useProvideAuth();
     return <authContext.Provider value={auth}>{children}</authContext.Provider>
 }
 
 export const useAuth = () => {
-    return useContext(authContext)
+    return useContext(authContext);
 }
 
 function useProvideAuth() {
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null);
+    const [userObj, setUserObj] = useState(null);
 
     const signup = async (email, password) => {
         const {error, user} = await supabase.auth.signUp({
@@ -22,7 +23,7 @@ function useProvideAuth() {
         })
 
         if(error) {
-            console.log(error)
+            console.log(error);
         }
 
         return {error, user}
@@ -35,20 +36,20 @@ function useProvideAuth() {
         })
 
         if(error) {
-            console.log(error)
+            console.log(error);
         }
 
         return {error, user}
     }
 
     const logout = async () => {
-        const {error} = await supabase.auth.signOut()
+        const {error} = await supabase.auth.signOut();
 
         if(error) {
-            console.log(error)
+            console.log(error);
         }
 
-        setUser(null)
+        setUser(null);
     }
 
     const resetPassword = async (email) => {
@@ -57,7 +58,7 @@ function useProvideAuth() {
         })
 
         if(error) {
-            console.log(error)
+            console.log(error);
         }
 
         return {error, user}
@@ -67,33 +68,46 @@ function useProvideAuth() {
         const {error, user} = await supabase.auth.updateUser({password: newPassword })
 
         if(error) {
-            console.log(error)
+            console.log(error);
         }
 
         return {error, user}
     }
 
-    useEffect(() => {        
+    const getUserObj = async (userId) => {
+            const queryData = await supabase
+            .from('users')
+            .select()
+            .eq('auth_user_id', userId)            
+        if (queryData.error) {
+            console.log(queryData.error.message);
+        }else {
+            setUserObj(queryData.data);
+        }      
+    }
 
+    useEffect(() => {        
         const auth = supabase.auth.onAuthStateChange(async (event, session) => {
             if (event === 'SIGNED_IN') {
-                setUser(session.user)
+                setUser(session.user);
+                getUserObj(session.user.id);
             }
 
             if (event === 'SIGNED_OUT') {
-                setUser(null)
+                setUser(null);
+                setUserObj(null);
             }            
             
         })
 
-        return () => auth.data.subscription.unsubscribe()
-
+        return () => auth.data.subscription.unsubscribe();
     }, [])
 
   
 
     return {
         user,
+        userObj,
         signup,
         login,
         logout,
