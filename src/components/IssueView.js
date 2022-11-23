@@ -58,6 +58,28 @@ const IssueView = () => {
     }
 
     const deleteIssue = async () => {
+        
+
+        //delete isuuses symptoms
+        const deletedSymptom = await supabase
+            .from('symptoms')
+            .delete()
+            .eq('issue_id',location.state.issueData.id)
+
+        if (deletedSymptom.error) {
+            alert(deletedSymptom.error.message);
+        }    
+
+        //delete isuuses interventions
+        const deletedIntervention = await supabase
+            .from('interventions')
+            .delete()
+            .eq('issue_id',location.state.issueData.id)
+
+        if (deletedIntervention.error) {
+            alert(deletedIntervention.error.message);
+        }    
+
         const queryData = await supabase
             .from('issues')
             .delete()
@@ -65,7 +87,7 @@ const IssueView = () => {
 
         if (queryData.error) {
             alert(queryData.error.message);
-        }      
+        }     
         
         navigate(-1);
     }
@@ -79,7 +101,8 @@ const IssueView = () => {
                 resolved: resolved,
                 diagnosis: diagnosis,
                 last_changed: lastChanged,
-                lead_therapist_id: leadTherapistId,             
+                lead_therapist_id: leadTherapistId,  
+                org_id: auth.userObj.org_id           
             })
             .eq('id', location.state.issueData.id)
 
@@ -122,18 +145,6 @@ const IssueView = () => {
         }else {
             setPatientData(queryData.data[0])
         }     
-    }
-    
-    
-    //interventions
-    const toggleShowNewIntervention = () => {
-        
-    }
-
-
-    //symptoms
-    const toggleShowNewSymptom = () => {
-
     }
 
 

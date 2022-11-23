@@ -82,7 +82,7 @@ function useProvideAuth() {
         if (queryData.error) {
             console.log(queryData.error.message);
         }else {
-            setUserObj(queryData.data);
+            setUserObj(queryData.data[0]);
         }      
     }
 

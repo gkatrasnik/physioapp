@@ -6,34 +6,35 @@ import { Container } from 'react-bootstrap';
 
 const Home = () => {
     const auth = useAuth();
-    const [userData, setUserData] = useState();
+    const [orgData, setOrgData] = useState(null);
 
-    const getUserData = async (user_id) => {
+    const getOrgData = async (org_id) => {
         const queryData = await supabase
-            .from('users')
+            .from('organizations')
             .select()
-            .eq("auth_user_id", user_id)
+            .eq("id", org_id)
 
         if (queryData.error) {
             console.log(queryData.error.message)
         }
-        setUserData(queryData.data);
+        setOrgData(queryData.data[0]);
     }
 
     useEffect(() => {        
-        getUserData(auth.user.id);
-    }, [])
+       auth.userObj&& getOrgData(auth.userObj.org_id);
+    }, [auth.userObj])
 
     return (
         <Layout>
             <Container>
                 <h1 className='text-center'>Home</h1>
                 <h2 className='text-center'>Organization Info</h2>
+                {orgData && 
                 <div className='m-5'>
-                    <p>Basic Info:</p>
-                    <p>Contact: </p>
-                    <p>Adress:</p>                
-                </div>
+                    <p>{orgData.name}</p>
+                    <p>{orgData.address}</p>  
+                    <p>{orgData.zip_code}, {orgData.city}</p>
+                </div>}
             </Container>
         </Layout>
     );

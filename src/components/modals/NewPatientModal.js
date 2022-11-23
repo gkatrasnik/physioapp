@@ -17,8 +17,8 @@ const NewPatientModal = (props) => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
-    const [zip, setZip] = useState();
-    const [birthDate, setBirdhDate] = useState();
+    const [zip, setZip] = useState(null);
+    const [birthDate, setBirthDate] = useState(null);
     const [occupation, setOccupation] = useState("");
 
     const auth = useAuth();
@@ -30,7 +30,7 @@ const NewPatientModal = (props) => {
         props.getPatients();
     }
 
-    const addPatient = async () => {        
+    const addPatient = async () => {     
 
         const queryData = await supabase
             .from('patients')
@@ -43,11 +43,12 @@ const NewPatientModal = (props) => {
                 zip_code: zip,
                 birthdate: birthDate,
                 occupation: occupation,
-                user_id: auth.user.id
+                user_id: auth.user.id,
+                org_id: auth.userObj.org_id
             })
 
         if (queryData.error) {
-            console.log(queryData.error.message);
+            console.log(queryData.error.message);            
         }else {
             console.log(queryData)
         }     
@@ -132,7 +133,7 @@ const NewPatientModal = (props) => {
                 <Form.Control
                     type="date"
                     onChange={(e) => {
-                    setBirdhDate(e.target.value);
+                    setBirthDate(e.target.value);
                     }}
                 />                
                 </Form.Group>

@@ -4,9 +4,12 @@ import { supabase } from '../supabase';
 import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
 import InterventionModal from './modals/InterventionModal';
 import NewInterventionModal from './modals/NewInterventionModal';
+import { useAuth } from '../auth';
 
 
 const InterventionsList = (props) => {
+    const auth = useAuth();
+
     const [showInterventionModal, setShowInterventionModal] = useState(false);
     const [showNewInterventionModal, setShowNewInterventionModal] = useState(false);
     const [interventionsData, setInterventionsData] = useState([]);  
@@ -42,7 +45,8 @@ const InterventionsList = (props) => {
     const getTherapistsData = async () => {
             const queryData = await supabase
             .from('users')
-            .select()            
+            .select()
+            .eq('org_id', auth.userObj.org_id)            
         if (queryData.error) {
             alert(queryData.error.message);
         }else {

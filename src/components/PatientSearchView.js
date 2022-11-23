@@ -23,9 +23,9 @@ const PatientSearchView = () => {
     }
 
     if (searchQuery === "") {
-        getPatients(auth.user.id, searchQuery, false);
+        getPatients(searchQuery, false);
     } else {
-        getPatients(auth.user.id, searchQuery, true);
+        getPatients(searchQuery, true);
     }
     
    }
@@ -34,7 +34,7 @@ const PatientSearchView = () => {
     showNewPatientModal ? setShowNewPatientModal(false) : setShowNewPatientModal(true);
    }
 
-   const getPatients = async (user_id, searchString, getAll) => {
+   const getPatients = async (searchString, getAll) => {    
         let queryData;   
 
         if (getAll){
@@ -42,12 +42,12 @@ const PatientSearchView = () => {
             .from('patients')
             .select("id, name, birthdate")
             .textSearch('name', searchString, {type:'websearch'})
-            .eq("user_id", auth.user.id)
+            .eq("org_id", auth.userObj.org_id)
         } else {
             queryData = await supabase
             .from('patients')
             .select("id, name, birthdate")
-            .eq("user_id", auth.user.id)
+            .eq("org_id", auth.userObj.org_id)
         }        
 
         if (queryData.error) {
@@ -64,11 +64,9 @@ const PatientSearchView = () => {
 
     //on component mount search all patients
     useEffect(() => {
-      handleSearch();
-    }, [])
-    
+      handleSearch();      
+    }, []) 
    
-
 
 
     return (

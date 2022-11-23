@@ -40,7 +40,9 @@ const NewIssueModal = (props) => {
                 diagnosis: diagnosis,
                 patient_id: props.patientData.id,
                 user_id: auth.user.id,
-                lead_therapist_id: 1//therapistsData[0].id,   // hardcoded [0] for now, make dropdown selection
+                lead_therapist_id: auth.userObj.id,
+                org_id: auth.userObj.org_id
+
                 //last_changed - add this
             })
 

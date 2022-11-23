@@ -8,7 +8,7 @@ const NewInterventionModal = (props) => {
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState(null);
     const [notes, setNotes] = useState("");    
-    const [therapistId, setTherapistId] = useState(1);    
+    const [therapistId, setTherapistId] = useState(null);    
 
     const auth = useAuth();
 
@@ -28,7 +28,8 @@ const NewInterventionModal = (props) => {
                 notes: notes,
                 therapist_id: therapistId,
                 user_id: auth.user.id,
-                issue_id: props.issueData.id
+                issue_id: props.issueData.id,
+                org_id: auth.userObj.org_id
             })
 
         if (queryData.error) {
@@ -43,7 +44,7 @@ const NewInterventionModal = (props) => {
         setTreatment("");
         setNotes("");
         setDuration(null);
-        setTherapistId(1);
+        setTherapistId(auth.userObj.id);
     }, []);
 
 
