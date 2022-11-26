@@ -12,6 +12,7 @@ import Layout from "./Layout";
 import { Container, Button, Form, Table } from 'react-bootstrap';
 import { useAuth } from '../auth';
 import NewIssueModal from './modals/NewIssueModal';
+import { Fire } from 'react-bootstrap-icons';
 
 const PatientProfileView = () => {
     const auth = useAuth();
@@ -54,18 +55,67 @@ const PatientProfileView = () => {
         }     
     }
     
-    const deletePatient = async () => {     
+    
+
+    const deletePatient = async (patientId) => {
         const queryData = await supabase
             .from('patients')
             .delete()
-            .eq('id',location.state.patientData.id)
+            .eq('id',patientId)
 
         if (queryData.error) {
             alert(queryData.error.message);
-        }      
+        }    
+
+        console.log("after deleting patient")
         
         navigate("/patients");
     }
+
+    const handleDeleteIssues = async () => {   
+        //delete all issues of this patient        
+        const resultArr = await Promise.allSettled(issuesData.map(async (issue) => {
+           deleteIssue(issue.id);          
+        }));
+
+    }
+
+     const deleteIssue = async (issueId) => {      
+
+        //delete isuses symptoms
+        const deletedSymptom = await supabase
+            .from('symptoms')
+            .delete()
+            .eq('issue_id', issueId)
+
+        if (deletedSymptom.error) {
+            alert(deletedSymptom.error.message);
+        }    
+
+        //delete isuses interventions
+        const deletedIntervention = await supabase
+            .from('interventions')
+            .delete()
+            .eq('issue_id', issueId)
+
+        if (deletedIntervention.error) {
+            alert(deletedIntervention.error.message);
+        }    
+
+        const queryData = await supabase
+            .from('issues')
+            .delete()
+            .eq('id', issueId)
+
+        if (queryData.error) {
+            alert(queryData.error.message);
+        } else {
+            return queryData;
+        }           
+    }
+
+
+
     
     const updatePatient = async () => {  
 
@@ -115,8 +165,8 @@ const PatientProfileView = () => {
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
-            setIssuesData(queryData.data)
-        }     
+            setIssuesData(queryData.data);          
+        } 
     }
 
     const toggleShowNewIssue = () => {
@@ -235,12 +285,18 @@ const PatientProfileView = () => {
                         }}
                     />                
                     </Form.Group>
-                    {editing && <Button className="m-2 mr-5" variant="danger" onClick={deletePatient}>
-                        Delete Patient
-                    </Button>}                
-                    {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                        Update Patient
-                    </Button> }   
+                    
+                        {editing && <Button disabled={issuesData.length} className="m-2 mr-5" variant="danger" onClick={() => {deletePatient(location.state.patientData.id)}}>
+                            Delete Patient
+                        </Button>}  
+                        {editing && issuesData.length > 0 && <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIssues}>
+                            Delete Patient Data
+                        </Button>}
+                        {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                            Update Patient
+                        </Button> }
+                        
+                     
                     <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
                         {editing ? "Cancel" : "Edit Patient"}
                     </Button>             

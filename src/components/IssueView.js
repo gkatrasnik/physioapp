@@ -43,28 +43,27 @@ const IssueView = () => {
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
-            setTitle(queryData.data[0].name)
-            setNotes(queryData.data[0].notes)
-            setResolved(queryData.data[0].resolved)
-            setDiagnosis(queryData.data[0].diagnosis)
-            setCreatedAt(queryData.data[0].created_at)
-            setLastChanged(queryData.data[0].last_changed)
-            setUserId(queryData.data[0].user_id)
-            setLeadTherapistId(queryData.data[0].lead_therapist_id)
-            setPatientId(queryData.data[0].patient_id)
+            setTitle(queryData && queryData.data[0].name)
+            setNotes(queryData && queryData.data[0].notes)
+            setResolved(queryData && queryData.data[0].resolved)
+            setDiagnosis(queryData && queryData.data[0].diagnosis)
+            setCreatedAt(queryData && queryData.data[0].created_at)
+            setLastChanged(queryData && queryData.data[0].last_changed)
+            setUserId(queryData && queryData.data[0].user_id)
+            setLeadTherapistId(queryData && queryData.data[0].lead_therapist_id)
+            setPatientId(queryData && queryData.data[0].patient_id)
 
             console.log("resolved", resolved)
         }     
     }
 
-    const deleteIssue = async () => {
-        
+    const deleteIssue = async (issueId) => {       
 
         //delete isuuses symptoms
         const deletedSymptom = await supabase
             .from('symptoms')
             .delete()
-            .eq('issue_id',location.state.issueData.id)
+            .eq('issue_id', issueId)
 
         if (deletedSymptom.error) {
             alert(deletedSymptom.error.message);
@@ -74,7 +73,7 @@ const IssueView = () => {
         const deletedIntervention = await supabase
             .from('interventions')
             .delete()
-            .eq('issue_id',location.state.issueData.id)
+            .eq('issue_id', issueId)
 
         if (deletedIntervention.error) {
             alert(deletedIntervention.error.message);
@@ -83,7 +82,7 @@ const IssueView = () => {
         const queryData = await supabase
             .from('issues')
             .delete()
-            .eq('id',location.state.issueData.id)
+            .eq('id', issueId)
 
         if (queryData.error) {
             alert(queryData.error.message);
@@ -239,7 +238,7 @@ const IssueView = () => {
                         type="text"
                     />                
                     </Form.Group>
-                    {editing && <Button className="m-2 mr-5" variant="danger" onClick={deleteIssue}>
+                    {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {deleteIssue(location.state.issueData.id)}}>
                         Delete Issue
                     </Button>}                
                     {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdateIssue}>
