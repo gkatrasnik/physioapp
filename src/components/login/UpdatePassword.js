@@ -47,6 +47,7 @@ const UpdatePassword = () => {
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>New Password</Form.Label>
               <Form.Control
+                required
                 type="password"
                 placeholder="Enter new password"
                 onChange={(e) => {
@@ -58,6 +59,7 @@ const UpdatePassword = () => {
             <Form.Group className="mb-3" controlId="passwordConfirmation">
               <Form.Label>Confirm New Password</Form.Label>
               <Form.Control
+                required
                 type="password"
                 placeholder="Enter password confirmation"
                 onChange={(e) => {

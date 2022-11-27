@@ -48,7 +48,7 @@ const SymptomModal = (props) => {
                 bodypart_id: bodypartId,
                 issue_id: props.issueData.id,
                 user_id: auth.user.id,
-                org_id: auth.userObj.org_id
+                org_id: auth.user.user_metadata.org_id
             })
             .eq('id', props.symptomData.id)
 
@@ -145,11 +145,11 @@ const SymptomModal = (props) => {
                 </Button>
                 {editing ? <> 
                         <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteSymptom}>
-                            Delete Symptom
+                            Delete
                         </Button>     
 
                         <Button  className="m-2" variant="primary" type="submit">
-                            Update Symptom
+                            Update
                         </Button> 
                     </> :
                     <Button className="m-2 " variant="secondary" onClick={toggleEditing}>

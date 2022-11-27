@@ -13,7 +13,6 @@ const InterventionsList = (props) => {
     const [showInterventionModal, setShowInterventionModal] = useState(false);
     const [showNewInterventionModal, setShowNewInterventionModal] = useState(false);
     const [interventionsData, setInterventionsData] = useState([]);  
-    const [therapistsData, setTherapistsData] = useState([]);  
     const [currentInterventionData, setCurrentInterventionData] = useState(null)
 
     const showUpdateInterventionModal = (interventionObj) => { 
@@ -41,31 +40,10 @@ const InterventionsList = (props) => {
             setInterventionsData(queryData.data)
         }     
     }
-
-    const getTherapistsData = async () => {
-            const queryData = await supabase
-            .from('users')
-            .select()
-            .eq('org_id', auth.userObj.org_id)            
-        if (queryData.error) {
-            alert(queryData.error.message);
-        }else {
-            setTherapistsData(queryData.data)
-        }     
-    }
-
-    const getTherapistName = (therapistId) => {
-        if (!therapistsData.length) {
-            return "No data";
-        }
-        const therapistObj = therapistsData.find(therapist => therapist.id === therapistId);
-        return therapistObj.name ? therapistObj.name : "No data";
-    }
    
     //on component mount find all interventions for this issue
     useEffect(() => {
       getInterventionsData();
-      getTherapistsData();
     }, [])
 
     // only show intervention modal afer current intervention data is updated
@@ -107,7 +85,6 @@ const InterventionsList = (props) => {
                     <th>Date</th>                    
                     <th>Duration</th>
                     <th>Notes</th>
-                    <th>Therapist</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -120,7 +97,6 @@ const InterventionsList = (props) => {
                             <td>{new Date(intervention.created_at).toLocaleDateString("sl")}</td>
                             <td>{intervention.duration}</td>
                             <td>{intervention.notes ? intervention.notes : "Empty"}</td>
-                            <td>{getTherapistName(intervention.therapist_id)}</td>
                             </tr>
                         )
                     }):                     

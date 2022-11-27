@@ -1,6 +1,3 @@
-//email/password login
-//magic link login
-
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../auth";
@@ -49,6 +46,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="email">
               <Form.Label>Email</Form.Label>
               <Form.Control
+                required
                 type="text"
                 placeholder="Enter email"
                 onChange={(e) => {
@@ -60,6 +58,7 @@ const Login = () => {
             <Form.Group className="mb-3" controlId="password">
               <Form.Label>Password</Form.Label>
               <Form.Control
+                required
                 type="password"
                 placeholder="Enter password"
                 onChange={(e) => {
@@ -73,7 +72,7 @@ const Login = () => {
             </Button>
           </Form>
           <Link to="/signup" className="float-start mx-4">
-             <BoxArrowInUp/> Sign up
+             <BoxArrowInUp/> Create User
           </Link>
           <Link to="/send-reset-password" className="float-start mx-4">
              Forgot Password?

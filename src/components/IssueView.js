@@ -25,10 +25,8 @@ const IssueView = () => {
     const [createdAt, setCreatedAt] = useState("");
     const [lastChanged, setLastChanged] = useState("");
     const [userId, setUserId] = useState("");
-    const [leadTherapistId, setLeadTherapistId] = useState("");
     const [patientId, setPatientId] = useState("");
 
-    const [therapistData, setTherapistData] = useState();
     const [patientData, setPatientData] =useState();   
 
     const [InterventionsData, setInterventionsData] =useState([]);   
@@ -43,15 +41,14 @@ const IssueView = () => {
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
-            setTitle(queryData && queryData.data[0].name)
-            setNotes(queryData && queryData.data[0].notes)
-            setResolved(queryData && queryData.data[0].resolved)
-            setDiagnosis(queryData && queryData.data[0].diagnosis)
-            setCreatedAt(queryData && queryData.data[0].created_at)
-            setLastChanged(queryData && queryData.data[0].last_changed)
-            setUserId(queryData && queryData.data[0].user_id)
-            setLeadTherapistId(queryData && queryData.data[0].lead_therapist_id)
-            setPatientId(queryData && queryData.data[0].patient_id)
+            setTitle(queryData.data && queryData.data[0].name)
+            setNotes(queryData.data && queryData.data[0].notes)
+            setResolved(queryData.data && queryData.data[0].resolved)
+            setDiagnosis(queryData.data && queryData.data[0].diagnosis)
+            setCreatedAt(queryData.data && queryData.data[0].created_at)
+            setLastChanged(queryData.data && queryData.data[0].last_changed)
+            setUserId(queryData.data && queryData.data[0].user_id)
+            setPatientId(queryData.data && queryData.data[0].patient_id)
 
             console.log("resolved", resolved)
         }     
@@ -100,8 +97,7 @@ const IssueView = () => {
                 resolved: resolved,
                 diagnosis: diagnosis,
                 last_changed: lastChanged,
-                lead_therapist_id: leadTherapistId,  
-                org_id: auth.userObj.org_id           
+                org_id: auth.user.user_metadata.org_id          
             })
             .eq('id', location.state.issueData.id)
 
@@ -111,18 +107,6 @@ const IssueView = () => {
         }        
     }
 
-    //therapists data
-    const getTherapistData = async () => {
-         const queryData = await supabase
-            .from('users')
-            .select() 
-            .eq('id', location.state.issueData.lead_therapist_id)           
-        if (queryData.error) {
-            alert(queryData.error.message);
-        }else {
-            setTherapistData(queryData.data[0])
-        }     
-    }
 
      const handleUpdateIssue = () => {
         updateIssue();
@@ -150,7 +134,6 @@ const IssueView = () => {
     // useEffects
     useEffect(() => {
          getIssueData();    
-        getTherapistData();
         getPatientData();
     }, []);
 
@@ -220,15 +203,6 @@ const IssueView = () => {
                         type="text"
                     />                
                     </Form.Group>     
-
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
-                    <Form.Label>Lead Therapist</Form.Label>
-                    <Form.Control
-                        defaultValue = {therapistData && therapistData.name}
-                        disabled = {true}
-                        type="text"
-                    />                
-                    </Form.Group>
 
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
                     <Form.Label>Patient</Form.Label>

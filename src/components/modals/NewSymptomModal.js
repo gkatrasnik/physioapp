@@ -7,9 +7,9 @@ import { useAuth } from '../../auth';
 
 const NewSymptomModal = (props) => {
     const [name, setName] = useState("");
-    const [intensity, setIntensity] = useState(0);
+    const [intensity, setIntensity] = useState(null);
     const [duration, setDuration] = useState("");
-    const [bodypartId, setBodypartId] = useState("");    
+    const [bodypartId, setBodypartId] = useState(null);    
 
     const auth = useAuth();
 
@@ -17,6 +17,11 @@ const NewSymptomModal = (props) => {
         e.preventDefault();
         addSymptom();
         props.toggleModal();              
+
+        setName("");
+        setIntensity(null);
+        setDuration("");
+        setBodypartId(null);
     }
 
 
@@ -30,7 +35,7 @@ const NewSymptomModal = (props) => {
                 bodypart_id: bodypartId,
                 issue_id: props.issueData.id,
                 user_id: auth.user.id,
-                org_id: auth.userObj.org_id
+                org_id: auth.user.user_metadata.org_id
             })
 
         if (queryData.error) {
@@ -42,7 +47,7 @@ const NewSymptomModal = (props) => {
 
    
     useEffect(() => {
-         setName("");
+        setName("");
         setIntensity(0)
         setDuration("")
         setBodypartId(0)
@@ -59,6 +64,7 @@ const NewSymptomModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
+                    required
                     type="text"
                     defaultValue={name}
                     autoFocus

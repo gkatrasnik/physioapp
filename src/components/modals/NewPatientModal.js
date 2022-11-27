@@ -44,7 +44,7 @@ const NewPatientModal = (props) => {
                 birthdate: birthDate,
                 occupation: occupation,
                 user_id: auth.user.id,
-                org_id: auth.userObj.org_id
+                org_id: auth.user.user_metadata.org_id
             })
 
         if (queryData.error) {
@@ -70,6 +70,7 @@ const NewPatientModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
+                    required
                     type="text"
                     autoFocus
                     onChange={(e) => {

@@ -8,9 +8,8 @@ const InterventionModal = (props) => {
     const [editing, setEditing] = useState(false);
 
     const [treatment, setTreatment] = useState("");
-    const [duration, setDuration] = useState(null);
+    const [duration, setDuration] = useState("");
     const [notes, setNotes] = useState("");    
-    const [therapistId, setTherapistId] = useState(1);      
 
     const auth = useAuth();
 
@@ -44,10 +43,9 @@ const InterventionModal = (props) => {
                 treatment: treatment,
                 duration: duration,
                 notes: notes,
-                therapist_id: therapistId,
                 user_id: auth.user.id,
                 issue_id: props.issueData.id,
-                org_id: auth.userObj.org_id
+                org_id: auth.user.user_metadata.org_id
             })
             .eq('id', props.interventionData.id)
 
@@ -78,7 +76,6 @@ const InterventionModal = (props) => {
             setTreatment(props.interventionData.treatment);
             setNotes(props.interventionData.notes);
             setDuration(props.interventionData.duration);
-            setTherapistId(props.interventionData.therapistId);
         } 
         
     }, [props.interventionData]);
@@ -107,7 +104,7 @@ const InterventionModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>Duration</Form.Label>
                 <Form.Control
-                    type="number"
+                    type="text"
                     defaultValue={duration}
                     disabled={!editing}
                     onChange={(e) => {
@@ -129,28 +126,17 @@ const InterventionModal = (props) => {
                 />                
                 </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Therapist</Form.Label>
-                <Form.Control
-                    type="number"
-                    defaultValue={1}
-                    disabled={!editing}
-                    onChange={(e) => {
-                    setTherapistId(e.target.value);
-                    }}
-                />                
-                </Form.Group>
                  
                 <Button className="m-2 " variant="secondary" onClick={handleClose}>
                     {!editing ? "Close" : "Cancel"}
                 </Button>
                {editing ? <> 
                         <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIntervention}>
-                            Delete Symptom
+                            Delete
                         </Button>     
 
                         <Button  className="m-2" variant="primary" type="submit">
-                            Update Symptom
+                            Update
                         </Button> 
                     </> :                
                     <Button className="m-2 " variant="secondary" onClick={toggleEditing}>

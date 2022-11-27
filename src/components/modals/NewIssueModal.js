@@ -16,11 +16,8 @@ const NewIssueModal = (props) => {
     const [notes, setNotes] = useState("");
     const [resolved, setResolved] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
-    const [leadTherapistId, setLeadTherapistId] = useState("")
 
     
-    const [therapistsData, setTherapistsData] = useState([]);
-
     const auth = useAuth();
 
     const handleNewIssue = (e) => {
@@ -40,8 +37,7 @@ const NewIssueModal = (props) => {
                 diagnosis: diagnosis,
                 patient_id: props.patientData.id,
                 user_id: auth.user.id,
-                lead_therapist_id: auth.userObj.id,
-                org_id: auth.userObj.org_id
+                org_id: auth.user.user_metadata.org_id
 
                 //last_changed - add this
             })
@@ -54,21 +50,6 @@ const NewIssueModal = (props) => {
         
     }
 
-    const getTherapists = async () => {
-         const queryData = await supabase
-            .from('users')
-            .select()            
-        if (queryData.error) {
-            alert(queryData.error.message);
-        }else {
-            setTherapistsData(queryData.data)
-        }     
-    }
-
-    useEffect(() => {
-        getTherapists();
-    }, [])
-
 
     return (        
         <Modal centered backdrop="static" show={props.showNewIssue} onHide={props.toggleShowNewIssue}>
@@ -80,6 +61,7 @@ const NewIssueModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
+                    required
                     type="text"
                     autoFocus
                     onChange={(e) => {
@@ -94,16 +76,6 @@ const NewIssueModal = (props) => {
                     type="text"
                     onChange={(e) => {
                     setNotes(e.target.value);
-                    }}
-                />                
-                </Form.Group>
-
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                <Form.Label>Lead Therapist</Form.Label>
-                <Form.Control
-                    type="text"
-                    onChange={(e) => {
-                    setLeadTherapistId(e.target.value);
                     }}
                 />                
                 </Form.Group>

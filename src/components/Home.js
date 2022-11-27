@@ -21,8 +21,8 @@ const Home = () => {
     }
 
     useEffect(() => {        
-       auth.userObj&& getOrgData(auth.userObj.org_id);
-    }, [auth.userObj])
+      getOrgData(auth.user.user_metadata.org_id);
+    }, [])
 
     return (
         <Layout>

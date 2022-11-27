@@ -131,7 +131,7 @@ const PatientProfileView = () => {
                 birthdate: birthDate,
                 occupation: occupation,
                 user_id: auth.user.id,
-                org_id: auth.userObj.org_id
+                org_id: auth.user.user_metadata.org_id
             })
             .eq('id', location.state.patientData.id)
 

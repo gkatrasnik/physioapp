@@ -6,16 +6,19 @@ import { useAuth } from '../../auth';
 
 const NewInterventionModal = (props) => {
     const [treatment, setTreatment] = useState("");
-    const [duration, setDuration] = useState(null);
+    const [duration, setDuration] = useState("");
     const [notes, setNotes] = useState("");    
-    const [therapistId, setTherapistId] = useState(null);    
 
     const auth = useAuth();
 
     const handleNewIntervention = (e) => {
         e.preventDefault();
         addIntervention();
-        props.toggleModal();                
+        props.toggleModal();         
+        
+        setTreatment("");
+        setDuration("");
+        setNotes("");
     }
 
 
@@ -26,10 +29,9 @@ const NewInterventionModal = (props) => {
                 treatment: treatment,
                 duration: duration,
                 notes: notes,
-                therapist_id: therapistId,
                 user_id: auth.user.id,
                 issue_id: props.issueData.id,
-                org_id: auth.userObj.org_id
+                org_id: auth.user.user_metadata.org_id
             })
 
         if (queryData.error) {
@@ -44,7 +46,6 @@ const NewInterventionModal = (props) => {
         setTreatment("");
         setNotes("");
         setDuration(null);
-        setTherapistId(auth.userObj.id);
     }, []);
 
 
@@ -58,6 +59,7 @@ const NewInterventionModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Treatment</Form.Label>
                 <Form.Control
+                    required
                     type="text"
                     defaultValue={treatment}
                     autoFocus
@@ -70,7 +72,7 @@ const NewInterventionModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>Duration</Form.Label>
                 <Form.Control
-                    type="number"
+                    type="text"
                     defaultValue={duration}
                     onChange={(e) => {
                     setDuration(e.target.value);
@@ -86,17 +88,6 @@ const NewInterventionModal = (props) => {
                     defaultValue={notes}
                     onChange={(e) => {
                     setNotes(e.target.value);
-                    }}
-                />                
-                </Form.Group>
-
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Therapist</Form.Label>
-                <Form.Control
-                    type="number"
-                    defaultValue={1}
-                    onChange={(e) => {
-                    setTherapistId(e.target.value);
                     }}
                 />                
                 </Form.Group>

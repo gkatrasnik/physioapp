@@ -42,12 +42,12 @@ const PatientSearchView = () => {
             .from('patients')
             .select("id, name, birthdate")
             .textSearch('name', searchString, {type:'websearch'})
-            .eq("org_id", auth.userObj.org_id)
+            .eq("org_id", auth.user.user_metadata.org_id)
         } else {
             queryData = await supabase
             .from('patients')
             .select("id, name, birthdate")
-            .eq("org_id", auth.userObj.org_id)
+            .eq("org_id", auth.user.user_metadata.org_id)
         }        
 
         if (queryData.error) {
@@ -62,9 +62,11 @@ const PatientSearchView = () => {
      navigate('/patient',{state:{patientData:patient}});
     }
 
+
     //on component mount search all patients
     useEffect(() => {
       handleSearch();      
+      
     }, []) 
    
 
