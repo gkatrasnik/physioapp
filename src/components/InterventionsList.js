@@ -34,6 +34,7 @@ const InterventionsList = (props) => {
             .from('interventions')
             .select()
             .eq('issue_id',props.issueData.id)
+            .order('created_at', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
@@ -76,7 +77,9 @@ const InterventionsList = (props) => {
 
             <h1 className='text-center'>Interventions</h1>
 
-
+            <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
+                    Add Intervention
+            </Button>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -108,9 +111,7 @@ const InterventionsList = (props) => {
                     }   
                 </tbody>
             </Table> 
-            <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
-                    Add Intervention
-            </Button>
+            
         </>
  
     );

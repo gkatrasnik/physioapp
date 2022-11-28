@@ -62,11 +62,10 @@ const PatientSearchView = () => {
      navigate('/patient',{state:{patientData:patient}});
     }
 
-
+    
     //on component mount search all patients
     useEffect(() => {
-      handleSearch();      
-      
+      handleSearch();     
     }, []) 
    
 

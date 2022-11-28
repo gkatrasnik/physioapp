@@ -62,7 +62,7 @@ const NewSymptomModal = (props) => {
             <Modal.Body className="py-2">
             <Form disabled={true} onSubmit={handleNewSymptom} >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Symptom</Form.Label>
                 <Form.Control
                     required
                     type="text"

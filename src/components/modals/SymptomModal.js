@@ -12,6 +12,7 @@ const SymptomModal = (props) => {
     const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
     const [bodypartId, setBodypartId] = useState("");    
+    const [bodypartsList, setBodypartsList] = useState([]);
 
     const auth = useAuth();
 
@@ -59,7 +60,7 @@ const SymptomModal = (props) => {
         }
     }
 
-     const deleteSymptom = async () => {
+    const deleteSymptom = async () => {
         const queryData = await supabase
             .from('symptoms')
             .delete()
@@ -73,6 +74,18 @@ const SymptomModal = (props) => {
                 
     }
 
+    const getBodypartsData = async() => {
+        const queryData = await supabase
+            .from('bodyparts')
+            .select()          
+
+        if (queryData.error) {
+            alert(queryData.error.message);
+        } else {
+           setBodypartsList(queryData.data) ;   
+        }     
+    }
+
     useEffect(() => {       
         if (props.symptomData) {
             setName(props.symptomData.name);
@@ -83,16 +96,21 @@ const SymptomModal = (props) => {
         
     }, [props.symptomData]);
 
+    useEffect(() => {
+      getBodypartsData();
+    }, [])
+    
+
 
     return (        
         <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
             <Modal.Header className="py-2" closeButton>
-            <Modal.Title className='text-center'>Edit Symptom</Modal.Title>
+            <Modal.Title className='text-center'>Symptom</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
             <Form onSubmit={handleUpdateSymptom}>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>Symptom</Form.Label>
                 <Form.Control
                     type="text"
                     defaultValue={name}
@@ -129,17 +147,21 @@ const SymptomModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Body Part</Form.Label>
-                <Form.Control
-                    type="number"
-                    defaultValue={bodypartId}
-                    disabled={!editing}
-                    onChange={(e) => {
+                <Form.Label>Body Part</Form.Label>                
+                 <Form.Select 
+                 disabled={!editing}
+                 defaultValue={bodypartId}
+                 onChange={(e) => {
                     setBodypartId(e.target.value);
-                    }}
-                />                
+                 }}
+                 >
+                {bodypartsList.map((part) => {
+                    return <option value={part.id}>{part.body_side} {part.name}</option>
+                })}
+               
+                </Form.Select>                                
                 </Form.Group>
-                
+
                 <Button className="m-2 " variant="secondary" onClick={handleClose}>
                     {!editing ? "Close" : "Cancel"}
                 </Button>

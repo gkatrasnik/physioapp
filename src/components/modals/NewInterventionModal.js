@@ -84,7 +84,7 @@ const NewInterventionModal = (props) => {
                 <Form.Label>Notes</Form.Label>
                 <Form.Control
                     type="text"
-                    as="textarea" rows={4}
+                    as="textarea" rows={5}
                     defaultValue={notes}
                     onChange={(e) => {
                     setNotes(e.target.value);

@@ -36,6 +36,7 @@ const SymptomsList = (props) => {
             .from('symptoms')
             .select()
             .eq('issue_id',props.issueData.id)
+            .order('created_at', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
@@ -59,7 +60,7 @@ const SymptomsList = (props) => {
             return "No data"; 
         }
         const bodypartObj = bodypartsData.find(bodypart => bodypart.id === bodypartId);
-        return bodypartObj && bodypartObj.name ? bodypartObj.name : "No data";
+        return bodypartObj  ? bodypartObj.body_side + " "+ bodypartObj.name : "No data";
     }
 
 
@@ -100,6 +101,9 @@ const SymptomsList = (props) => {
 
             <h1 className='text-center'>Symptoms</h1>
 
+            <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
+                    Add Symptom
+            </Button>
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -132,11 +136,7 @@ const SymptomsList = (props) => {
                         </tr>
                 }   
                 </tbody>
-            </Table> 
-
-            <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
-                    Add Symptom
-            </Button>
+            </Table>             
         </>
  
     );

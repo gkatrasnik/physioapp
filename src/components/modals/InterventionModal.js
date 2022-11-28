@@ -84,7 +84,7 @@ const InterventionModal = (props) => {
     return (        
         <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
             <Modal.Header className="py-2" closeButton>
-            <Modal.Title className='text-center'>Edit Intervention</Modal.Title>
+            <Modal.Title className='text-center'>Intervention</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
             <Form onSubmit={handleUpdateIntervention}>
@@ -117,7 +117,7 @@ const InterventionModal = (props) => {
                 <Form.Label>Notes</Form.Label>
                 <Form.Control
                     type="text"
-                    as="textarea" rows={4}
+                    as="textarea" rows={5}
                     defaultValue={notes}
                     disabled={!editing}
                     onChange={(e) => {

@@ -12,7 +12,7 @@ import Layout from "./Layout";
 import { Container, Button, Form, Table } from 'react-bootstrap';
 import { useAuth } from '../auth';
 import NewIssueModal from './modals/NewIssueModal';
-import { Fire } from 'react-bootstrap-icons';
+import { CheckSquare } from 'react-bootstrap-icons';
 
 const PatientProfileView = () => {
     const auth = useAuth();
@@ -20,6 +20,7 @@ const PatientProfileView = () => {
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [showNewIssue, setShowNewIssue] = useState(false);
+    const [infoExpanded, setInfoExpanded] = useState(false);
 
     //patient profile editing state
     const [name, setName] = useState("");
@@ -149,6 +150,11 @@ const PatientProfileView = () => {
 
     const toggleEdit = () => {
         setEditing(!editing);
+        setInfoExpanded(true); //always show info if editing
+    }
+
+    const toggleShowInfo = () => {
+        setInfoExpanded(!infoExpanded);
     }
 
     // issues logic 
@@ -162,6 +168,7 @@ const PatientProfileView = () => {
             .from('issues')
             .select()
             .eq('patient_id',location.state.patientData.id)
+            .order('created_at', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
@@ -201,7 +208,8 @@ const PatientProfileView = () => {
                         }}
                     />                
                     </Form.Group>
-
+                    {infoExpanded &&
+                    <>
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
@@ -285,6 +293,7 @@ const PatientProfileView = () => {
                         }}
                     />                
                     </Form.Group>
+                    </>}
                     
                         {editing && <Button disabled={issuesData.length} className="m-2 mr-5" variant="danger" onClick={() => {deletePatient(location.state.patientData.id)}}>
                             Delete Patient
@@ -299,10 +308,19 @@ const PatientProfileView = () => {
                      
                     <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
                         {editing ? "Cancel" : "Edit Patient"}
-                    </Button>             
+                    </Button>   
+
+                    {!editing &&
+                    <Button className="m-2 " variant="secondary" onClick={toggleShowInfo}>
+                        {infoExpanded ? "Hide Info" : "Show Info"}
+                    </Button>}           
                 </Form>
 
-                <Table striped bordered hover>
+                <Button  className="m-2" variant="primary" type="submit" onClick={toggleShowNewIssue}>
+                    New Issue
+                </Button>
+
+                <Table  bordered >
                     <thead>
                         <tr>
                         <th>Id</th>
@@ -316,12 +334,12 @@ const PatientProfileView = () => {
                         
                        {issuesData && issuesData.length ? issuesData.map((issue, index) => {
                         return (
-                            <tr key={index} onClick={()=>{toIssueView(issue)}}>
+                            <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.resolved ?'text-white bg-success' : ''}>
                             <td>{issue.id}</td>
                             <td>{issue.name}</td>
                             <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
                             <td>{issue.diagnosis}</td>
-                            <td>{issue.resolved ? "True" : "False"}</td>
+                            <td className='text-center'>{issue.resolved ? <CheckSquare/> : ""}</td>
                             </tr>
                             )
                         }):                     
@@ -333,9 +351,7 @@ const PatientProfileView = () => {
                     }   
                     </tbody>
                 </Table>     
-                <Button  className="m-2" variant="primary" type="submit" onClick={toggleShowNewIssue}>
-                    New Issue
-                </Button>
+                
             </Container>
         </Layout>
     );
