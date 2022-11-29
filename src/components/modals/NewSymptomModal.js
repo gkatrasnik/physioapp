@@ -89,14 +89,17 @@ const NewSymptomModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                <Form.Label>Intensity</Form.Label>
-                <Form.Control
-                    type="number"
+                <Form.Label>Intensity ({intensity})</Form.Label>
+                <Form.Range
+                    name="intensity"
+                    label={intensity}                   
+                    min={0}
+                    max={10}
                     defaultValue={intensity}
                     onChange={(e) => {
-                    setIntensity(e.target.value);
+                    setIntensity(e.target.valueAsNumber);
                     }}
-                />                
+                />                 
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">

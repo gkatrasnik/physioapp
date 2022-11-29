@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import {useAuth} from "../auth";
 import Layout from "./Layout";
-import { Container, Card } from 'react-bootstrap';
+import { Container, Card, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const auth = useAuth();
@@ -29,6 +30,13 @@ const Home = () => {
             <Container>
                 <h1 className='text-center'>Home</h1>
 
+                <Card className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
+                <Card.Body className="d-flex flex-row justify-content-around">
+                    <Link to={"/patients"}><Button size="lg">Patients</Button></Link>
+                    <Link to={"/appointments"}><Button size="lg">Calendar</Button></Link>
+                </Card.Body>
+                </Card>
+
                 {orgData &&                 
                 <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
                 <Card.Body>
@@ -47,7 +55,7 @@ const Home = () => {
                     <Card.Text>{auth.user.email}</Card.Text> 
                     <Card.Text>{auth.user.user_metadata.phone}</Card.Text>                   
                 </Card.Body>
-                </Card>}
+                </Card>}                
             </Container>
         </Layout>
     );

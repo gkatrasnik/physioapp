@@ -131,13 +131,14 @@ const InterventionModal = (props) => {
                     {!editing ? "Close" : "Cancel"}
                 </Button>
                {editing ? <> 
-                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIntervention}>
-                            Delete
-                        </Button>     
-
+                        
                         <Button  className="m-2" variant="primary" type="submit">
                             Update
                         </Button> 
+                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIntervention}>
+                            Delete
+                        </Button>     
+                       
                     </> :                
                     <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
                             Edit

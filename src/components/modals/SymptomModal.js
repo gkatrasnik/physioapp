@@ -123,13 +123,16 @@ const SymptomModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                <Form.Label>Intensity</Form.Label>
-                <Form.Control
-                    type="number"
+                <Form.Label>Intensity ({intensity})</Form.Label>
+                <Form.Range
+                    name="intensity"
+                    label={intensity}                   
+                    min={0}
+                    max={10}
                     defaultValue={intensity}
                     disabled={!editing}
                     onChange={(e) => {
-                    setIntensity(e.target.value);
+                    setIntensity(e.target.valueAsNumber);
                     }}
                 />                
                 </Form.Group>
@@ -166,13 +169,15 @@ const SymptomModal = (props) => {
                     {!editing ? "Close" : "Cancel"}
                 </Button>
                 {editing ? <> 
-                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteSymptom}>
-                            Delete
-                        </Button>     
 
                         <Button  className="m-2" variant="primary" type="submit">
                             Update
                         </Button> 
+
+                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteSymptom}>
+                            Delete
+                        </Button>     
+                        
                     </> :
                     <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
                         Edit

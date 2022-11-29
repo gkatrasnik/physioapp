@@ -145,6 +145,7 @@ const IssueView = () => {
                 
                 <Form className="mt-4">
                     <h2 className='text-center'>{location.state.issueData.name}</h2>
+
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                     <Form.Label>Title</Form.Label>
                     <Form.Control
@@ -155,7 +156,7 @@ const IssueView = () => {
                         onChange={(e) => {
                         setTitle(e.target.value);
                         }}
-                    />                
+                    />         
                     </Form.Group>
 
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
@@ -168,20 +169,8 @@ const IssueView = () => {
                         onChange={(e) => {
                         setNotes(e.target.value);
                         }}
-                    />                
-                    </Form.Group>
-
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                    <Form.Label>Resolved</Form.Label>
-                    <Form.Check
-                        checked = {resolved && resolved}
-                        disabled = {!editing}
-                        type="checkbox"
-                        onChange={(e) => {
-                        setResolved(e.target.checked);
-                        }}
-                    />                
-                    </Form.Group>
+                    />        
+                    </Form.Group>  
 
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
                     <Form.Label>Diagnosis</Form.Label>
@@ -201,8 +190,8 @@ const IssueView = () => {
                         defaultValue = {new Date(createdAt).toLocaleDateString("sl")}
                         disabled = {true}
                         type="text"
-                    />                
-                    </Form.Group>     
+                    />               
+                    </Form.Group>  
 
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
                     <Form.Label>Patient</Form.Label>
@@ -212,15 +201,31 @@ const IssueView = () => {
                         type="text"
                     />                
                     </Form.Group>
+
+                    <Form.Group className="m-2" controlId="exampleForm.ControlInput3">
+                    <Form.Check
+                        label="Resolved"
+                     
+                        checked = {resolved && resolved}
+                        disabled = {!editing}
+                        type="checkbox"
+                        onChange={(e) => {
+                        setResolved(e.target.checked);
+                        }}
+                    />                
+                    </Form.Group>
+
+                    <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                        {editing ? "Cancel" : "Edit Issue"}
+                    </Button>    
+
                     {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {deleteIssue(location.state.issueData.id)}}>
                         Delete Issue
                     </Button>}                
                     {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdateIssue}>
                         Update Issue
                     </Button> }   
-                    <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                        {editing ? "Cancel" : "Edit Issue"}
-                    </Button>             
+                             
                 </Form>
 
                 <SymptomsList issueData={location.state.issueData}/>
