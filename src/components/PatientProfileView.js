@@ -293,22 +293,24 @@ const PatientProfileView = () => {
                         }}
                     />                
                     </Form.Group>
-                    </>}
                     
-                        {editing && <Button disabled={issuesData.length} className="m-2 mr-5" variant="danger" onClick={() => {deletePatient(location.state.patientData.id)}}>
-                            Delete Patient
-                        </Button>}  
-                        {editing && issuesData.length > 0 && <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIssues}>
-                            Delete Patient Data
-                        </Button>}
-                        {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                            Update Patient
-                        </Button> }
-                        
+                    
+                    {editing && <Button disabled={issuesData.length} className="m-2 mr-5" variant="danger" onClick={() => {deletePatient(location.state.patientData.id)}}>
+                        Delete Patient
+                    </Button>}  
+                    {editing && issuesData.length > 0 && <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIssues}>
+                        Delete Patient Data
+                    </Button>}
+                    {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                        Update Patient
+                    </Button> }
+                     
                      
                     <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
                         {editing ? "Cancel" : "Edit Patient"}
                     </Button>   
+                    
+                    </>}   
 
                     {!editing &&
                     <Button className="m-2 " variant="secondary" onClick={toggleShowInfo}>

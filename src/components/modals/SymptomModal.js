@@ -89,9 +89,9 @@ const SymptomModal = (props) => {
     useEffect(() => {       
         if (props.symptomData) {
             setName(props.symptomData.name);
-            setIntensity(props.symptomData.intensity)
-            setDuration(props.symptomData.duration)
-            setBodypartId(props.symptomData.bodypart_id)
+            setIntensity(props.symptomData.intensity);
+            setDuration(props.symptomData.duration);
+            setBodypartId(props.symptomData.bodypart_id);
         } 
         
     }, [props.symptomData]);

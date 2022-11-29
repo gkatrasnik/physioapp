@@ -7,9 +7,10 @@ import { useAuth } from '../../auth';
 
 const NewSymptomModal = (props) => {
     const [name, setName] = useState("");
-    const [intensity, setIntensity] = useState(null);
+    const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
     const [bodypartId, setBodypartId] = useState(null);    
+    const [bodypartsList, setBodypartsList] = useState([]);
 
     const auth = useAuth();
 
@@ -45,12 +46,25 @@ const NewSymptomModal = (props) => {
         }
     }
 
+    const getBodypartsData = async() => {
+        const queryData = await supabase
+            .from('bodyparts')
+            .select()          
+
+        if (queryData.error) {
+            alert(queryData.error.message);
+        } else {
+           setBodypartsList(queryData.data);   
+        }     
+    }
+
    
     useEffect(() => {
         setName("");
-        setIntensity(0)
-        setDuration("")
-        setBodypartId(0)
+        setIntensity(0);
+        setDuration("");
+        setBodypartId(null);
+        getBodypartsData();
     }, []);
 
 
@@ -97,14 +111,19 @@ const NewSymptomModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Body Part</Form.Label>
-                <Form.Control
-                    type="number"
-                    defaultValue={bodypartId}
-                    onChange={(e) => {
+                <Form.Label>Body Part</Form.Label>                
+                 <Form.Select 
+                 disabled={!editing}
+                 defaultValue={bodypartId}
+                 onChange={(e) => {
                     setBodypartId(e.target.value);
-                    }}
-                />                
+                 }}
+                 >
+                {bodypartsList.map((part) => {
+                    return <option value={part.id}>{part.body_side} {part.name}</option>
+                })}
+               
+                </Form.Select>                                
                 </Form.Group>
                 
                 <Button className="m-2 " variant="secondary" onClick={props.toggleModal}>
