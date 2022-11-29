@@ -112,13 +112,12 @@ const NewSymptomModal = (props) => {
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
                 <Form.Label>Body Part</Form.Label>                
-                 <Form.Select 
-                 disabled={!editing}
-                 defaultValue={bodypartId}
-                 onChange={(e) => {
-                    setBodypartId(e.target.value);
-                 }}
-                 >
+                <Form.Select                  
+                defaultValue={bodypartId}
+                onChange={(e) => {
+                setBodypartId(e.target.value);
+                }}
+                >
                 {bodypartsList.map((part) => {
                     return <option value={part.id}>{part.body_side} {part.name}</option>
                 })}
