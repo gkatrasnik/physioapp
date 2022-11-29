@@ -11,7 +11,7 @@ const SymptomModal = (props) => {
     const [name, setName] = useState("");
     const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
-    const [bodypartId, setBodypartId] = useState("");    
+    const [bodypartId, setBodypartId] = useState(0);    
     const [bodypartsList, setBodypartsList] = useState([]);
 
     const auth = useAuth();
