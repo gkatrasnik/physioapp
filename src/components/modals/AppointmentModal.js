@@ -4,7 +4,8 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 
-const NewAppointmentModal = (props) => {
+const AppointmentModal = (props) => {
+    
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
     const [patientId, setPatientId] = useState(null);
@@ -123,4 +124,4 @@ const NewAppointmentModal = (props) => {
 };
 
 
-export default NewAppointmentModal;
+export default AppointmentModal;

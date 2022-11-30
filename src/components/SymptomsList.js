@@ -95,7 +95,6 @@ const SymptomsList = (props) => {
                 show={showNewSymptomModal} 
                 toggleModal={toggleNewSymptomModal}   
                 issueData = {props.issueData}    
-                symptomData = {currentSymptomData}
                 getSymptomsData = {getSymptomsData}
             />
 

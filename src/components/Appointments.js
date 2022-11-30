@@ -1,4 +1,4 @@
-
+    // implement adding new events/appointments --- handle error in getEvents()      
 
 import React, {useState, useCallback, useEffect} from 'react';
 import Layout from "./Layout";
@@ -9,29 +9,43 @@ import { useNavigate } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import NewAppointmentModal from './modals/NewAppointmentModal';
+import AppointmentModal from './modals/AppointmentModal';
 
 const Appointments = () => {
     const auth = useAuth();
     const localizer = momentLocalizer(moment)
     const [eventList, setEventList] = useState([]);
     const [patientsData, setPatientsData] = useState([]);
+    const [showAppointmentModal, setShowAppointmentModal] = useState(false);
+    const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
     const navigate = useNavigate();
 
     
     // implement adding new events/appointments --- handle error in getEvents()
-     const handleSelectSlot = useCallback(
-        ({ start, end }) => {
-        const title = window.prompt('New Event name')
-        console.log("slot")
-        if (title) {
-            setEventList((prev) => [...prev, { start, end, title }])
-        }
-        },
-        [setEventList]
-    )
+     const handleSelectSlot = () => {
+        toggleNewAppointmentModal();
+    }
+     
+       
+    
 
     const handleSelectEvent = (event) => {
         toPatientProfile(event.patient)
+    }
+
+
+        
+
+    const toggleNewAppointmentModal = () => {
+        setShowNewAppointmentModal(!showNewAppointmentModal);
+    }
+
+    
+    
+
+    const hideAppointmentModal = () => {
+        setShowAppointmentModal(false);
     }
         
     
@@ -67,7 +81,6 @@ const Appointments = () => {
         if (queryData.error) {
             alert(queryData.error.message);
         }
-        
         setPatientsData(queryData.data);               
     }
 
@@ -89,7 +102,19 @@ const Appointments = () => {
         <Layout>
             <Container>
                 <h1 className='text-center'>Appointments</h1>   
-                <Button>New</Button>
+                 <NewAppointmentModal 
+                    patientsData={patientsData}
+                    show={showNewAppointmentModal} 
+                    toggleModal={toggleNewAppointmentModal} 
+                    getEvents={getEvents}                    
+                />
+
+                <AppointmentModal
+                    patientsData={patientsData}
+                    hideAppointmentModal={hideAppointmentModal}
+                    show={showAppointmentModal}
+
+                />
                 <div className='my-5'>
                     <Calendar
                     localizer={localizer}
