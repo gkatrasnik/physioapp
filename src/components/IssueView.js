@@ -22,7 +22,7 @@ const IssueView = () => {
     const [notes, setNotes] = useState("");
     const [resolved, setResolved] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
-    const [createdAt, setCreatedAt] = useState("");
+    const [createdAt, setCreatedAt] = useState("2022-11-20 00:00:00.643528+00");
     const [lastChanged, setLastChanged] = useState("");
     const [userId, setUserId] = useState("");
     const [patientId, setPatientId] = useState("");
@@ -133,7 +133,7 @@ const IssueView = () => {
 
     // useEffects
     useEffect(() => {
-         getIssueData();    
+        getIssueData();    
         getPatientData();
     }, []);
 
