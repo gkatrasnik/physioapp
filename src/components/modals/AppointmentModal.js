@@ -48,8 +48,10 @@ const AppointmentModal = (props) => {
 
    
     useEffect(() => {
-        findEventPatient(); 
+        
         if (props.currentEvent) {
+            findEventPatient(); //to fill up fields on modal
+
             setStart(props.currentEvent.start);
             setEnd(props.currentEvent.end);
             setPatientId(props.currentEvent.patient_id);
