@@ -35,8 +35,8 @@
         const handleSelectEvent = (event) => {
             //open appointment modal (event)
             setCurrentEvent(event);
-        }
-    
+            console.log("current event set", event)
+        } 
     
         
     
@@ -78,6 +78,11 @@
             getEvents();
         }, [])    
         
+        useEffect(()=>{
+            if (currentEvent){
+                setShowAppointmentModal(true);
+            }            
+        }, [currentEvent])
     
         return (
             <Layout>
