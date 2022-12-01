@@ -187,7 +187,7 @@ const IssueView = () => {
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
                     <Form.Label>Created At</Form.Label>
                     <Form.Control
-                        defaultValue = {new Date(createdAt).toLocaleDateString("sl")}
+                        value = {new Date(createdAt).toLocaleDateString("sl")}
                         disabled = {true}
                         type="text"
                     />               
