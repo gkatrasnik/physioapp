@@ -57,7 +57,7 @@ const AppointmentModal = (props) => {
             <Modal.Title className='text-center'>Appointment</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={} >
+            <Form disabled={true}  >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>From</Form.Label>
                 <Form.Control
