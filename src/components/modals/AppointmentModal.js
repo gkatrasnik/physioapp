@@ -64,13 +64,14 @@ const AppointmentModal = (props) => {
             <Modal.Title className='text-center'>Appointment</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true}  >
+            <Form   >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>From</Form.Label>
                 <Form.Control
+                    disabled={true}
                     required
                     defaultValue={start}
-                    type="datetime-local"                    
+                    type="text"                    
                     onChange={(e) => {
                     setStart(new Date(e.target.value));
                     }}
@@ -80,8 +81,9 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>To</Form.Label>
                 <Form.Control
+                    disabled={true}
                     required
-                    type="datetime-local"
+                    type="text"
                     defaultValue={end}                    
                     onChange={(e) => {
                     setEnd(new Date(e.target.value));
@@ -92,6 +94,7 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
+                 disabled={true}
                  defaultValue={patientId}
                  onChange={(e) => {
                     setPatientId(e.target.value);
@@ -106,6 +109,7 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
+                    disabled={true}
                     type="text"
                     defaultValue={title}
                     onChange={(e) => {
@@ -118,13 +122,15 @@ const AppointmentModal = (props) => {
                     Close
                 </Button>
                 
+                <Button className="m-2" variant="danger" onClick={handleDeleteAppointment}>
+                   Delete
+                </Button> 
+                
                 <Button className="m-2" variant="primary" onClick={()=>{toPatientProfile(eventPatient)}}>
                     Patient Profile
                 </Button>     
 
-                <Button className="m-2" variant="primary" onClick={handleDeleteAppointment}>
-                   Delete
-                </Button> 
+                
                
             </Form>
             </Modal.Body>

@@ -42,6 +42,7 @@
     
         const hideAppointmentModal = () => {
             setShowAppointmentModal(false);
+            setCurrentEvent(null);
         }
             
         
