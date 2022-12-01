@@ -56,7 +56,7 @@
             if (queryData.error) {
                 alert(queryData.error.message);
             }else {
-                queryData.data.array.forEach(event => {
+                queryData.data.forEach(event => {
                     event.start = new Date(event.start);
                     event.end = new Date(event.end);
                 });
