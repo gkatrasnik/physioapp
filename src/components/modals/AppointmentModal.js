@@ -72,11 +72,9 @@ const AppointmentModal = (props) => {
                 <Form.Control
                     disabled={true}
                     required
-                    defaultValue={start}
-                    type="text"                    
-                    onChange={(e) => {
-                    setStart(new Date(e.target.value));
-                    }}
+                    value={new Date(start).toLocaleString("sl")}
+                    type="text"                 
+                    
                 />                
                 </Form.Group>
 
@@ -86,10 +84,8 @@ const AppointmentModal = (props) => {
                     disabled={true}
                     required
                     type="text"
-                    defaultValue={end}                    
-                    onChange={(e) => {
-                    setEnd(new Date(e.target.value));
-                    }}
+                    value={new Date(end).toLocaleString("sl")}                    
+                    
                 />                       
                 </Form.Group>
 
@@ -97,10 +93,7 @@ const AppointmentModal = (props) => {
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
                  disabled={true}
-                 defaultValue={patientId}
-                 onChange={(e) => {
-                    setPatientId(e.target.value);
-                 }}
+                 defaultValue={patientId}                
                  >
                 {props.patientsData.map((patient) => {
                     return <option key={patient.id} value={patient.id}>{patient.name}</option>
@@ -114,9 +107,6 @@ const AppointmentModal = (props) => {
                     disabled={true}
                     type="text"
                     defaultValue={title}
-                    onChange={(e) => {
-                    setTitle(e.target.value);
-                    }}
                 />                
                 </Form.Group>
                 
