@@ -92,7 +92,7 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
-                 defaultValue={patient_id}
+                 defaultValue={patientId}
                  onChange={(e) => {
                     setPatientId(e.target.value);
                  }}
