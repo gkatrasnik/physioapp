@@ -6,36 +6,27 @@ import { useAuth } from '../../auth';
 
 const AppointmentModal = (props) => {
     
-    const [start, setStart] = useState(null);
-    const [end, setEnd] = useState(null);
-    const [patientId, setPatientId] = useState(null);
-    const [title, setTitle] = useState("");
+    const [start, setStart] = useState(props.currentEvent.start);
+    const [end, setEnd] = useState(props.currentEvent.end);
+    const [patientId, setPatientId] = useState(props.currentEvent.patient_id);
+    const [title, setTitle] = useState(props.currentEvent.title);
+    const [eventPatient, setEventPatient] = useState(null);
 
     const auth = useAuth();
 
-    const handleNewAppointment = (e) => {
+    const handleDeleteAppointment = (e) => {
         e.preventDefault();
-        addAppointment();
-        props.toggleModal();         
-        
-        setStart(null);
-        setEnd(null);
-        setPatientId(null);
-        setTitle("");
+        deleteAppointment();
+        props.hideAppointmentModal();
+        setEditing(false);     
     }
 
 
-    const addAppointment = async () => {        
+    const DeleteAppointment = async () => {        
         const queryData = await supabase
             .from('appointments')
-            .insert({
-                start: start,
-                end: end,
-                patient_id: patientId,
-                title: title,
-                user_id: auth.user.id,
-                org_id: auth.user.user_metadata.org_id
-            })
+            .delete()
+            .eq('id', props.currentEvent.id)
 
         if (queryData.error) {
             alert(queryData.error.message);
@@ -44,19 +35,24 @@ const AppointmentModal = (props) => {
         }
     }
 
+    const toPatientProfile=(patient)=>{
+        navigate('/patient',{state:{patientData:patient}});
+    }
+   
+    const findEventPatient = () => {
+        const eventPatient = props.patientsData.find(patient => patient.id === props.currentEvent.patient_id);
+        setEventPatient(eventPatient);
+    }
+
    
     useEffect(() => {
-        setStart(null);
-        setEnd(null);
-        setPatientId(null);
-        setTitle("");
-        console.log("props",props)
-    }, []);
+        findEventPatient();        
+    }, [props]);
 
     return (        
-        <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={props.hideAppointmentModal}>
             <Modal.Header className="py-2" closeButton>
-            <Modal.Title className='text-center'>Add New Appointment</Modal.Title>
+            <Modal.Title className='text-center'>Appointment</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
             <Form disabled={true} onSubmit={handleNewAppointment} >
@@ -64,7 +60,7 @@ const AppointmentModal = (props) => {
                 <Form.Label>From</Form.Label>
                 <Form.Control
                     required
-                    defaultValue={start}
+                    defaultValue={props.currentEvent.start}
                     type="datetime-local"                    
                     onChange={(e) => {
                     setStart(new Date(e.target.value));
@@ -77,7 +73,7 @@ const AppointmentModal = (props) => {
                 <Form.Control
                     required
                     type="datetime-local"
-                    defaultValue={end}                    
+                    defaultValue={props.currentEvent.end}                    
                     onChange={(e) => {
                     setEnd(new Date(e.target.value));
                     }}
@@ -87,7 +83,7 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
-                 defaultValue={null}
+                 defaultValue={props.currentEvent.patient_id}
                  onChange={(e) => {
                     setPatientId(e.target.value);
                  }}
@@ -102,20 +98,24 @@ const AppointmentModal = (props) => {
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                     type="text"
-                    defaultValue={title}
+                    defaultValue={props.currentEvent.title}
                     onChange={(e) => {
                     setTitle(e.target.value);
                     }}
                 />                
                 </Form.Group>
                 
-                <Button className="m-2 " variant="secondary" onClick={props.toggleModal}>
+                <Button className="m-2 " variant="secondary" onClick={props.hideAppointmentModal}>
                     Close
                 </Button>
                 
-                <Button className="m-2" variant="primary" type="submit">
-                    Add Appointment
+                <Button className="m-2" variant="primary" onClick={()=>{toPatientProfile(eventPatient)}}>
+                    Patient Profile
                 </Button>     
+
+                <Button className="m-2" variant="primary" onClick={handleDeleteAppointment}>
+                   Delete
+                </Button> 
                
             </Form>
             </Modal.Body>
