@@ -8,10 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 const AppointmentModal = (props) => {
     
-    const [start, setStart] = useState(props.currentEvent.start);
-    const [end, setEnd] = useState(props.currentEvent.end);
-    const [patientId, setPatientId] = useState(props.currentEvent.patient_id);
-    const [title, setTitle] = useState(props.currentEvent.title);
+    const [start, setStart] = useState(null);
+    const [end, setEnd] = useState(null);
+    const [patientId, setPatientId] = useState(null);
+    const [title, setTitle] = useState("");
     const [eventPatient, setEventPatient] = useState(null);
 
     const auth = useAuth();
@@ -48,8 +48,15 @@ const AppointmentModal = (props) => {
 
    
     useEffect(() => {
-        findEventPatient();        
-    }, [props]);
+        findEventPatient(); 
+        if (props.currentEvent) {
+            setStart(props.currentEvent.start);
+            setEnd(props.currentEvent.end);
+            setPatientId(props.currentEvent.patient_id);
+            setTitle(props.currentEvent.title);
+        }  
+        
+    }, [props.currentEvent]);
 
     return (        
         <Modal centered backdrop="static" show={props.show} onHide={props.hideAppointmentModal}>
