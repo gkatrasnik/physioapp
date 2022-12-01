@@ -69,7 +69,7 @@ const AppointmentModal = (props) => {
                 <Form.Label>From</Form.Label>
                 <Form.Control
                     required
-                    defaultValue={props.currentEvent.start}
+                    defaultValue={start}
                     type="datetime-local"                    
                     onChange={(e) => {
                     setStart(new Date(e.target.value));
@@ -82,7 +82,7 @@ const AppointmentModal = (props) => {
                 <Form.Control
                     required
                     type="datetime-local"
-                    defaultValue={props.currentEvent.end}                    
+                    defaultValue={end}                    
                     onChange={(e) => {
                     setEnd(new Date(e.target.value));
                     }}
@@ -92,7 +92,7 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
-                 defaultValue={props.currentEvent.patient_id}
+                 defaultValue={patient_id}
                  onChange={(e) => {
                     setPatientId(e.target.value);
                  }}
@@ -107,7 +107,7 @@ const AppointmentModal = (props) => {
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                     type="text"
-                    defaultValue={props.currentEvent.title}
+                    defaultValue={title}
                     onChange={(e) => {
                     setTitle(e.target.value);
                     }}
