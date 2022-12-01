@@ -5,7 +5,6 @@
     import {useAuth} from "../auth";
     import { Container,Button } from 'react-bootstrap';
     import { supabase } from '../supabase';
-    import { useNavigate } from 'react-router-dom';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
     import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -20,7 +19,7 @@
         const [showAppointmentModal, setShowAppointmentModal] = useState(false);
         const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
         const [currentEvent, setCurrentEvent] = useState(null);
-        const navigate = useNavigate();
+        
     
         
         // implement adding new events/appointments --- handle error in getEvents()

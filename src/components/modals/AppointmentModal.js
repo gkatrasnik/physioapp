@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import { useNavigate } from 'react-router-dom';
+
 
 const AppointmentModal = (props) => {
     
@@ -13,16 +15,16 @@ const AppointmentModal = (props) => {
     const [eventPatient, setEventPatient] = useState(null);
 
     const auth = useAuth();
+    const navigate = useNavigate();
 
     const handleDeleteAppointment = (e) => {
         e.preventDefault();
         deleteAppointment();
-        props.hideAppointmentModal();
-        setEditing(false);     
+        props.hideAppointmentModal();             
     }
 
 
-    const DeleteAppointment = async () => {        
+    const deleteAppointment = async () => {        
         const queryData = await supabase
             .from('appointments')
             .delete()
@@ -55,7 +57,7 @@ const AppointmentModal = (props) => {
             <Modal.Title className='text-center'>Appointment</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={handleNewAppointment} >
+            <Form disabled={true} onSubmit={} >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>From</Form.Label>
                 <Form.Control
