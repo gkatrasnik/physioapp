@@ -55,8 +55,12 @@
                 .eq("org_id", auth.user.user_metadata.org_id)
             if (queryData.error) {
                 alert(queryData.error.message);
-            }else {            
-                setEventList(queryData.data)
+            }else {
+                queryData.data.array.forEach(event => {
+                    event.start = new Date(event.start);
+                    event.end = new Date(event.end);
+                });
+                setEventList(queryData.data);
             }     
         }
     
