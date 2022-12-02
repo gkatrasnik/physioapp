@@ -7,7 +7,7 @@
     import { supabase } from '../supabase';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
-    import "react-big-calendar/lib/css/react-big-calendar.css";
+    
     import NewAppointmentModal from './modals/NewAppointmentModal';
     import AppointmentModal from './modals/AppointmentModal';
     
