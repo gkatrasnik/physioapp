@@ -22,7 +22,6 @@
         
     
         
-        // implement adding new events/appointments --- handle error in getEvents()
          const handleSelectSlot = () => {
             toggleNewAppointmentModal();
         }
@@ -117,6 +116,7 @@
                         style={{ height: 500 }}
                         onSelectEvent={handleSelectEvent}
                         onSelectSlot={handleSelectSlot}
+                        longPressThreshold={20} 
                         selectable
                         />
                     </div>
