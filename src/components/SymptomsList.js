@@ -103,39 +103,41 @@ const SymptomsList = (props) => {
             <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
                     Add Symptom
             </Button>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                    <th>Id</th>
-                    <th>Symptom</th>
-                    <th>Date</th>
-                    <th>Duration</th>
-                    <th>Intensity</th>
-                    <th>Body Part</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    {symptomsData.length ? symptomsData.map((symptom, index) => {
-                    return (
-                        <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>
-                        <td>{symptom.id}</td>
-                        <td>{symptom.name}</td>
-                        <td>{new Date(symptom.created_at).toLocaleDateString("sl")}</td>
-                        <td>{symptom.duration}</td>
-                        <td>{symptom.intensity}</td>
-                        <td>{getBodypartName(symptom.bodypart_id)}</td>    
-                        </tr>
-                        )
-                    }):                     
+            <div className='table-container mb-5'>  
+                <Table striped hover>
+                    <thead>
                         <tr>
-                            <td colSpan={6}>
-                                No Symptoms
-                            </td>                               
+                        <th>Id</th>
+                        <th>Symptom</th>
+                        <th>Date</th>
+                        <th>Duration</th>
+                        <th>Intensity</th>
+                        <th>Body Part</th>
                         </tr>
-                }   
-                </tbody>
-            </Table>             
+                    </thead>
+                    <tbody>
+                        
+                        {symptomsData.length ? symptomsData.map((symptom, index) => {
+                        return (
+                            <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>
+                            <td>{symptom.id}</td>
+                            <td>{symptom.name}</td>
+                            <td>{new Date(symptom.created_at).toLocaleDateString("sl")}</td>
+                            <td>{symptom.duration}</td>
+                            <td>{symptom.intensity}</td>
+                            <td>{getBodypartName(symptom.bodypart_id)}</td>    
+                            </tr>
+                            )
+                        }):                     
+                            <tr>
+                                <td colSpan={6}>
+                                    No Symptoms
+                                </td>                               
+                            </tr>
+                    }   
+                    </tbody>
+                </Table>
+            </div>             
         </>
  
     );

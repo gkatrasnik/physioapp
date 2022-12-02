@@ -9,7 +9,7 @@ const NewSymptomModal = (props) => {
     const [name, setName] = useState("");
     const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
-    const [bodypartId, setBodypartId] = useState(0);    
+    const [bodypartId, setBodypartId] = useState(1);    
     const [bodypartsList, setBodypartsList] = useState([]);
 
     const auth = useAuth();
@@ -63,7 +63,7 @@ const NewSymptomModal = (props) => {
         setName("");
         setIntensity(0);
         setDuration("");
-        setBodypartId(0);
+        setBodypartId(1);
         getBodypartsData();
     }, []);
 

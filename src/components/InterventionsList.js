@@ -80,7 +80,8 @@ const InterventionsList = (props) => {
             <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
                     Add Intervention
             </Button>
-            <Table striped bordered hover>
+            <div className='table-container mb-5'>  
+            <Table striped hover>
                 <thead>
                     <tr>
                     <th>Id</th>
@@ -111,7 +112,7 @@ const InterventionsList = (props) => {
                     }   
                 </tbody>
             </Table> 
-            
+            </div>
         </>
  
     );

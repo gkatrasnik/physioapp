@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.table-container {
+  height:500px;
+  overflow-y: auto;
+}
+
+.table-container thead th {
+   position: sticky;
+    top: 0;
+    z-index: 1; 
+    background-color: darkgray;
+  }
+
+.table-container td {
+}
+
+
+
+

@@ -106,34 +106,35 @@ const PatientSearchView = () => {
                     </Row>            
                 </Form>   
 
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                        <th>Patient Id</th>
-                        <th>Name</th>
-                        <th>Birth Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                       {patientsData && patientsData.length ? patientsData.map((patient, index) => {
-                        return (
-                            <tr key={index} onClick={()=>{toPatientProfile(patient)}}>
-                            <td>{patient.id}</td>
-                            <td>{patient.name}</td>
-                            <td>{patient.birthdate}</td>
-                            </tr>
-                            )
-                        }):                     
+                <div className='table-container mb-5'>                
+                    <Table striped hover>
+                        <thead>
                             <tr>
-                                <td colSpan={3}>
-                                     No results
-                                </td>                               
+                            <th>Patient Id</th>
+                            <th>Name</th>
+                            <th>Birth Date</th>
                             </tr>
-                    }   
-                    </tbody>
-                </Table>         
-            
+                        </thead>
+                        <tbody>
+                            
+                        {patientsData && patientsData.length ? patientsData.map((patient, index) => {
+                            return (
+                                <tr key={index} onClick={()=>{toPatientProfile(patient)}}>
+                                <td>{patient.id}</td>
+                                <td>{patient.name}</td>
+                                <td>{patient.birthdate}</td>
+                                </tr>
+                                )
+                            }):                     
+                                <tr>
+                                    <td colSpan={3}>
+                                        No results
+                                    </td>                               
+                                </tr>
+                        }   
+                        </tbody>
+                    </Table>         
+                </div>
             </Container>
         </Layout>
     );

@@ -322,38 +322,39 @@ const PatientProfileView = () => {
                     New Issue
                 </Button>
 
-                <Table  bordered >
-                    <thead>
-                        <tr>
-                        <th>Id</th>
-                        <th>Issue</th>
-                        <th>Date</th>
-                        <th>Diagnosis</th>
-                        <th>Resolved</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        
-                       {issuesData && issuesData.length ? issuesData.map((issue, index) => {
-                        return (
-                            <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.resolved ?'text-white bg-success' : ''}>
-                            <td>{issue.id}</td>
-                            <td>{issue.name}</td>
-                            <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
-                            <td>{issue.diagnosis}</td>
-                            <td className='text-center'>{issue.resolved ? <CheckSquare/> : ""}</td>
-                            </tr>
-                            )
-                        }):                     
+                <div className='table-container mb-5'>                
+                    <Table>
+                        <thead>
                             <tr>
-                                <td colSpan={5}>
-                                     No results
-                                </td>                               
+                            <th>Id</th>
+                            <th>Issue</th>
+                            <th>Date</th>
+                            <th>Diagnosis</th>
+                            <th className='text-center'>Resolved</th>
                             </tr>
-                    }   
-                    </tbody>
-                </Table>     
-                
+                        </thead>
+                        <tbody>
+                            
+                        {issuesData && issuesData.length ? issuesData.map((issue, index) => {
+                            return (
+                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.resolved ?'text-white bg-success' : 'bg-warning'}>
+                                <td>{issue.id}</td>
+                                <td>{issue.name}</td>
+                                <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
+                                <td>{issue.diagnosis}</td>
+                                <td className='text-center'>{issue.resolved ? <CheckSquare/> : ""}</td>
+                                </tr>
+                                )
+                            }):                     
+                                <tr>
+                                    <td colSpan={5}>
+                                        No results
+                                    </td>                               
+                                </tr>
+                        }   
+                        </tbody>
+                    </Table>     
+                </div>
             </Container>
         </Layout>
     );
