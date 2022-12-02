@@ -116,7 +116,7 @@
                         style={{ height: 500 }}
                         onSelectEvent={handleSelectEvent}
                         onSelectSlot={handleSelectSlot}
-                        longPressThreshold={20} 
+                        longPressThreshold={250} 
                         selectable
                         />
                     </div>
