@@ -15,45 +15,35 @@ const PatientSearchView = () => {
    const [searchQuery, setSearchQuery] = useState("");
    const [showNewPatientModal, setShowNewPatientModal] = useState(false);
    const [patientsData, setPatientsData] = useState([]);  
+   const [filteredPatients, setFilteredPatients] = useState([]);  
    const navigate = useNavigate();
 
-   const handleSearch = (e) => {
-    if(e) {
-        e.preventDefault();
-    }
-
-    if (searchQuery === "") {
-        getPatients(searchQuery, false);
-    } else {
-        getPatients(searchQuery, true);
-    }
-    
-   }
-
-   const toggleModal = () => {
-    showNewPatientModal ? setShowNewPatientModal(false) : setShowNewPatientModal(true);
-   }
-
-   const getPatients = async (searchString, getAll) => {    
-        let queryData;   
-
-        if (getAll){
-            queryData = await supabase
-            .from('patients')
-            .select("id, name, birthdate")
-            .textSearch('name', searchString, {type:'websearch'})
-            .eq("org_id", auth.user.user_metadata.org_id)
-        } else {
-            queryData = await supabase
-            .from('patients')
-            .select("id, name, birthdate")
-            .eq("org_id", auth.user.user_metadata.org_id)
-        }        
-
-        if (queryData.error) {
-            console.log(queryData.error.message);
+    const handleSearch = (query) => {   
+        if (patientsData.length) {
+            console.log("patietns are there")
+            if (query.length === 0) { //show all patients
+                setFilteredPatients(patientsData);
+            } else if (query.length > 2) {//auto filter patients when typing in search      
+            const newArr = patientsData.filter(patient => patient.name.toLowerCase().includes(query.toLowerCase()));
+            setFilteredPatients(newArr);
+            }
         }
+    }
+
+    const toggleModal = () => {
+        showNewPatientModal ? setShowNewPatientModal(false) : setShowNewPatientModal(true);
+    }
+
+    const getPatients = async () => {           
+        const queryData = await supabase
+            .from('patients')
+            .select()            
+            .eq("org_id", auth.user.user_metadata.org_id)
         
+         if (queryData.error) {
+            alert(queryData.error.message);
+        }
+        queryData.data.forEach(patient => patient.birthdate = new Date(patient.birthdate))
         setPatientsData(queryData.data);               
     }
 
@@ -63,10 +53,19 @@ const PatientSearchView = () => {
     }
 
     
-    //on component mount search all patients
+    //on component get all patients data
     useEffect(() => {
-      handleSearch();     
+      getPatients();    
     }, []) 
+
+    useEffect(() => { //on patients data change, show all patients
+      handleSearch("");  
+    }, [patientsData]) 
+
+    useEffect(() => { //on search query change, handle search
+        handleSearch(searchQuery);
+    }, [searchQuery])
+    
    
 
 
@@ -94,10 +93,7 @@ const PatientSearchView = () => {
                             </Form.Group>
                         </Col>
                         <Col>
-                            <ButtonGroup aria-label="Basic example">
-                                <Button variant="primary" type="submit" >
-                                    Search
-                                </Button>
+                            <ButtonGroup aria-label="Basic example">                                
                                 <Button variant="primary" onClick={toggleModal}>
                                     New Patient
                                 </Button>
@@ -117,12 +113,12 @@ const PatientSearchView = () => {
                         </thead>
                         <tbody>
                             
-                        {patientsData && patientsData.length ? patientsData.map((patient, index) => {
+                        {filteredPatients && filteredPatients.length ? filteredPatients.map((patient, index) => {
                             return (
                                 <tr key={index} onClick={()=>{toPatientProfile(patient)}}>
                                 <td>{patient.id}</td>
                                 <td>{patient.name}</td>
-                                <td>{patient.birthdate}</td>
+                                <td>{patient.birthdate.toLocaleDateString("sl")}</td>
                                 </tr>
                                 )
                             }):                     

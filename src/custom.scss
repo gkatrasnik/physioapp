@@ -6,7 +6,7 @@ $font-family-base: Quicksand;
 $headings-font-family: Quicksand;
 
 $enable-grid-classes: false;
-$primary: #0051ff;
+$primary: #0e4dd6;
 $secondary: #c9d6df;
 $success: #58ac5c;
 $danger: #cc5050;
@@ -35,12 +35,19 @@ $btn-box-shadow: inset 2px 2px 2px rgba($white, 0.3),
 $btn-border-width: 0;
 $btn-border-radius: 0;
 $btn-primary-color:#fafafa;
+$btn-border-radius-lg:0;
 
-$card-border-radius: 0;
-
-
+$card-border-radius:0;
+$modal-content-border-radius: 0;
 
 @import "../node_modules/bootstrap/scss/bootstrap";
+
+
+
+$event-bg :#0051ff;
+$event-border-radius: 0;
+@import 'react-big-calendar/lib/sass/styles';
+
 
 // Add SASS theme customizations here..
 

@@ -159,7 +159,7 @@ const SymptomModal = (props) => {
                  }}
                  >
                 {bodypartsList.map((part) => {
-                    return <option value={part.id}>{part.body_side} {part.name}</option>
+                    return <option key={part.id} value={part.id}>{part.body_side} {part.name}</option>
                 })}
                
                 </Form.Select>                                

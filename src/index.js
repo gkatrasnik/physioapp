@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./custom.scss";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
 import {AuthProvider} from "./auth";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/login/Login";
@@ -36,6 +36,8 @@ root.render(
                 <Route path={"signup"} element={<Signup/>}/>          
                 <Route path={"send-reset-password"} element={<SendResetPassword/>}/>    
                 <Route path={"update-password"} element={<UpdatePassword/>}/>    
+                <Route path="*" element={<Navigate to="/" replace />}
+    />
             </Routes>
         </BrowserRouter>
     </AuthProvider>,
