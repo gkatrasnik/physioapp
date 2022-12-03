@@ -58,6 +58,7 @@ const InterventionsList = (props) => {
     return (
         
         <>
+            <h2 className='text-center'>Interventions</h2>
             <InterventionModal 
                 show={showInterventionModal} 
                 hideModal={hideUpdateInterventionModal}                  
@@ -73,10 +74,7 @@ const InterventionsList = (props) => {
                 interventionData = {currentInterventionData}
                 getInterventionsData = {getInterventionsData}
             />
-
-
-            <h1 className='text-center'>Interventions</h1>
-
+          
             <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
                     Add Intervention
             </Button>

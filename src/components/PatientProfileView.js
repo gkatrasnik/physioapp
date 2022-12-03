@@ -9,18 +9,21 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
-import { Container, Button, Form, Table } from 'react-bootstrap';
+import { Container, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../auth';
-import NewIssueModal from './modals/NewIssueModal';
-import { CheckSquare } from 'react-bootstrap-icons';
+import AppointmentsList from './AppointmentsList';
+import IssueList from './IssueList';
 
 const PatientProfileView = () => {
     const auth = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
-    const [showNewIssue, setShowNewIssue] = useState(false);
+    
     const [infoExpanded, setInfoExpanded] = useState(false);
+
+    const [issuesData, setIssuesData] = useState([]);
+
 
     //patient profile editing state
     const [name, setName] = useState("");
@@ -32,8 +35,7 @@ const PatientProfileView = () => {
     const [birthDate, setBirdhDate] = useState();
     const [occupation, setOccupation] = useState("");
 
-    // issue data state
-    const [issuesData, setIssuesData] = useState([])
+    
 
     const getPatientData = async () => {
          const queryData = await supabase
@@ -73,53 +75,8 @@ const PatientProfileView = () => {
         navigate("/patients");
     }
 
-    const handleDeleteIssues = async () => {   
-        //delete all issues of this patient        
-        const resultArr = await Promise.allSettled(issuesData.map(async (issue) => {
-           deleteIssue(issue.id);          
-        }));
-
-    }
-
-     const deleteIssue = async (issueId) => {      
-
-        //delete isuses symptoms
-        const deletedSymptom = await supabase
-            .from('symptoms')
-            .delete()
-            .eq('issue_id', issueId)
-
-        if (deletedSymptom.error) {
-            alert(deletedSymptom.error.message);
-        }    
-
-        //delete isuses interventions
-        const deletedIntervention = await supabase
-            .from('interventions')
-            .delete()
-            .eq('issue_id', issueId)
-
-        if (deletedIntervention.error) {
-            alert(deletedIntervention.error.message);
-        }    
-
-        const queryData = await supabase
-            .from('issues')
-            .delete()
-            .eq('id', issueId)
-
-        if (queryData.error) {
-            alert(queryData.error.message);
-        } else {
-            return queryData;
-        }           
-    }
-
-
-
     
     const updatePatient = async () => {  
-
         const queryData = await supabase
             .from('patients')
             .update({
@@ -157,10 +114,49 @@ const PatientProfileView = () => {
         setInfoExpanded(!infoExpanded);
     }
 
-    // issues logic 
 
-    const toIssueView=(issue)=>{
-     navigate('/issue',{state:{issueData:issue}});
+
+    // Issues logic 
+
+    const handleDeleteIssues = async () => {   
+        //delete all issues of this patient        
+        const resultArr = await Promise.allSettled(issuesData.map(async (issue) => {
+           deleteIssue(issue.id);          
+        }));
+
+    }
+
+    const deleteIssue = async (issueId) => {    
+        //delete isuses symptoms
+        const deletedSymptom = await supabase
+            .from('symptoms')
+            .delete()
+            .eq('issue_id', issueId)
+
+        if (deletedSymptom.error) {
+            alert(deletedSymptom.error.message);
+        }    
+
+        //delete isuses interventions
+        const deletedIntervention = await supabase
+            .from('interventions')
+            .delete()
+            .eq('issue_id', issueId)
+
+        if (deletedIntervention.error) {
+            alert(deletedIntervention.error.message);
+        }    
+
+        const queryData = await supabase
+            .from('issues')
+            .delete()
+            .eq('id', issueId)
+
+        if (queryData.error) {
+            alert(queryData.error.message);
+        } else {
+            return queryData;
+        }           
     }
 
     const getIssuesData = async () => {
@@ -176,22 +172,17 @@ const PatientProfileView = () => {
         } 
     }
 
-    const toggleShowNewIssue = () => {
-        setShowNewIssue(!showNewIssue);
-    }
-
 
     // useEffects
     useEffect(() => {
-    getPatientData();    
-    getIssuesData();
+        getPatientData();    
+        getIssuesData();    
     }, []);
 
 
     return (
         <Layout>
             <Container>
-                <NewIssueModal patientData={location.state.patientData} showNewIssue={showNewIssue} getIssuesData={getIssuesData} toggleShowNewIssue={toggleShowNewIssue}/>
                 <h1 className="text-center">Patient Profile View</h1>
                 
                 <Form className="mt-4">
@@ -318,43 +309,16 @@ const PatientProfileView = () => {
                     </Button>}           
                 </Form>
 
-                <Button  className="m-2" variant="primary" type="submit" onClick={toggleShowNewIssue}>
-                    New Issue
-                </Button>
+                <IssueList 
+                    issuesData={issuesData}
+                    getIssuesData={getIssuesData}
+                    patientData={location.state.patientData}
+                />
 
-                <div className='table-container mb-5'>                
-                    <Table>
-                        <thead>
-                            <tr>
-                            <th>Id</th>
-                            <th>Issue</th>
-                            <th>Date</th>
-                            <th>Diagnosis</th>
-                            <th className='text-center'>Resolved</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                        {issuesData && issuesData.length ? issuesData.map((issue, index) => {
-                            return (
-                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.resolved ?'text-white bg-success' : 'bg-warning'}>
-                                <td>{issue.id}</td>
-                                <td>{issue.name}</td>
-                                <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
-                                <td>{issue.diagnosis}</td>
-                                <td className='text-center'>{issue.resolved ? <CheckSquare/> : ""}</td>
-                                </tr>
-                                )
-                            }):                     
-                                <tr>
-                                    <td colSpan={5}>
-                                        No results
-                                    </td>                               
-                                </tr>
-                        }   
-                        </tbody>
-                    </Table>     
-                </div>
+                <AppointmentsList
+                    patientData={location.state.patientData}
+                />
+
             </Container>
         </Layout>
     );

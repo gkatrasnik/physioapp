@@ -60,7 +60,7 @@ const SymptomsList = (props) => {
             return "No data"; 
         }
         const bodypartObj = bodypartsData.find(bodypart => bodypart.id === bodypartId);
-        return bodypartObj  ? bodypartObj.body_side + " "+ bodypartObj.name : "No data";
+        return bodypartObj  ? (bodypartObj.body_side || "") + " "+ bodypartObj.name : "No data";
     }
 
 
@@ -83,6 +83,7 @@ const SymptomsList = (props) => {
     return (
         
         <>
+        <h2 className='text-center'>Symptoms</h2>
             <SymptomModal 
                 show={showSymptomModal} 
                 hideModal={hideUpdateSymptomModal}   
@@ -97,8 +98,6 @@ const SymptomsList = (props) => {
                 issueData = {props.issueData}    
                 getSymptomsData = {getSymptomsData}
             />
-
-            <h1 className='text-center'>Symptoms</h1>
 
             <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
                     Add Symptom
