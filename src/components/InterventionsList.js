@@ -89,8 +89,8 @@ const InterventionsList = (props) => {
                     <th>Notes</th>
                     </tr>
                 </thead>
-                <tbody>
-                    
+
+                <tbody className='hand'>                    
                     {interventionsData.length ? interventionsData.map((intervention, index) => {
                         return (
                             <tr key={index} onClick={()=>{showUpdateInterventionModal(intervention)}}>

@@ -111,7 +111,7 @@ const PatientSearchView = () => {
                             <th>Birth Date</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className='hand'>
                             
                         {filteredPatients && filteredPatients.length ? filteredPatients.map((patient, index) => {
                             return (

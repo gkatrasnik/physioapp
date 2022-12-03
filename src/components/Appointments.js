@@ -47,7 +47,7 @@
         
     
     
-      const getEvents = async () => {
+        const getEvents = async () => {
              const queryData = await supabase
                 .from('appointments')
                 .select()

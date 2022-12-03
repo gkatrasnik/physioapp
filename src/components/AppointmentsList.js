@@ -54,10 +54,10 @@ const AppointmentsList = (props) => {
                     <thead>
                         <tr>
                         <th>Id</th>
-                        <th>Patient</th>                            
+                        <th>Title</th>                            
                         <th>Date</th>
                         <th>Duration</th>  
-                        <th>Title</th>                          
+                        <th>Patient</th>                    
                         </tr>
                     </thead>
                     <tbody>
@@ -66,10 +66,10 @@ const AppointmentsList = (props) => {
                         return (
                             <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'}>
                             <td>{event.id}</td>
-                            <td>{props.patientData.name}</td>                                
+                            <td>{event.title}</td>                             
                             <td>{new Date(event.start).toLocaleDateString("sl")}</td>
                             <td>{getDuration(event.start, event.end) + ' min'}</td>
-                            <td>{event.title}</td>
+                            <td>{props.patientData.name}</td>
                             </tr>
                             )
                         }):                     

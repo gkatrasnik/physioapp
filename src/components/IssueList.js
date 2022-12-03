@@ -40,8 +40,8 @@ const IssueList = (props) => {
                             <th className='text-center'>Resolved</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            
+                        
+                        <tbody className='hand'>                                                        
                         {props.issuesData && props.issuesData.length ? props.issuesData.map((issue, index) => {
                             return (
                                 <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.resolved ?'text-white bg-success' : 'bg-warning'}>
