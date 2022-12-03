@@ -9,11 +9,14 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import moment from 'moment';
 
 const NewIssueModal = (props) => {
    // const auth = useAuth();
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
+    const [start, setStart] = useState(null);
+    const [end, setEnd] = useState(null);
     const [resolved, setResolved] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
 
@@ -32,11 +35,12 @@ const NewIssueModal = (props) => {
             .from('issues')
             .insert({
                 name: title,
-                notes: notes,
-                resolved: resolved,
+                notes: notes,                
                 diagnosis: diagnosis,
                 patient_id: props.patientData.id,
                 user_id: auth.user.id,
+                start: start,
+                end: resolved ? moment().toDate() : null,
                 org_id: auth.user.user_metadata.org_id
 
                 //last_changed - add this
@@ -76,6 +80,18 @@ const NewIssueModal = (props) => {
                     type="text"
                     onChange={(e) => {
                     setNotes(e.target.value);
+                    }}
+                />                
+                </Form.Group>
+
+                <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
+                <Form.Label>From</Form.Label>
+                <Form.Control
+                    required
+                    defaultValue={start}
+                    type="datetime-local"                    
+                    onChange={(e) => {
+                    setStart(moment(e.target.value).toDate());
                     }}
                 />                
                 </Form.Group>

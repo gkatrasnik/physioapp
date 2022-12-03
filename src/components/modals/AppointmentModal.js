@@ -4,7 +4,7 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import { useNavigate } from 'react-router-dom';
-
+import moment from 'moment'
 
 const AppointmentModal = (props) => {
     
@@ -39,10 +39,14 @@ const AppointmentModal = (props) => {
 
     const toPatientProfile=(patient)=>{
         navigate('/patient',{state:{patientData:patient}});
+        console.log("patient" , patient)
     }
    
     const findEventPatient = () => {
         const eventPatient = props.patientsData.find(patient => patient.id === props.currentEvent.patient_id);
+        console.log("eventPatient", eventPatient)
+        console.log("props.patientsData", props.patientsData)
+        console.log("props.currentEvent", props.currentEvent)
         setEventPatient(eventPatient);
     }
 
@@ -72,7 +76,7 @@ const AppointmentModal = (props) => {
                 <Form.Control
                     disabled={true}
                     required
-                    value={new Date(start).toLocaleString("sl")}
+                    value={moment(start).toDate().toLocaleString("sl")}
                     type="text"                 
                     
                 />                
@@ -84,7 +88,7 @@ const AppointmentModal = (props) => {
                     disabled={true}
                     required
                     type="text"
-                    value={new Date(end).toLocaleString("sl")}                    
+                    value={moment(end).toDate().toLocaleString("sl")}                    
                     
                 />                       
                 </Form.Group>

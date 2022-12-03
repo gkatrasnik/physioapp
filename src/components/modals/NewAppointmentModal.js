@@ -3,20 +3,25 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import moment from 'moment';
+import { dateTimeLocal } from '../../helpers';
 
 const NewAppointmentModal = (props) => {
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
-    const [patientId, setPatientId] = useState(null);
+    const [patientId, setPatientId] = useState(1);
     const [title, setTitle] = useState("");
 
     const auth = useAuth();
 
     const handleNewAppointment = (e) => {
         e.preventDefault();
+        if (!(end > start)) {
+            return alert("Please set appointment duration")
+        }
+       
         addAppointment();
-        props.toggleModal();         
-        
+        props.toggleModal(); 
         setStart(null);
         setEnd(null);
         setPatientId(null);
@@ -45,12 +50,12 @@ const NewAppointmentModal = (props) => {
 
    
     useEffect(() => {
-        setStart(null);
-        setEnd(null);
-        setPatientId(null);
-        setTitle("");
-        console.log("props",props)
-    }, []);
+        if (props.selectedSlot) {
+            setStart(props.selectedSlot.start);
+        }
+        
+    }, [props.selectedSlot]);
+    
 
     return (        
         <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
@@ -63,22 +68,22 @@ const NewAppointmentModal = (props) => {
                 <Form.Label>From</Form.Label>
                 <Form.Control
                     required
-                    defaultValue={start}
+                    defaultValue={dateTimeLocal(start)}
                     type="datetime-local"                    
                     onChange={(e) => {
-                    setStart(new Date(e.target.value));
+                    setStart(moment(e.target.value).toDate());
                     }}
                 />                
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                <Form.Label>To</Form.Label>
+                <Form.Label>Duration (h:m)</Form.Label>
                 <Form.Control
                     required
-                    type="datetime-local"
-                    defaultValue={end}                    
+                    type="time"
+                    defaultValue={"00:00"}                    
                     onChange={(e) => {
-                    setEnd(new Date(e.target.value));
+                    setEnd(moment(start).add(e.target.valueAsNumber, 'ms').toDate());                    
                     }}
                 />                       
                 </Form.Group>
@@ -86,7 +91,7 @@ const NewAppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
-                 defaultValue={null}
+                 defaultValue={patientId}
                  onChange={(e) => {
                     setPatientId(e.target.value);
                  }}

@@ -5,7 +5,7 @@ import Layout from "./Layout";
 import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
 import SymptomModal from './modals/SymptomModal';
 import NewSymptomModal from './modals/NewSymptomModal';
-
+import moment from 'moment'
 
 const SymptomsList = (props) => {
     const [showSymptomModal, setShowSymptomModal] = useState(false);
@@ -121,7 +121,7 @@ const SymptomsList = (props) => {
                             <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>
                             <td>{symptom.id}</td>
                             <td>{symptom.name}</td>
-                            <td>{new Date(symptom.created_at).toLocaleDateString("sl")}</td>
+                            <td>{moment(symptom.created_at).toDate().toLocaleDateString("sl")}</td>
                             <td>{symptom.duration}</td>
                             <td>{symptom.intensity}</td>
                             <td>{getBodypartName(symptom.bodypart_id)}</td>    

@@ -5,6 +5,7 @@ import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-boots
 import InterventionModal from './modals/InterventionModal';
 import NewInterventionModal from './modals/NewInterventionModal';
 import { useAuth } from '../auth';
+import moment from 'moment';
 
 
 const InterventionsList = (props) => {
@@ -96,7 +97,7 @@ const InterventionsList = (props) => {
                             <tr key={index} onClick={()=>{showUpdateInterventionModal(intervention)}}>
                             <td>{intervention.id}</td>
                             <td>{intervention.treatment}</td>
-                            <td>{new Date(intervention.created_at).toLocaleDateString("sl")}</td>
+                            <td>{moment(intervention.created_at).toDate().toLocaleDateString("sl")}</td>
                             <td>{intervention.duration}</td>
                             <td>{intervention.notes ? intervention.notes : "Empty"}</td>
                             </tr>

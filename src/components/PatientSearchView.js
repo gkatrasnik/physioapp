@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth';
 import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
 import NewPatientModal from './modals/NewPatientModal';
-
+import moment from 'moment'
 
 const PatientSearchView = () => {
    const auth = useAuth();
@@ -43,7 +43,7 @@ const PatientSearchView = () => {
          if (queryData.error) {
             alert(queryData.error.message);
         }
-        queryData.data.forEach(patient => patient.birthdate = new Date(patient.birthdate))
+        queryData.data.forEach(patient => patient.birthdate = moment(patient.birthdate).toDate())
         setPatientsData(queryData.data);               
     }
 

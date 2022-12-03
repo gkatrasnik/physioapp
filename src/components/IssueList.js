@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {  Button, Table} from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import NewIssueModal from './modals/NewIssueModal';
 import { CheckSquare } from 'react-bootstrap-icons';
-
+import moment from 'moment'
 
 const IssueList = (props) => {
     const navigate = useNavigate();
@@ -18,6 +18,11 @@ const IssueList = (props) => {
     const toggleShowNewIssue = () => {
         setShowNewIssue(!showNewIssue);
     }
+
+    useEffect(() => {
+      console.log(props.issuesData)
+    }, [props])
+    
 
     return (
         <>
@@ -35,7 +40,8 @@ const IssueList = (props) => {
                             <tr>
                             <th>Id</th>
                             <th>Issue</th>
-                            <th>Date</th>
+                            <th>From</th>
+                            <th>To</th>
                             <th>Diagnosis</th>
                             <th className='text-center'>Resolved</th>
                             </tr>
@@ -44,12 +50,13 @@ const IssueList = (props) => {
                         <tbody className='hand'>                                                        
                         {props.issuesData && props.issuesData.length ? props.issuesData.map((issue, index) => {
                             return (
-                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.resolved ?'text-white bg-success' : 'bg-warning'}>
+                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.end ?'text-white bg-success' : 'bg-warning'}>
                                 <td>{issue.id}</td>
                                 <td>{issue.name}</td>
-                                <td>{new Date(issue.created_at).toLocaleDateString("sl")}</td>
+                                <td>{issue.start ? moment(issue.start).toDate().toLocaleDateString("sl") : ""}</td>
+                                <td>{issue.end ? moment(issue.end).toDate().toLocaleDateString("sl") : ""}</td>
                                 <td>{issue.diagnosis}</td>
-                                <td className='text-center'>{issue.resolved ? <CheckSquare/> : ""}</td>
+                                <td className='text-center'>{issue.end ? <CheckSquare/> : ""}</td>
                                 </tr>
                                 )
                             }):                     

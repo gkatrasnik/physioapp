@@ -164,7 +164,7 @@ const PatientProfileView = () => {
             .from('issues')
             .select()
             .eq('patient_id',location.state.patientData.id)
-            .order('created_at', { ascending: false })
+            .order('start', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);
         }else {

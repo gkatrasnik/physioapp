@@ -19,11 +19,11 @@
         const [showAppointmentModal, setShowAppointmentModal] = useState(false);
         const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
         const [currentEvent, setCurrentEvent] = useState(null);
-        
+        const [selectedSlot, setSelectedSlot] = useState(null);
     
         
-         const handleSelectSlot = () => {
-            toggleNewAppointmentModal();
+         const handleSelectSlot = (slot) => {
+            setSelectedSlot(slot)            
         }
          
         const toggleNewAppointmentModal = () => {
@@ -34,10 +34,8 @@
         const handleSelectEvent = (event) => {
             //open appointment modal (event)
             setCurrentEvent(event);
-            console.log("current event set", event)
         } 
-    
-        
+            
     
         const hideAppointmentModal = () => {
             setShowAppointmentModal(false);
@@ -56,8 +54,8 @@
                 alert(queryData.error.message);
             }else {
                 queryData.data.forEach(event => {
-                    event.start = new Date(event.start);
-                    event.end = new Date(event.end);
+                    event.start = moment(event.start).toDate();
+                    event.end = moment(event.end).toDate();
                 });
                 setEventList(queryData.data);
             }     
@@ -87,12 +85,20 @@
                 setShowAppointmentModal(true);
             }            
         }, [currentEvent])
+
+        useEffect(() => {
+          if (selectedSlot) {
+            toggleNewAppointmentModal();
+          }
+        }, [selectedSlot])
+        
     
         return (
             <Layout>
                 <Container>
                     <h1 className='text-center'>Appointments</h1>   
                      <NewAppointmentModal 
+                        selectedSlot={selectedSlot}
                         patientsData={patientsData}
                         show={showNewAppointmentModal} 
                         toggleModal={toggleNewAppointmentModal} 

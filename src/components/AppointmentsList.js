@@ -21,15 +21,15 @@ const AppointmentsList = (props) => {
             alert(queryData.error.message);
         } else {
             queryData.data.forEach(event => {
-                event.start = new Date(event.start);
-                event.end = new Date(event.end);
+                event.start = moment(event.start).toDate();
+                event.end = moment(event.end).toDate();
             });
             setEventsList(queryData.data);
         }     
     }
 
     const isEventPast = (eventEnd) => {
-        const now = new Date();
+        const now = moment().toDate();
         return eventEnd < now;
     }
 
@@ -67,7 +67,7 @@ const AppointmentsList = (props) => {
                             <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'}>
                             <td>{event.id}</td>
                             <td>{event.title}</td>                             
-                            <td>{new Date(event.start).toLocaleDateString("sl")}</td>
+                            <td>{moment(event.start).toDate().toLocaleDateString("sl")}</td>
                             <td>{getDuration(event.start, event.end) + ' min'}</td>
                             <td>{props.patientData.name}</td>
                             </tr>

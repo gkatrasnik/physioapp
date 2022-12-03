@@ -8,6 +8,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, Form, Table } from 'react-bootstrap';
 import SymptomsList from './SymptomsList';
 import InterventionsList from './InterventionsList';
+import { dateTimeLocal } from '../helpers';
+import moment from "moment";
 
 
 const IssueView = () => {
@@ -22,7 +24,8 @@ const IssueView = () => {
     const [notes, setNotes] = useState("");
     const [resolved, setResolved] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
-    const [createdAt, setCreatedAt] = useState(null);
+    const [start, setStart] = useState(null);
+    const [end, setEnd] = useState(null);
     const [lastChanged, setLastChanged] = useState("");
     const [userId, setUserId] = useState("");
     const [patientId, setPatientId] = useState("");
@@ -45,7 +48,8 @@ const IssueView = () => {
             setNotes(queryData.data && queryData.data[0].notes)
             setResolved(queryData.data && queryData.data[0].resolved)
             setDiagnosis(queryData.data && queryData.data[0].diagnosis)
-            setCreatedAt(queryData.data && queryData.data[0].created_at)
+            setStart(queryData.data && queryData.data[0].start ? moment(queryData.data[0].start).toDate() : null)
+            setEnd(queryData.data && queryData.data[0].end ? moment(queryData.data[0].end).toDate() : null)
             setLastChanged(queryData.data && queryData.data[0].last_changed)
             setUserId(queryData.data && queryData.data[0].user_id)
             setPatientId(queryData.data && queryData.data[0].patient_id)
@@ -93,10 +97,11 @@ const IssueView = () => {
             .from('issues')
             .update({
                 name: title,
-                notes: notes,
-                resolved: resolved,
+                notes: notes,                
                 diagnosis: diagnosis,
                 last_changed: lastChanged,
+                start: start,
+                end: end,
                 org_id: auth.user.user_metadata.org_id          
             })
             .eq('id', location.state.issueData.id)
@@ -104,6 +109,7 @@ const IssueView = () => {
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
+            getIssueData();
         }        
     }
 
@@ -130,13 +136,16 @@ const IssueView = () => {
         }     
     }
 
+    const setEndNull = () => {
+        setEnd(null);
+    }    
 
     // useEffects
     useEffect(() => {
         getIssueData();    
         getPatientData();
     }, []);
-
+    
 
     return (
         <Layout>
@@ -185,11 +194,26 @@ const IssueView = () => {
                     </Form.Group>
 
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
-                    <Form.Label>Created At</Form.Label>
+                    <Form.Label>From</Form.Label>
                     <Form.Control
-                        value = {new Date(createdAt).toLocaleDateString("sl")}
-                        disabled = {true}
-                        type="text"
+                        defaultValue = {dateTimeLocal(start)}
+                        disabled = {!editing}
+                        type="datetime-local"
+                        onChange={(e) => {
+                        setStart(moment(e.target.value).toDate());
+                        }}
+                    />               
+                    </Form.Group>  
+
+                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
+                    <Form.Label>To</Form.Label>
+                    <Form.Control
+                        defaultValue = {dateTimeLocal(end)}
+                        disabled = {!editing}
+                        type="datetime-local"
+                        onChange={(e) => {
+                        setEnd(moment(e.target.value).toDate());
+                        }}
                     />               
                     </Form.Group>  
 
@@ -204,14 +228,10 @@ const IssueView = () => {
 
                     <Form.Group className="m-2" controlId="exampleForm.ControlInput3">
                     <Form.Check
-                        label="Resolved"
-                     
-                        checked = {resolved && resolved}
-                        disabled = {!editing}
-                        type="checkbox"
-                        onChange={(e) => {
-                        setResolved(e.target.checked);
-                        }}
+                        label="Resolved"                     
+                        checked = {end && end}
+                        disabled = {true}
+                        type="checkbox"                       
                     />                
                     </Form.Group>
 
@@ -225,6 +245,10 @@ const IssueView = () => {
                     {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdateIssue}>
                         Update Issue
                     </Button> }   
+
+                    {editing && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
+                        Set Not resolved
+                    </Button>}  
                              
                 </Form>
 
