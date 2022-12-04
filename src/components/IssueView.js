@@ -40,6 +40,7 @@ const IssueView = () => {
             .from('issues')
             .select()
             .eq('id',location.state.issueData.id)
+            .eq("rec_deleted", false)
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
@@ -63,26 +64,32 @@ const IssueView = () => {
         //delete isuuses symptoms
         const deletedSymptom = await supabase
             .from('symptoms')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('issue_id', issueId)
 
         if (deletedSymptom.error) {
-            alert(deletedSymptom.error.message);
+            console.warn("There were no symptoms to delete for issue id ", issueId);
         }    
 
         //delete isuuses interventions
         const deletedIntervention = await supabase
             .from('interventions')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('issue_id', issueId)
 
         if (deletedIntervention.error) {
-            alert(deletedIntervention.error.message);
+            console.warn("There were no interventions to delete for issue id ", issueId);
         }    
 
         const queryData = await supabase
             .from('issues')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('id', issueId)
 
         if (queryData.error) {
@@ -132,6 +139,7 @@ const IssueView = () => {
             .from('patients')
             .select() 
             .eq('id', location.state.issueData.patient_id)           
+            .eq("rec_deleted", false)
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
@@ -148,14 +156,7 @@ const IssueView = () => {
         getIssueData();    
         getPatientData();
     }, []);
-    
-
-    useEffect(() => {
-      console.log("start", start)
-      console.log("to date", moment(start).toDate())
-      console.log("formated", moment(moment(start).toDate()).format("YYYY-MM-DDTHH:mm"))
-
-    }, [start])
+  
     
 
     return (

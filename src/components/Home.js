@@ -14,7 +14,7 @@ const Home = () => {
             .from('organizations')
             .select()
             .eq("id", org_id)
-
+            .eq("rec_deleted", false)
         if (queryData.error) {
             console.log(queryData.error.message)
         }

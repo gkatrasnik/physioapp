@@ -21,7 +21,7 @@ function Layout({children}) {
             >
               <Offcanvas.Header closeButton>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-false`}>
-                  PhysioApp
+                  PhysioApp 
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

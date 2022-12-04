@@ -63,7 +63,9 @@ const SymptomModal = (props) => {
     const deleteSymptom = async () => {
         const queryData = await supabase
             .from('symptoms')
-            .delete()
+            .update({
+                rec_deleted:true
+            })
             .eq('id', props.symptomData.id)
 
         if (queryData.error) {
@@ -77,7 +79,8 @@ const SymptomModal = (props) => {
     const getBodypartsData = async() => {
         const queryData = await supabase
             .from('bodyparts')
-            .select()          
+            .select()
+            .eq('rec_deleted', false)          
 
         if (queryData.error) {
             alert(queryData.error.message);

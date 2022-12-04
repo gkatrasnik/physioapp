@@ -20,7 +20,6 @@ const PatientSearchView = () => {
 
     const handleSearch = (query) => {   
         if (patientsData.length) {
-            console.log("patietns are there")
             if (query.length === 0) { //show all patients
                 setFilteredPatients(patientsData);
             } else if (query.length > 2) {//auto filter patients when typing in search      
@@ -39,6 +38,7 @@ const PatientSearchView = () => {
             .from('patients')
             .select()            
             .eq("org_id", auth.user.user_metadata.org_id)
+            .eq("rec_deleted", false)
         
          if (queryData.error) {
             alert(queryData.error.message);

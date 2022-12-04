@@ -26,8 +26,7 @@ const NewPatientModal = (props) => {
     const handleNewPatient = (e) => {
         e.preventDefault();
         addPatient();
-        props.handleToggleModal();
-        props.getPatients();
+        props.handleToggleModal();       
     }
 
     const addPatient = async () => {     
@@ -44,13 +43,14 @@ const NewPatientModal = (props) => {
                 birthdate: birthDate,
                 occupation: occupation,
                 user_id: auth.user.id,
-                org_id: auth.user.user_metadata.org_id
+                org_id: auth.user.user_metadata.org_id,
+                rec_deleted: false
             })
 
         if (queryData.error) {
             console.log(queryData.error.message);            
         }else {
-            console.log(queryData)
+             props.getPatients();
         }     
         
         

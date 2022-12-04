@@ -42,6 +42,7 @@ const PatientProfileView = () => {
             .from('patients')
             .select()
             .eq('id',location.state.patientData.id)
+            .eq("rec_deleted", false)
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
@@ -54,16 +55,20 @@ const PatientProfileView = () => {
             setBirdhDate(queryData.data[0].birthdate)
             setOccupation((queryData.data[0].occupation))
 
-            console.log(queryData)
         }     
     }
     
     
 
-    const deletePatient = async (patientId) => {
+    const handleDeletePatient = async (patientId) => {
+
+        await handleDeleteData();
+
         const queryData = await supabase
             .from('patients')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('id',patientId)
 
         if (queryData.error) {
@@ -118,19 +123,35 @@ const PatientProfileView = () => {
 
     // Issues logic 
 
-    const handleDeleteIssues = async () => {   
+    //delete all patients data. It is called on deletePatient
+    const handleDeleteData = async () => {   
         //delete all issues of this patient        
-        const resultArr = await Promise.allSettled(issuesData.map(async (issue) => {
-           deleteIssue(issue.id);          
+        const issuesResult = await Promise.allSettled(issuesData.map(async (issue) => {
+          await deleteIssue(issue.id);          
         }));
 
+        //delete apopointments of this patient
+        const queryData = await supabase
+            .from('appointments')
+            .update({
+                rec_deleted: true
+            })
+            .eq('patient_id', location.state.patientData.id)
+
+            if (queryData.error) {
+                alert(queryData.error.message);
+            } else {
+                return queryData;
+            } 
     }
 
     const deleteIssue = async (issueId) => {    
         //delete isuses symptoms
         const deletedSymptom = await supabase
             .from('symptoms')
-            .delete()
+            .update({
+                rec_deleted:true
+            })
             .eq('issue_id', issueId)
 
         if (deletedSymptom.error) {
@@ -140,7 +161,9 @@ const PatientProfileView = () => {
         //delete isuses interventions
         const deletedIntervention = await supabase
             .from('interventions')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('issue_id', issueId)
 
         if (deletedIntervention.error) {
@@ -149,7 +172,9 @@ const PatientProfileView = () => {
 
         const queryData = await supabase
             .from('issues')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('id', issueId)
 
         if (queryData.error) {
@@ -164,6 +189,7 @@ const PatientProfileView = () => {
             .from('issues')
             .select()
             .eq('patient_id',location.state.patientData.id)
+            .eq("rec_deleted", false)
             .order('start', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);
@@ -293,13 +319,9 @@ const PatientProfileView = () => {
                         Update Patient
                     </Button> }
 
-                    {editing && <Button disabled={issuesData.length} className="m-2 mr-5" variant="danger" onClick={() => {deletePatient(location.state.patientData.id)}}>
+                    {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {handleDeletePatient(location.state.patientData.id)}}>
                         Delete Patient
                     </Button>}  
-
-                    {editing && issuesData.length > 0 && <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIssues}>
-                        Delete Patient Data
-                    </Button>}
                     
                     </>}   
 

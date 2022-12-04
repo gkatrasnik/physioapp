@@ -31,7 +31,8 @@ const NewInterventionModal = (props) => {
                 notes: notes,
                 user_id: auth.user.id,
                 issue_id: props.issueData.id,
-                org_id: auth.user.user_metadata.org_id
+                org_id: auth.user.user_metadata.org_id,
+                rec_deleted: false
             })
 
         if (queryData.error) {

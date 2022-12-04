@@ -27,7 +27,9 @@ const AppointmentModal = (props) => {
     const deleteAppointment = async () => {        
         const queryData = await supabase
             .from('appointments')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('id', props.currentEvent.id)
 
         if (queryData.error) {

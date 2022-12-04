@@ -59,7 +59,9 @@ const InterventionModal = (props) => {
      const deleteIntervention = async () => {
         const queryData = await supabase
             .from('interventions')
-            .delete()
+            .update({
+                rec_deleted: true
+            })
             .eq('id', props.interventionData.id)
 
         if (queryData.error) {

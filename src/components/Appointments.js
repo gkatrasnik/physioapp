@@ -50,6 +50,7 @@
                 .from('appointments')
                 .select()
                 .eq("org_id", auth.user.user_metadata.org_id)
+                .eq("rec_deleted", false)
             if (queryData.error) {
                 alert(queryData.error.message);
             }else {
@@ -66,7 +67,7 @@
                 .from('patients')
                 .select()
                 .eq("org_id", auth.user.user_metadata.org_id)               
-    
+                .eq("rec_deleted", false)
             if (queryData.error) {
                 alert(queryData.error.message);
             }

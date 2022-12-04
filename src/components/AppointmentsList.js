@@ -16,6 +16,7 @@ const AppointmentsList = (props) => {
             .from('appointments')
             .select()
             .eq("patient_id", props.patientData.id)
+            .eq("rec_deleted", false)
             .order('end', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);

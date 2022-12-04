@@ -35,6 +35,7 @@ const InterventionsList = (props) => {
             .from('interventions')
             .select()
             .eq('issue_id',props.issueData.id)
+            .eq("rec_deleted", false)
             .order('created_at', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);

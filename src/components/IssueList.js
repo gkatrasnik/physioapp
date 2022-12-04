@@ -18,10 +18,6 @@ const IssueList = (props) => {
     const toggleShowNewIssue = () => {
         setShowNewIssue(!showNewIssue);
     }
-
-    useEffect(() => {
-      console.log(props.issuesData)
-    }, [props])
     
 
     return (

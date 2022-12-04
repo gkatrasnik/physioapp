@@ -36,7 +36,8 @@ const NewSymptomModal = (props) => {
                 bodypart_id: bodypartId,
                 issue_id: props.issueData.id,
                 user_id: auth.user.id,
-                org_id: auth.user.user_metadata.org_id
+                org_id: auth.user.user_metadata.org_id,
+                rec_deleted: false
             })
 
         if (queryData.error) {
@@ -49,7 +50,8 @@ const NewSymptomModal = (props) => {
     const getBodypartsData = async() => {
         const queryData = await supabase
             .from('bodyparts')
-            .select()          
+            .select()    
+            .eq('rec_deleted', false)      
 
         if (queryData.error) {
             alert(queryData.error.message);

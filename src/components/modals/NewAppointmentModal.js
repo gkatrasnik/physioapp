@@ -37,7 +37,8 @@ const NewAppointmentModal = (props) => {
                 patient_id: patientId,
                 title: title,
                 user_id: auth.user.id,
-                org_id: auth.user.user_metadata.org_id
+                org_id: auth.user.user_metadata.org_id,
+                rec_deleted: false
             })
 
         if (queryData.error) {

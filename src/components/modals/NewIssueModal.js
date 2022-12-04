@@ -41,7 +41,8 @@ const NewIssueModal = (props) => {
                 user_id: auth.user.id,
                 start: start,
                 end: resolved ? moment().toDate() : null,
-                org_id: auth.user.user_metadata.org_id
+                org_id: auth.user.user_metadata.org_id,
+                rec_deleted: false
 
                 //last_changed - add this
             })

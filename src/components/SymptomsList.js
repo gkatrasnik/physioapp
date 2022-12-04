@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
-import Layout from "./Layout";
-import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
+import { Button, Table} from "react-bootstrap";
 import SymptomModal from './modals/SymptomModal';
 import NewSymptomModal from './modals/NewSymptomModal';
 import moment from 'moment'
@@ -36,6 +35,7 @@ const SymptomsList = (props) => {
             .from('symptoms')
             .select()
             .eq('issue_id',props.issueData.id)
+            .eq("rec_deleted", false)
             .order('created_at', { ascending: false })
         if (queryData.error) {
             alert(queryData.error.message);
@@ -48,6 +48,7 @@ const SymptomsList = (props) => {
          const queryData = await supabase
             .from('bodyparts')
             .select()
+            .eq("rec_deleted", false)
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
