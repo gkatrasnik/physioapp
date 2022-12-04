@@ -4,7 +4,6 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import moment from 'moment';
-import { dateTimeLocal } from '../../helpers';
 
 const NewAppointmentModal = (props) => {
     const [start, setStart] = useState(null);
@@ -68,7 +67,7 @@ const NewAppointmentModal = (props) => {
                 <Form.Label>From</Form.Label>
                 <Form.Control
                     required
-                    defaultValue={dateTimeLocal(start)}
+                    defaultValue={moment(start).format("YYYY-MM-DDTHH:mm")}
                     type="datetime-local"                    
                     onChange={(e) => {
                     setStart(moment(e.target.value).toDate());

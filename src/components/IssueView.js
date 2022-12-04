@@ -8,7 +8,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, Form, Table } from 'react-bootstrap';
 import SymptomsList from './SymptomsList';
 import InterventionsList from './InterventionsList';
-import { dateTimeLocal } from '../helpers';
 import moment from "moment";
 
 
@@ -44,17 +43,18 @@ const IssueView = () => {
         if (queryData.error) {
             alert(queryData.error.message);
         }else {
-            setTitle(queryData.data && queryData.data[0].name)
-            setNotes(queryData.data && queryData.data[0].notes)
-            setResolved(queryData.data && queryData.data[0].resolved)
-            setDiagnosis(queryData.data && queryData.data[0].diagnosis)
-            setStart(queryData.data && queryData.data[0].start ? moment(queryData.data[0].start).toDate() : null)
-            setEnd(queryData.data && queryData.data[0].end ? moment(queryData.data[0].end).toDate() : null)
-            setLastChanged(queryData.data && queryData.data[0].last_changed)
-            setUserId(queryData.data && queryData.data[0].user_id)
-            setPatientId(queryData.data && queryData.data[0].patient_id)
-
-            console.log("resolved", resolved)
+            if(queryData.data) {
+                setTitle(queryData.data[0].name)
+                setNotes(queryData.data[0].notes)
+                setResolved(queryData.data[0].resolved)
+                setDiagnosis(queryData.data[0].diagnosis)
+                setStart(moment(queryData.data[0].start).toDate())
+                setEnd(moment(queryData.data[0].end).toDate())
+                setLastChanged(queryData.data[0].last_changed)
+                setUserId(queryData.data[0].user_id)
+                setPatientId(queryData.data[0].patient_id)
+            }
+           
         }     
     }
 
@@ -115,6 +115,9 @@ const IssueView = () => {
 
 
      const handleUpdateIssue = () => {
+        if (start && end && start >= end) {
+            return alert('Please adjust "From" and "To" dates')
+        }
         updateIssue();
         setEditing(false);
     }
@@ -145,6 +148,14 @@ const IssueView = () => {
         getIssueData();    
         getPatientData();
     }, []);
+    
+
+    useEffect(() => {
+      console.log("start", start)
+      console.log("to date", moment(start).toDate())
+      console.log("formated", moment(moment(start).toDate()).format("YYYY-MM-DDTHH:mm"))
+
+    }, [start])
     
 
     return (
@@ -196,7 +207,7 @@ const IssueView = () => {
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
                     <Form.Label>From</Form.Label>
                     <Form.Control
-                        defaultValue = {dateTimeLocal(start)}
+                        value = {moment(start).format("YYYY-MM-DDTHH:mm")}
                         disabled = {!editing}
                         type="datetime-local"
                         onChange={(e) => {
@@ -208,7 +219,7 @@ const IssueView = () => {
                     <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
                     <Form.Label>To</Form.Label>
                     <Form.Control
-                        defaultValue = {dateTimeLocal(end)}
+                        value = {moment(end).format("YYYY-MM-DDTHH:mm")}
                         disabled = {!editing}
                         type="datetime-local"
                         onChange={(e) => {
@@ -242,7 +253,7 @@ const IssueView = () => {
                     {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {deleteIssue(location.state.issueData.id)}}>
                         Delete Issue
                     </Button>}                
-                    {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdateIssue}>
+                    {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
                         Update Issue
                     </Button> }   
 
