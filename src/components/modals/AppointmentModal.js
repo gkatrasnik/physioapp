@@ -13,6 +13,7 @@ const AppointmentModal = (props) => {
     const [patientId, setPatientId] = useState(null);
     const [title, setTitle] = useState("");
     const [eventPatient, setEventPatient] = useState(null);
+    const [showToPatientBtn, setShowToPatientBtn] = useState(false);
 
     const auth = useAuth();
     const navigate = useNavigate();
@@ -63,6 +64,9 @@ const AppointmentModal = (props) => {
             setPatientId(props.currentEvent.patient_id);
             setTitle(props.currentEvent.title);
         }  
+
+        let url = window.location.href;
+        setShowToPatientBtn(!url.includes("/patient"))
         
     }, [props.currentEvent]);
 
@@ -124,9 +128,10 @@ const AppointmentModal = (props) => {
                    Delete
                 </Button> 
                 
+                {showToPatientBtn &&
                 <Button className="m-2" variant="primary" onClick={()=>{toPatientProfile(eventPatient)}}>
                     Patient Profile
-                </Button>     
+                </Button>}     
 
                 
                
