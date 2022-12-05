@@ -53,6 +53,10 @@ const AppointmentsList = (props) => {
     const toggleNewAppointmentModal = () => {
         setShowNewAppointmentModal(!showNewAppointmentModal);
     } 
+    
+    const showNewApointment = () => {
+        setShowAppointmentModal(true);
+    }
 
     const hideAppointmentModal = () => {
         setShowAppointmentModal(false);
@@ -104,7 +108,7 @@ const AppointmentsList = (props) => {
 
             <h2 className='text-center'>Appointments</h2>
 
-            <Button  className="m-2" variant="primary" onClick={toggleShowNewAppointment}>
+            <Button  className="m-2" variant="primary" onClick={showNewApointment}>
                 New Appointment
             </Button>
             <div className='table-container mb-5'>                
