@@ -10,6 +10,8 @@ const NewAppointmentModal = (props) => {
     const [end, setEnd] = useState(null);
     const [patientId, setPatientId] = useState(1);
     const [title, setTitle] = useState("");
+    const [patientFieldDisabled, setPatientFieldDisabled] = useState(false);
+
 
     const auth = useAuth();
 
@@ -53,7 +55,8 @@ const NewAppointmentModal = (props) => {
         if (props.selectedSlot) {
             setStart(props.selectedSlot.start);
         }
-        
+        let url = window.location.href;
+        setPatientFieldDisabled(url.includes("/patient"))
     }, [props.selectedSlot]);
     
 
@@ -91,6 +94,7 @@ const NewAppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
+                 disabled={patientFieldDisabled}
                  defaultValue={patientId}
                  onChange={(e) => {
                     setPatientId(e.target.value);

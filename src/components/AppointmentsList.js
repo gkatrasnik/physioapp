@@ -18,7 +18,6 @@ const AppointmentsList = (props) => {
     const [currentEvent, setCurrentEvent] = useState(null);
     const [patientsData, setPatientsData] = useState([]);
 
-
     const getEvents = async () => {
         const queryData = await supabase
             .from('appointments')
@@ -54,7 +53,7 @@ const AppointmentsList = (props) => {
         setShowNewAppointmentModal(!showNewAppointmentModal);
     } 
     
-    const showNewApointment = () => {
+    const handleShowApointmentModal = () => {
         setShowAppointmentModal(true);
     }
 
@@ -84,7 +83,7 @@ const AppointmentsList = (props) => {
 
     useEffect(()=>{
         if (currentEvent){
-            setShowAppointmentModal(true);
+            handleShowApointmentModal();
         }            
     }, [currentEvent])   
     
@@ -108,7 +107,7 @@ const AppointmentsList = (props) => {
 
             <h2 className='text-center'>Appointments</h2>
 
-            <Button  className="m-2" variant="primary" onClick={showNewApointment}>
+            <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>
                 New Appointment
             </Button>
             <div className='table-container mb-5'>                
@@ -129,7 +128,7 @@ const AppointmentsList = (props) => {
                             <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'} onClick={() => {setCurrentEvent(event)}}>
                             <td>{event.id}</td>
                             <td>{event.title}</td>                             
-                            <td>{moment(event.start).toDate().toLocaleDateString("sl")}</td>
+                            <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
                             <td>{getDuration(event.start, event.end) + ' min'}</td>
                             <td>{props.patientData.name}</td>
                             </tr>
