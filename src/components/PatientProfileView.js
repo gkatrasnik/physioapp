@@ -202,6 +202,7 @@ const PatientProfileView = () => {
     useEffect(() => {
         getPatientData();    
         getIssuesData();    
+        window.scrollTo(0, 0);
     }, []);
 
 

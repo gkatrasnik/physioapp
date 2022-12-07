@@ -81,13 +81,13 @@
       
         return (
             
-                <Container className="mb-5">
+                <div className="mb-5">
                     {showIssuesCalendar && 
                     <h1 className='text-center'>Issues Calendar</h1>} 
 
                     {showIssuesCalendar ?
-                    <Button onClick={handleHideCalendar}>Hide Calendar</Button> :
-                    <Button onClick={handleShowCalendar}>Show Issues Calendar</Button>   
+                    <Button className="m-2" onClick={handleHideCalendar}>Hide Calendar</Button> :
+                    <Button className="m-2" onClick={handleShowCalendar}>Show Issues Calendar</Button>   
                     }
 
                     {showIssuesCalendar && 
@@ -105,7 +105,7 @@
                         selectable
                         />
                     </div>}
-                </Container>                
+                </div>                
             
     
         );

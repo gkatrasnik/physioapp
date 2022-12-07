@@ -46,6 +46,15 @@ $modal-content-border-radius: 0;
 
 $event-bg :#0051ff;
 $event-border-radius: 0;
+
+.rbc-toolbar {
+  justify-content: start !important;
+  margin-bottom: 5px !important;
+}
+
+.rbc-toolbar button {
+  border-radius: 0 !important;
+}
 @import 'react-big-calendar/lib/sass/styles';
 
 

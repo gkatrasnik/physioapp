@@ -155,6 +155,7 @@ const IssueView = () => {
     useEffect(() => {
         getIssueData();    
         getPatientData();
+        window.scrollTo(0, 0);
     }, []);
   
     

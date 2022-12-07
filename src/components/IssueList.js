@@ -26,7 +26,7 @@ const IssueList = (props) => {
             <NewIssueModal patientData={props.patientData} showNewIssue={showNewIssue} getIssuesData={props.getIssuesData} toggleShowNewIssue={toggleShowNewIssue}/>
 
             <h2 className='text-center'>issues</h2>
-            <Button  className="m-2" variant="primary" type="submit" onClick={toggleShowNewIssue}>
+            <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
                 New Issue
             </Button>
 
