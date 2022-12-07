@@ -42,7 +42,7 @@
                         startAccessor="start"
                         endAccessor="end"
                         style={{ height: 500 }}
-                        onSelectEvent={()=>{setCurrentEvent(event)}}
+                        
                         
                         longPressThreshold={250} 
                         selectable
