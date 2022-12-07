@@ -336,12 +336,12 @@ const PatientProfileView = () => {
                     patientData={location.state.patientData}
                 />
 
-                <AppointmentsList
-                    patientData={location.state.patientData}
-                />
-
                 <IssuesCalendarModal
                     issuesData={issuesData}
+                />
+
+                <AppointmentsList
+                    patientData={location.state.patientData}
                 />
 
             </Container>
