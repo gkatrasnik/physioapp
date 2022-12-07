@@ -13,6 +13,7 @@ import { Container, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../auth';
 import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
+import IssuesCalendarModal from './modals/IssuesCalendarModal';
 
 const PatientProfileView = () => {
     const auth = useAuth();
@@ -21,7 +22,6 @@ const PatientProfileView = () => {
     const [editing, setEditing] = useState(false);
     
     const [infoExpanded, setInfoExpanded] = useState(false);
-
     const [issuesData, setIssuesData] = useState([]);
 
 
@@ -198,7 +198,6 @@ const PatientProfileView = () => {
         } 
     }
 
-
     // useEffects
     useEffect(() => {
         getPatientData();    
@@ -339,6 +338,10 @@ const PatientProfileView = () => {
 
                 <AppointmentsList
                     patientData={location.state.patientData}
+                />
+
+                <IssuesCalendarModal
+                    issuesData={issuesData}
                 />
 
             </Container>
