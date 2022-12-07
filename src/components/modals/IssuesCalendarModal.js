@@ -1,7 +1,6 @@
     // implement adding new events/appointments --- handle error in getEvents()      
 
     import React, {useState, useCallback, useEffect} from 'react';
-    import Layout from "./Layout";
     import { Container,Button } from 'react-bootstrap';
     import { supabase } from '../../supabase';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
