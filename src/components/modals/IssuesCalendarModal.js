@@ -7,7 +7,7 @@
     import moment from 'moment'
 
     
-    const IssuesCalendarModal = () => {
+    const IssuesCalendarModal = (props) => {
         const localizer = momentLocalizer(moment);        
         const [currentEvent, setCurrentEvent] = useState(null);
         const [showIssuesCalendar, setShowIssuesCalendar] = useState(false);
@@ -34,7 +34,7 @@
             
                 <Container>
                     <h1 className='text-center'>Appointments</h1>   
-                    <Button onClick={toggleIssuesCalendar}>{showIssuesCalendar ? Hide : Show}</Button>                    
+                    <Button onClick={toggleIssuesCalendar}>{showIssuesCalendar ? "Hide" : "Show"}</Button>                    
                     <div className='my-5'>
                         <Calendar
                         localizer={localizer}
