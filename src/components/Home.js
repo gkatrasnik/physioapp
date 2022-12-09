@@ -20,9 +20,6 @@ const Home = () => {
         }
         setOrgData(queryData.data[0]);
     }
-
-    console.log("error: ", error, "user: ",user)
-    }
     
 
     useEffect(() => {        
