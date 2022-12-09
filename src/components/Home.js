@@ -21,18 +21,12 @@ const Home = () => {
         setOrgData(queryData.data[0]);
     }
 
-    const a = async () => {
-        const { user, error } = await supabase.auth.update({
-        data: { org_id: '020c6604-b6fb-42d7-a2f3-228118fb49d8' }
-    })
-    
     console.log("error: ", error, "user: ",user)
     }
     
 
     useEffect(() => {        
       getOrgData(auth.user.user_metadata.org_id);
-      a();
     }, [])
 
     return (
