@@ -37,6 +37,7 @@ const Signup = () => {
           setOrgCode(data);
           setOrgPass("");
         } else {
+          alert("No organization matches this password")
           e.target.reset();
         }
         
