@@ -5,7 +5,7 @@ import { supabase } from '../supabase';
 import Layout from "./Layout";
 import { useAuth } from '../auth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Button, Form, Table } from 'react-bootstrap';
+import { Container, Button, Form, Row, Col } from 'react-bootstrap';
 import SymptomsList from './SymptomsList';
 import InterventionsList from './InterventionsList';
 import moment from "moment";
@@ -164,110 +164,113 @@ const IssueView = () => {
         <Layout>
             <Container>
                 <h1 className="text-center">Issue View</h1>
-                
-                <Form className="mt-4">
-                    <h2 className='text-center'>{location.state.issueData.name}</h2>
+                 <Row>
+                    <Col lg={6}>
+                        <Form className="mt-4">
+                            <h2 className='text-center'>{location.state.issueData.name}</h2>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control
-                        defaultValue = {title}
-                        disabled = {!editing}
-                        type="text"
-                        autoFocus
-                        onChange={(e) => {
-                        setTitle(e.target.value);
-                        }}
-                    />         
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                defaultValue = {title}
+                                disabled = {!editing}
+                                type="text"
+                                autoFocus
+                                onChange={(e) => {
+                                setTitle(e.target.value);
+                                }}
+                            />         
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                    <Form.Label>Notes</Form.Label>
-                    <Form.Control
-                        defaultValue = {notes}
-                        disabled = {!editing}
-                        type="text"
-                        as="textarea" rows={4}
-                        onChange={(e) => {
-                        setNotes(e.target.value);
-                        }}
-                    />        
-                    </Form.Group>  
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
+                            <Form.Label>Notes</Form.Label>
+                            <Form.Control
+                                defaultValue = {notes}
+                                disabled = {!editing}
+                                type="text"
+                                as="textarea" rows={4}
+                                onChange={(e) => {
+                                setNotes(e.target.value);
+                                }}
+                            />        
+                            </Form.Group>  
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                    <Form.Label>Diagnosis</Form.Label>
-                    <Form.Control
-                        defaultValue = {diagnosis}
-                        disabled = {!editing}
-                        type="text"
-                        onChange={(e) => {
-                        setDiagnosis(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                            <Form.Label>Diagnosis</Form.Label>
+                            <Form.Control
+                                defaultValue = {diagnosis}
+                                disabled = {!editing}
+                                type="text"
+                                onChange={(e) => {
+                                setDiagnosis(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
-                    <Form.Label>From</Form.Label>
-                    <Form.Control
-                        value = {moment(start).format("YYYY-MM-DDTHH:mm")}
-                        disabled = {!editing}
-                        type="datetime-local"
-                        onChange={(e) => {
-                        setStart(moment(e.target.value).toDate());
-                        }}
-                    />               
-                    </Form.Group>  
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
+                            <Form.Label>From</Form.Label>
+                            <Form.Control
+                                value = {moment(start).format("YYYY-MM-DDTHH:mm")}
+                                disabled = {!editing}
+                                type="datetime-local"
+                                onChange={(e) => {
+                                setStart(moment(e.target.value).toDate());
+                                }}
+                            />               
+                            </Form.Group>  
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
-                    <Form.Label>To</Form.Label>
-                    <Form.Control
-                        value = {moment(end).format("YYYY-MM-DDTHH:mm")}
-                        disabled = {!editing}
-                        type="datetime-local"
-                        onChange={(e) => {
-                        setEnd(moment(e.target.value).toDate());
-                        }}
-                    />               
-                    </Form.Group>  
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
+                            <Form.Label>To</Form.Label>
+                            <Form.Control
+                                value = {moment(end).format("YYYY-MM-DDTHH:mm")}
+                                disabled = {!editing}
+                                type="datetime-local"
+                                onChange={(e) => {
+                                setEnd(moment(e.target.value).toDate());
+                                }}
+                            />               
+                            </Form.Group>  
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
-                    <Form.Label>Patient</Form.Label>
-                    <Form.Control
-                        defaultValue = {patientData && patientData.name}
-                        disabled = {true}
-                        type="text"
-                    />                
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
+                            <Form.Label>Patient</Form.Label>
+                            <Form.Control
+                                defaultValue = {patientData && patientData.name}
+                                disabled = {true}
+                                type="text"
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="m-2" controlId="exampleForm.ControlInput3">
-                    <Form.Check
-                        label="Resolved"                     
-                        checked = {end && end}
-                        disabled = {true}
-                        type="checkbox"                       
-                    />                
-                    </Form.Group>
+                            <Form.Group className="m-2" controlId="exampleForm.ControlInput3">
+                            <Form.Check
+                                label="Resolved"                     
+                                checked = {end && end}
+                                disabled = {true}
+                                type="checkbox"                       
+                            />                
+                            </Form.Group>
 
-                    <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                        {editing ? "Cancel" : "Edit Issue"}
-                    </Button>    
+                            <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                {editing ? "Cancel" : "Edit Issue"}
+                            </Button>    
 
-                    {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {deleteIssue(location.state.issueData.id)}}>
-                        Delete Issue
-                    </Button>}                
-                    {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
-                        Update Issue
-                    </Button> }   
+                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {deleteIssue(location.state.issueData.id)}}>
+                                Delete Issue
+                            </Button>}                
+                            {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
+                                Update Issue
+                            </Button> }   
 
-                    {editing && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
-                        Set Not resolved
-                    </Button>}  
-                             
-                </Form>
-
-                <SymptomsList issueData={location.state.issueData}/>
-                <InterventionsList issueData={location.state.issueData}/>
-
+                            {editing && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
+                                Set Not resolved
+                            </Button>}  
+                                    
+                        </Form>
+                    </Col>
+                     <Col lg={6}>
+                        <SymptomsList issueData={location.state.issueData}/>
+                        <InterventionsList issueData={location.state.issueData}/>
+                     </Col>
+                </Row>              
             </Container>
             
         </Layout>

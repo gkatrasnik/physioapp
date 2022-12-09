@@ -92,7 +92,7 @@ const InterventionsList = (props) => {
                     </tr>
                 </thead>
 
-                <tbody className='hand'>                    
+                <tbody className='cursor-pointer'>                    
                     {interventionsData.length ? interventionsData.map((intervention, index) => {
                         return (
                             <tr key={index} onClick={()=>{showUpdateInterventionModal(intervention)}}>

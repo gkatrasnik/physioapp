@@ -9,11 +9,11 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
-import { Container, Button, Form } from 'react-bootstrap';
+import { Container, Button, Form, Row, Col } from 'react-bootstrap';
 import { useAuth } from '../auth';
 import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
-import IssuesCalendarModal from './modals/IssuesCalendarModal';
+import IssuesCalendar from './IssuesCalendar';
 
 const PatientProfileView = () => {
     const auth = useAuth();
@@ -203,6 +203,9 @@ const PatientProfileView = () => {
         getPatientData();    
         getIssuesData();    
         window.scrollTo(0, 0);
+        if (window.innerWidth >= 992) {
+            setInfoExpanded(true);
+        }
     }, []);
 
 
@@ -210,141 +213,144 @@ const PatientProfileView = () => {
         <Layout>
             <Container>
                 <h1 className="text-center">Patient Profile View</h1>
-                
-                <Form className="mt-4">
-                    <h2 className='text-center'>{location.state.patientData.name}</h2>
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                        defaultValue = {name}
-                        disabled = {!editing}
-                        type="text"
-                        autoFocus
-                        onChange={(e) => {
-                        setName(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
-                    {infoExpanded &&
-                    <>
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control
-                        defaultValue = {email}
-                        disabled = {!editing}
-                        type="email"
-                        onChange={(e) => {
-                        setEmail(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
+                 <Row>
+                    <Col lg={6}>
+                        <Form className="my-5">
+                            <h2 className='text-center'>{location.state.patientData.name}</h2>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control
+                                defaultValue = {name}
+                                disabled = {!editing}
+                                type="text"
+                                autoFocus
+                                onChange={(e) => {
+                                setName(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
+                            {infoExpanded &&
+                            <>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
+                            <Form.Label>Email Address</Form.Label>
+                            <Form.Control
+                                defaultValue = {email}
+                                disabled = {!editing}
+                                type="email"
+                                onChange={(e) => {
+                                setEmail(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                    <Form.Label>Phone Number</Form.Label>
-                    <Form.Control
-                        defaultValue = {phone}
-                        disabled = {!editing}
-                        type="tel"
-                        onChange={(e) => {
-                        setPhone(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
+                            <Form.Label>Phone Number</Form.Label>
+                            <Form.Control
+                                defaultValue = {phone}
+                                disabled = {!editing}
+                                type="tel"
+                                onChange={(e) => {
+                                setPhone(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                    <Form.Label>Address</Form.Label>
-                    <Form.Control
-                        defaultValue = {address}
-                        disabled = {!editing}
-                        type="text"
-                        onChange={(e) => {
-                        setAddress(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                            <Form.Label>Address</Form.Label>
+                            <Form.Control
+                                defaultValue = {address}
+                                disabled = {!editing}
+                                type="text"
+                                onChange={(e) => {
+                                setAddress(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
-                    <Form.Label>City</Form.Label>
-                    <Form.Control
-                        defaultValue = {city}
-                        disabled = {!editing}
-                        type="text"
-                        onChange={(e) => {
-                        setCity(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
+                            <Form.Label>City</Form.Label>
+                            <Form.Control
+                                defaultValue = {city}
+                                disabled = {!editing}
+                                type="text"
+                                onChange={(e) => {
+                                setCity(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput6">
-                    <Form.Label>ZIP Code</Form.Label>
-                    <Form.Control
-                        defaultValue = {zip}
-                        disabled = {!editing}
-                        type="number"
-                        onChange={(e) => {
-                        setZip(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput6">
+                            <Form.Label>ZIP Code</Form.Label>
+                            <Form.Control
+                                defaultValue = {zip}
+                                disabled = {!editing}
+                                type="number"
+                                onChange={(e) => {
+                                setZip(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
-                    <Form.Label>Birth Date</Form.Label>
-                    <Form.Control
-                        defaultValue = {birthDate}
-                        disabled = {!editing}
-                        type="date"
-                        onChange={(e) => {
-                        setBirdhDate(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
+                            <Form.Label>Birth Date</Form.Label>
+                            <Form.Control
+                                defaultValue = {birthDate}
+                                disabled = {!editing}
+                                type="date"
+                                onChange={(e) => {
+                                setBirdhDate(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
 
-                    <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
-                    <Form.Label>Occupation</Form.Label>
-                    <Form.Control
-                        defaultValue = {occupation}
-                        disabled = {!editing}
-                        type="text"
-                        onChange={(e) => {
-                        setOccupation(e.target.value);
-                        }}
-                    />                
-                    </Form.Group>
-                    
-                    <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                        {editing ? "Cancel" : "Edit Patient"}
-                    </Button> 
+                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
+                            <Form.Label>Occupation</Form.Label>
+                            <Form.Control
+                                defaultValue = {occupation}
+                                disabled = {!editing}
+                                type="text"
+                                onChange={(e) => {
+                                setOccupation(e.target.value);
+                                }}
+                            />                
+                            </Form.Group>
+                            
+                            <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                {editing ? "Cancel" : "Edit Patient"}
+                            </Button> 
 
-                    {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                        Update Patient
-                    </Button> }
+                            {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                                Update Patient
+                            </Button> }
 
-                    {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {handleDeletePatient(location.state.patientData.id)}}>
-                        Delete Patient
-                    </Button>}  
-                    
-                    </>}   
+                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {handleDeletePatient(location.state.patientData.id)}}>
+                                Delete Patient
+                            </Button>}  
+                            
+                            </>}   
 
-                    {!editing &&
-                    <Button className="m-2 " variant="secondary" onClick={toggleShowInfo}>
-                        {infoExpanded ? "Hide Info" : "Show Info"}
-                    </Button>}           
-                </Form>
+                            {!editing &&
+                            <Button className="m-2 " variant="secondary" onClick={toggleShowInfo}>
+                                {infoExpanded ? "Hide Info" : "Show Info"}
+                            </Button>}           
+                        </Form>
 
-                <IssueList 
-                    issuesData={issuesData}
-                    getIssuesData={getIssuesData}
-                    patientData={location.state.patientData}
-                />
+                        <AppointmentsList
+                            patientData={location.state.patientData}
+                        />
+                    </Col>
+                    <Col lg={6}>
+                        <IssueList 
+                        issuesData={issuesData}
+                        getIssuesData={getIssuesData}
+                        patientData={location.state.patientData}
+                        />
 
-                <IssuesCalendarModal
-                    issuesData={issuesData}
-                />
-
-                <AppointmentsList
-                    patientData={location.state.patientData}
-                />
-
+                        <IssuesCalendar
+                            issuesData={issuesData}
+                        />
+                    </Col>
+                </Row>
             </Container>
         </Layout>
     );

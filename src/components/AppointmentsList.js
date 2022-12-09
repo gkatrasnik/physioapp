@@ -121,8 +121,8 @@ const AppointmentsList = (props) => {
                         <th>Patient</th>                    
                         </tr>
                     </thead>
-                    <tbody>
-                        
+
+                    <tbody className='cursor-pointer'>                        
                     {eventsList && eventsList.length ? eventsList.map((event, index) => {
                         return (
                             <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'} onClick={() => {setCurrentEvent(event)}}>

@@ -24,13 +24,12 @@ const IssueList = (props) => {
         <>
 
             <NewIssueModal patientData={props.patientData} showNewIssue={showNewIssue} getIssuesData={props.getIssuesData} toggleShowNewIssue={toggleShowNewIssue}/>
-
-            <h2 className='text-center'>issues</h2>
-            <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
-                New Issue
-            </Button>
-
-                <div className='table-container mb-5'>                
+            <div className='my-5'>
+                <h2 className='text-center'>issues</h2>
+                <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
+                    New Issue
+                </Button>
+                <div className='table-container'>                
                     <Table>
                         <thead>
                             <tr>
@@ -43,7 +42,7 @@ const IssueList = (props) => {
                             </tr>
                         </thead>
                         
-                        <tbody className='hand'>                                                        
+                        <tbody className='cursor-pointer'>                                                        
                         {props.issuesData && props.issuesData.length ? props.issuesData.map((issue, index) => {
                             return (
                                 <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.end ?'text-white bg-success' : 'bg-warning'}>
@@ -65,6 +64,7 @@ const IssueList = (props) => {
                         </tbody>
                     </Table>     
                 </div>
+            </div>
         </>
     );
 };

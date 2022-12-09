@@ -116,7 +116,7 @@ const SymptomsList = (props) => {
                         </tr>
                     </thead>
 
-                    <tbody className='hand'>                        
+                    <tbody className='cursor-pointer'>                        
                         {symptomsData.length ? symptomsData.map((symptom, index) => {
                         return (
                             <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>
