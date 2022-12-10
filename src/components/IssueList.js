@@ -23,9 +23,14 @@ const IssueList = (props) => {
     return (
         <>
 
-            <NewIssueModal patientData={props.patientData} showNewIssue={showNewIssue} getIssuesData={props.getIssuesData} toggleShowNewIssue={toggleShowNewIssue}/>
-            <div className='my-5'>
-                <h2 className='text-center'>issues</h2>
+            <NewIssueModal 
+                patientData={props.patientData} 
+                showNewIssue={showNewIssue} 
+                getIssuesData={props.getIssuesData} 
+                toggleShowNewIssue={toggleShowNewIssue}
+            />
+            <div className="my-5 mx-auto component-big">
+                <h2 className='text-center'>Issues</h2>
                 <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
                     New Issue
                 </Button>

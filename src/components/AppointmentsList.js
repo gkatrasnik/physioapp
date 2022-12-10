@@ -90,58 +90,60 @@ const AppointmentsList = (props) => {
     
     return (
         <>
-                    <NewAppointmentModal 
-                        patientsData={patientsData}
-                        show={showNewAppointmentModal} 
-                        toggleModal={toggleNewAppointmentModal} 
-                        getEvents={getEvents}                    
-                    />
-    
-                    <AppointmentModal
-                        patientsData={patientsData}
-                        currentEvent={currentEvent}
-                        hideAppointmentModal={hideAppointmentModal}
-                        show={showAppointmentModal}
-                        getEvents={getEvents}       
-                    />
+            <NewAppointmentModal 
+                patientsData={patientsData}
+                show={showNewAppointmentModal} 
+                toggleModal={toggleNewAppointmentModal} 
+                getEvents={getEvents}                    
+            />
 
-            <h2 className='text-center'>Appointments</h2>
+            <AppointmentModal
+                patientsData={patientsData}
+                currentEvent={currentEvent}
+                hideAppointmentModal={hideAppointmentModal}
+                show={showAppointmentModal}
+                getEvents={getEvents}       
+            />
 
-            <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>
-                New Appointment
-            </Button>
-            <div className='table-container mb-5'>                
-                <Table>
-                    <thead>
-                        <tr>
-                        <th>Id</th>
-                        <th>Title</th>                            
-                        <th>Date</th>
-                        <th>Duration</th>  
-                        <th>Patient</th>                    
-                        </tr>
-                    </thead>
+            <div className='mx-auto component-big'>
+                <h2 className='text-center'>Appointments</h2>
 
-                    <tbody className='cursor-pointer'>                        
-                    {eventsList && eventsList.length ? eventsList.map((event, index) => {
-                        return (
-                            <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'} onClick={() => {setCurrentEvent(event)}}>
-                            <td>{event.id}</td>
-                            <td>{event.title}</td>                             
-                            <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
-                            <td>{getDuration(event.start, event.end) + ' min'}</td>
-                            <td>{props.patientData.name}</td>
-                            </tr>
-                            )
-                        }):                     
+                <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>
+                    New Appointment
+                </Button>
+                <div className='table-container mb-5'>                
+                    <Table>
+                        <thead>
                             <tr>
-                                <td colSpan={5}>
-                                    No results
-                                </td>                               
+                            <th>Id</th>
+                            <th>Title</th>                            
+                            <th>Date</th>
+                            <th>Duration</th>  
+                            <th>Patient</th>                    
                             </tr>
-                    }   
-                    </tbody>
-                </Table>     
+                        </thead>
+
+                        <tbody className='cursor-pointer'>                        
+                        {eventsList && eventsList.length ? eventsList.map((event, index) => {
+                            return (
+                                <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'} onClick={() => {setCurrentEvent(event)}}>
+                                <td>{event.id}</td>
+                                <td>{event.title}</td>                             
+                                <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
+                                <td>{getDuration(event.start, event.end) + ' min'}</td>
+                                <td>{props.patientData.name}</td>
+                                </tr>
+                                )
+                            }):                     
+                                <tr>
+                                    <td colSpan={5}>
+                                        No results
+                                    </td>                               
+                                </tr>
+                        }   
+                        </tbody>
+                    </Table>     
+                </div>
             </div>
         </>
        );

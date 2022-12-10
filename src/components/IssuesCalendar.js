@@ -88,7 +88,7 @@
       
         return (
             
-                <div className="mb-5">
+                <div className="mb-5 mx-auto component-big"> 
                     {showIssuesCalendar && 
                     <h2 className='text-center'>Issues Calendar</h2>} 
 

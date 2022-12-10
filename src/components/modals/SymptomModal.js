@@ -4,9 +4,12 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 const SymptomModal = (props) => {
     const [editing, setEditing] = useState(false);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
 
     const [name, setName] = useState("");
     const [intensity, setIntensity] = useState(0);
@@ -15,6 +18,10 @@ const SymptomModal = (props) => {
     const [bodypartsList, setBodypartsList] = useState([]);
 
     const auth = useAuth();
+
+    const toggleConfirmDelete = () => {
+        setShowConfirmDelete(!showConfirmDelete);
+    }
 
     const toggleEditing = () => {
         setEditing(!editing)
@@ -32,8 +39,7 @@ const SymptomModal = (props) => {
         setEditing(false);   
     }
 
-    const handleDeleteSymptom = (e) => {
-         e.preventDefault();
+    const handleDeleteSymptom = () => {        
         deleteSymptom();
         props.hideModal();
         setEditing(false);            
@@ -106,6 +112,15 @@ const SymptomModal = (props) => {
 
 
     return (        
+        <>
+        <ConfirmDeleteModal
+            show={showConfirmDelete}
+            title={"Delete Symptom"}
+            message={"Do you really want to delete this symptom?"}
+            callback={handleDeleteSymptom}
+            cancelCallback={toggleConfirmDelete}
+        />
+
         <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Symptom</Modal.Title>
@@ -171,16 +186,14 @@ const SymptomModal = (props) => {
                 <Button className="m-2 " variant="secondary" onClick={handleClose}>
                     {!editing ? "Close" : "Cancel"}
                 </Button>
-                {editing ? <> 
-
+                {editing ? 
+                    <> 
                         <Button  className="m-2" variant="primary" type="submit">
                             Update
                         </Button> 
-
-                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteSymptom}>
+                        <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                             Delete
-                        </Button>     
-                        
+                        </Button>    
                     </> :
                     <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
                         Edit
@@ -191,6 +204,7 @@ const SymptomModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 

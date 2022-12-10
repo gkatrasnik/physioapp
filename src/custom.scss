@@ -104,7 +104,7 @@ $event-border-radius: 0;
 
 @include media-breakpoint-up(md) {
 .table-container {
-    max-height: 300px;
+    max-height: 500px;
     overflow-y: auto;
     font-size: medium;
 }
@@ -118,4 +118,8 @@ $event-border-radius: 0;
 .appointment-future {
   background-color: #e2b85c88;
 
+}
+
+.component-big {
+  max-width: 800px;
 }

@@ -5,6 +5,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
+import ConfirmDeleteModal from './ConfirmDeleteModal';
 
 const AppointmentModal = (props) => {
     
@@ -14,14 +15,18 @@ const AppointmentModal = (props) => {
     const [title, setTitle] = useState("");
     const [eventPatient, setEventPatient] = useState(null);
     const [showToPatientBtn, setShowToPatientBtn] = useState(false);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
     const auth = useAuth();
     const navigate = useNavigate();
 
-    const handleDeleteAppointment = (e) => {
-        e.preventDefault();
-        deleteAppointment();
-        props.hideAppointmentModal();             
+    const toggleConfirmDelete = () => {
+        setShowConfirmDelete(!showConfirmDelete);
+    }
+
+    const handleDeleteAppointment = () => {       
+       deleteAppointment();      
+       props.hideAppointmentModal();             
     }
 
 
@@ -71,6 +76,15 @@ const AppointmentModal = (props) => {
     }, [props.currentEvent]);
 
     return (        
+        <>
+        <ConfirmDeleteModal
+            show={showConfirmDelete}
+            title={"Delete Appointment"}
+            message={"Do you really want to delete this appointment?"}
+            callback={handleDeleteAppointment}
+            cancelCallback={toggleConfirmDelete}
+        />
+
         <Modal centered backdrop="static" show={props.show} onHide={props.hideAppointmentModal}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Appointment</Modal.Title>
@@ -124,7 +138,7 @@ const AppointmentModal = (props) => {
                     Close
                 </Button>
                 
-                <Button className="m-2" variant="danger" onClick={handleDeleteAppointment}>
+                <Button className="m-2" variant="danger" onClick={toggleConfirmDelete}>
                    Delete
                 </Button> 
                 
@@ -138,6 +152,7 @@ const AppointmentModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 

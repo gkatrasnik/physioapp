@@ -60,7 +60,7 @@ const InterventionsList = (props) => {
     return (
         
         <>
-            <h2 className='text-center'>Interventions</h2>
+            
             <InterventionModal 
                 show={showInterventionModal} 
                 hideModal={hideUpdateInterventionModal}                  
@@ -76,42 +76,45 @@ const InterventionsList = (props) => {
                 interventionData = {currentInterventionData}
                 getInterventionsData = {getInterventionsData}
             />
-          
-            <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
-                    Add Intervention
-            </Button>
-            <div className='table-container mb-5'>  
-            <Table striped hover>
-                <thead>
-                    <tr>
-                    <th>Id</th>
-                    <th>Intervention</th>
-                    <th>Date</th>                    
-                    <th>Duration</th>
-                    <th>Notes</th>
-                    </tr>
-                </thead>
 
-                <tbody className='cursor-pointer'>                    
-                    {interventionsData.length ? interventionsData.map((intervention, index) => {
-                        return (
-                            <tr key={index} onClick={()=>{showUpdateInterventionModal(intervention)}}>
-                            <td>{intervention.id}</td>
-                            <td>{intervention.treatment}</td>
-                            <td>{moment(intervention.created_at).toDate().toLocaleDateString("sl")}</td>
-                            <td>{intervention.duration}</td>
-                            <td>{intervention.notes ? intervention.notes : "Empty"}</td>
+            <div className="my-5 mx-auto component-big">
+                <h2 className='text-center'>Interventions</h2>
+                <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
+                        Add Intervention
+                </Button>
+                <div className='table-container mb-5'>  
+                    <Table striped hover>
+                        <thead>
+                            <tr>
+                            <th>Id</th>
+                            <th>Intervention</th>
+                            <th>Date</th>                    
+                            <th>Duration</th>
+                            <th>Notes</th>
                             </tr>
-                        )
-                    }):                     
-                        <tr>
-                            <td colSpan={6}>
-                                No Interventions
-                            </td>                               
-                        </tr>
-                    }   
-                </tbody>
-            </Table> 
+                        </thead>
+
+                        <tbody className='cursor-pointer'>                    
+                            {interventionsData.length ? interventionsData.map((intervention, index) => {
+                                return (
+                                    <tr key={index} onClick={()=>{showUpdateInterventionModal(intervention)}}>
+                                    <td>{intervention.id}</td>
+                                    <td>{intervention.treatment}</td>
+                                    <td>{moment(intervention.created_at).toDate().toLocaleDateString("sl")}</td>
+                                    <td>{intervention.duration}</td>
+                                    <td>{intervention.notes ? intervention.notes : "Empty"}</td>
+                                    </tr>
+                                )
+                            }):                     
+                                <tr>
+                                    <td colSpan={6}>
+                                        No Interventions
+                                    </td>                               
+                                </tr>
+                            }   
+                        </tbody>
+                    </Table> 
+                </div>
             </div>
         </>
  

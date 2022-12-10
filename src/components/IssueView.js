@@ -9,6 +9,7 @@ import { Container, Button, Form, Row, Col } from 'react-bootstrap';
 import SymptomsList from './SymptomsList';
 import InterventionsList from './InterventionsList';
 import moment from "moment";
+import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
 
 
 const IssueView = () => {
@@ -16,6 +17,7 @@ const IssueView = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
    // const [userData, setUserData] = useState();
 
@@ -151,6 +153,11 @@ const IssueView = () => {
         setEnd(null);
     }    
 
+    const toggleConfirmDelete = () => {
+        setShowConfirmDelete(!showConfirmDelete);
+    }
+
+
     // useEffects
     useEffect(() => {
         getIssueData();    
@@ -161,12 +168,22 @@ const IssueView = () => {
     
 
     return (
+        <>
+        <ConfirmDeleteModal
+            show={showConfirmDelete}
+            title={"Delete Issue"}
+            message={"Do you really want to delete this issue with all of its symptoms and interventions?"}
+            callback={deleteIssue}
+            callbackArgs={location.state.issueData.id}
+            cancelCallback={toggleConfirmDelete}            
+        />
+
         <Layout>
-            <Container>
+            <Container fluid={true}>
                 <h1 className="text-center">Issue View</h1>
                  <Row>
                     <Col lg={6}>
-                        <Form className="mt-4">
+                        <Form className="my-5 mx-auto component-big">
                             <h2 className='text-center'>{location.state.issueData.name}</h2>
 
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
@@ -253,7 +270,7 @@ const IssueView = () => {
                                 {editing ? "Cancel" : "Edit Issue"}
                             </Button>    
 
-                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {deleteIssue(location.state.issueData.id)}}>
+                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                 Delete Issue
                             </Button>}                
                             {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
@@ -274,6 +291,7 @@ const IssueView = () => {
             </Container>
             
         </Layout>
+        </>
     );
 };
 

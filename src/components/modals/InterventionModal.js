@@ -3,15 +3,22 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
+
 
 const InterventionModal = (props) => {
     const [editing, setEditing] = useState(false);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
 
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState("");
     const [notes, setNotes] = useState("");    
 
     const auth = useAuth();
+
+    const toggleConfirmDelete = () => {
+        setShowConfirmDelete(!showConfirmDelete);
+    }
 
     const toggleEditing = () => {
         setEditing(!editing)
@@ -29,8 +36,7 @@ const InterventionModal = (props) => {
         setEditing(false);    
     }
 
-    const handleDeleteIntervention = (e) => {
-         e.preventDefault();
+    const handleDeleteIntervention = () => {
         deleteIntervention();
         props.hideModal();  
         setEditing(false);          
@@ -84,6 +90,15 @@ const InterventionModal = (props) => {
 
 
     return (        
+        <>
+        <ConfirmDeleteModal
+            show={showConfirmDelete}
+            title={"Delete Intervention"}
+            message={"Do you really want to delete this intervention?"}
+            callback={handleDeleteIntervention}
+            cancelCallback={toggleConfirmDelete}
+        />
+
         <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Intervention</Modal.Title>
@@ -132,15 +147,14 @@ const InterventionModal = (props) => {
                 <Button className="m-2 " variant="secondary" onClick={handleClose}>
                     {!editing ? "Close" : "Cancel"}
                 </Button>
-               {editing ? <> 
-                        
+               {editing ? 
+                    <>     
                         <Button  className="m-2" variant="primary" type="submit">
                             Update
                         </Button> 
-                        <Button className="m-2 mr-5" variant="danger" onClick={handleDeleteIntervention}>
+                        <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                             Delete
-                        </Button>     
-                       
+                        </Button>
                     </> :                
                     <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
                             Edit
@@ -150,6 +164,7 @@ const InterventionModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 

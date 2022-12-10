@@ -84,7 +84,7 @@ const SymptomsList = (props) => {
     return (
         
         <>
-        <h2 className='text-center'>Symptoms</h2>
+        
             <SymptomModal 
                 show={showSymptomModal} 
                 hideModal={hideUpdateSymptomModal}   
@@ -99,47 +99,48 @@ const SymptomsList = (props) => {
                 issueData = {props.issueData}    
                 getSymptomsData = {getSymptomsData}
             />
-
-            <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
-                    Add Symptom
-            </Button>
-            <div className='table-container mb-5'>  
-                <Table striped hover>
-                    <thead>
-                        <tr>
-                        <th>Id</th>
-                        <th>Symptom</th>
-                        <th>Date</th>
-                        <th>Duration</th>
-                        <th>Intensity</th>
-                        <th>Body Part</th>
-                        </tr>
-                    </thead>
-
-                    <tbody className='cursor-pointer'>                        
-                        {symptomsData.length ? symptomsData.map((symptom, index) => {
-                        return (
-                            <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>
-                            <td>{symptom.id}</td>
-                            <td>{symptom.name}</td>
-                            <td>{moment(symptom.created_at).toDate().toLocaleDateString("sl")}</td>
-                            <td>{symptom.duration}</td>
-                            <td>{symptom.intensity}</td>
-                            <td>{getBodypartName(symptom.bodypart_id)}</td>    
-                            </tr>
-                            )
-                        }):                     
+            <div className="my-5 mx-auto component-big">
+                <h2 className='text-center'>Symptoms</h2>
+                <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
+                        Add Symptom
+                </Button>
+                <div className='table-container mb-5'>  
+                    <Table striped hover>
+                        <thead>
                             <tr>
-                                <td colSpan={6}>
-                                    No Symptoms
-                                </td>                               
+                            <th>Id</th>
+                            <th>Symptom</th>
+                            <th>Date</th>
+                            <th>Duration</th>
+                            <th>Intensity</th>
+                            <th>Body Part</th>
                             </tr>
-                    }   
-                    </tbody>
-                </Table>
-            </div>             
-        </>
- 
+                        </thead>
+
+                        <tbody className='cursor-pointer'>                        
+                            {symptomsData.length ? symptomsData.map((symptom, index) => {
+                                return (
+                                    <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>
+                                    <td>{symptom.id}</td>
+                                    <td>{symptom.name}</td>
+                                    <td>{moment(symptom.created_at).toDate().toLocaleDateString("sl")}</td>
+                                    <td>{symptom.duration}</td>
+                                    <td>{symptom.intensity}</td>
+                                    <td>{getBodypartName(symptom.bodypart_id)}</td>    
+                                    </tr>
+                                )
+                            }):                     
+                                <tr>
+                                    <td colSpan={6}>
+                                        No Symptoms
+                                    </td>                               
+                                </tr>
+                            }   
+                        </tbody>
+                    </Table>
+                </div>  
+            </div>           
+        </> 
     );
 };
 

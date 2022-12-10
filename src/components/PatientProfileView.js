@@ -14,12 +14,16 @@ import { useAuth } from '../auth';
 import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
 import IssuesCalendar from './IssuesCalendar';
+import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
+
 
 const PatientProfileView = () => {
     const auth = useAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+
     
     const [infoExpanded, setInfoExpanded] = useState(false);
     const [issuesData, setIssuesData] = useState([]);
@@ -119,6 +123,10 @@ const PatientProfileView = () => {
         setInfoExpanded(!infoExpanded);
     }
 
+    const toggleConfirmDelete = () => {
+        setShowConfirmDelete(!showConfirmDelete);
+    }
+
 
 
     // Issues logic 
@@ -210,12 +218,21 @@ const PatientProfileView = () => {
 
 
     return (
+        <>
+        <ConfirmDeleteModal
+            show={showConfirmDelete}
+            title={"Delete Patient"}
+            message={"Do you really want to delete this patient and all of its data?"}
+            callback={handleDeletePatient}
+            callbackArgs={location.state.patientData.id}
+            cancelCallback={toggleConfirmDelete}            
+        />
         <Layout>
-            <Container>
+            <Container fluid={true}>
                 <h1 className="text-center">Patient Profile View</h1>
                  <Row>
                     <Col lg={6}>
-                        <Form className="my-5">
+                        <Form className="my-5 mx-auto component-big">
                             <h2 className='text-center'>{location.state.patientData.name}</h2>
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Name</Form.Label>
@@ -323,7 +340,7 @@ const PatientProfileView = () => {
                                 Update Patient
                             </Button> }
 
-                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={() => {handleDeletePatient(location.state.patientData.id)}}>
+                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                 Delete Patient
                             </Button>}  
                             
@@ -353,6 +370,7 @@ const PatientProfileView = () => {
                 </Row>
             </Container>
         </Layout>
+        </>
     );
 };
 
