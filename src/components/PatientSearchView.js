@@ -9,14 +9,17 @@ import { useAuth } from '../auth';
 import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
 import NewPatientModal from './modals/NewPatientModal';
 import moment from 'moment'
+import LoadingModal from "./modals/LoadingModal";
 
 const PatientSearchView = () => {
-   const auth = useAuth();
-   const [searchQuery, setSearchQuery] = useState("");
-   const [showNewPatientModal, setShowNewPatientModal] = useState(false);
-   const [patientsData, setPatientsData] = useState([]);  
-   const [filteredPatients, setFilteredPatients] = useState([]);  
-   const navigate = useNavigate();
+    const auth = useAuth();
+    const [searchQuery, setSearchQuery] = useState("");
+    const [showNewPatientModal, setShowNewPatientModal] = useState(false);
+    const [patientsData, setPatientsData] = useState([]);  
+    const [filteredPatients, setFilteredPatients] = useState([]);  
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSearch = (query) => {   
         if (patientsData.length) {
@@ -33,18 +36,23 @@ const PatientSearchView = () => {
         showNewPatientModal ? setShowNewPatientModal(false) : setShowNewPatientModal(true);
     }
 
-    const getPatients = async () => {           
+    const getPatients = async () => {     
+        setLoading(true);      
         const queryData = await supabase
             .from('patients')
             .select()            
             .eq("org_id", auth.user.user_metadata.org_id)
             .eq("rec_deleted", false)
         
-         if (queryData.error) {
+        if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
+        } else {
+            setLoading(false);
+            queryData.data.forEach(patient => patient.birthdate = moment(patient.birthdate).toDate())
+            setPatientsData(queryData.data); 
         }
-        queryData.data.forEach(patient => patient.birthdate = moment(patient.birthdate).toDate())
-        setPatientsData(queryData.data);               
+                      
     }
 
 
@@ -70,6 +78,8 @@ const PatientSearchView = () => {
 
 
     return (
+        <>
+        {loading && <LoadingModal />}        
         <Layout>
              
             <NewPatientModal 
@@ -133,6 +143,7 @@ const PatientSearchView = () => {
                 </div>
             </Container>
         </Layout>
+        </>
     );
 };
 

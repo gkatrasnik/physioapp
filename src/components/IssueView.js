@@ -10,7 +10,7 @@ import SymptomsList from './SymptomsList';
 import InterventionsList from './InterventionsList';
 import moment from "moment";
 import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
-
+import LoadingModal from "./modals/LoadingModal";
 
 const IssueView = () => {
     const auth = useAuth();
@@ -18,6 +18,8 @@ const IssueView = () => {
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
    // const [userData, setUserData] = useState();
 
@@ -38,14 +40,17 @@ const IssueView = () => {
 
 
     const getIssueData = async () => {
+        setLoading(true);
         const queryData = await supabase
             .from('issues')
             .select()
             .eq('id',location.state.issueData.id)
             .eq("rec_deleted", false)
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         }else {
+            setLoading(false);
             if(queryData.data) {
                 setTitle(queryData.data[0].name)
                 setNotes(queryData.data[0].notes)
@@ -62,7 +67,7 @@ const IssueView = () => {
     }
 
     const deleteIssue = async (issueId) => {       
-
+        setLoading(true);
         //delete isuuses symptoms
         const deletedSymptom = await supabase
             .from('symptoms')
@@ -71,7 +76,7 @@ const IssueView = () => {
             })
             .eq('issue_id', issueId)
 
-        if (deletedSymptom.error) {
+        if (deletedSymptom.error) {            
             console.warn("There were no symptoms to delete for issue id ", issueId);
         }    
 
@@ -95,13 +100,17 @@ const IssueView = () => {
             .eq('id', issueId)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
-        }     
+        } else {
+            setLoading(false);
+            navigate(-1);
+        }
         
-        navigate(-1);
     }
 
     const updateIssue = async () => {
+        setLoading(true);
         const queryData = await supabase
             .from('issues')
             .update({
@@ -116,8 +125,10 @@ const IssueView = () => {
             .eq('id', location.state.issueData.id)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         }else {
+            setLoading(false);
             getIssueData();
         }        
     }
@@ -137,14 +148,17 @@ const IssueView = () => {
 
     //patients data
     const getPatientData = async () => {
-         const queryData = await supabase
+        setLoading(true);
+        const queryData = await supabase
             .from('patients')
             .select() 
             .eq('id', location.state.issueData.patient_id)           
             .eq("rec_deleted", false)
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         }else {
+            setLoading(false);
             setPatientData(queryData.data[0])
         }     
     }
@@ -169,6 +183,8 @@ const IssueView = () => {
 
     return (
         <>
+        {loading && <LoadingModal />}
+
         <ConfirmDeleteModal
             show={showConfirmDelete}
             title={"Delete Issue"}

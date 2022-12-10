@@ -7,7 +7,8 @@
     import { supabase } from '../supabase';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
-    
+    import LoadingModal from "./modals/LoadingModal";
+
     import NewAppointmentModal from './modals/NewAppointmentModal';
     import AppointmentModal from './modals/AppointmentModal';
     
@@ -20,7 +21,8 @@
         const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
         const [currentEvent, setCurrentEvent] = useState(null);
         const [selectedSlot, setSelectedSlot] = useState(null);
-    
+        const [loading, setLoading] = useState(false);
+
         
          const handleSelectSlot = (slot) => {
             setSelectedSlot(slot)            
@@ -46,14 +48,17 @@
     
     
         const getEvents = async () => {
-             const queryData = await supabase
+            setLoading(true);
+            const queryData = await supabase
                 .from('appointments')
                 .select()
                 .eq("org_id", auth.user.user_metadata.org_id)
                 .eq("rec_deleted", false)
             if (queryData.error) {
-                alert(queryData.error.message);
+                setLoading(false);
+                alert(queryData.error.message);                
             }else {
+                setLoading(false);
                 queryData.data.forEach(event => {
                     event.start = moment(event.start).toDate();
                     event.end = moment(event.end).toDate();
@@ -63,14 +68,17 @@
         }
     
         const getPatients = async () => {  
+            setLoading(true);
             const queryData = await supabase
                 .from('patients')
                 .select()
                 .eq("org_id", auth.user.user_metadata.org_id)               
                 .eq("rec_deleted", false)
             if (queryData.error) {
+                setLoading(false);
                 alert(queryData.error.message);
             }
+            setLoading(false);
             setPatientsData(queryData.data);               
         }
     
@@ -95,6 +103,9 @@
         
     
         return (
+            <>
+            {loading && <LoadingModal />}
+
             <Layout>
                 <Container>
                     <h1 className='text-center'>Appointments</h1>   
@@ -129,7 +140,7 @@
                     </div>
                 </Container>                    
             </Layout>
-    
+            </>
         );
     };
     

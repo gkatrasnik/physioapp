@@ -5,9 +5,13 @@ import {useAuth} from "../../auth";
 import { Form, Button, Card, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BoxArrowInUp } from "react-bootstrap-icons";
+import LoadingModal from "../modals/LoadingModal";
+
 
 const Signup = () => {
     const auth = useAuth();
+    const [loading, setLoading] = useState(false);
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
@@ -25,14 +29,17 @@ const Signup = () => {
 
     const submitOrgPass = async (e) => {   
       e.preventDefault();   
+      setLoading(true);
       let { data, error } = await supabase
         .rpc('find_org', {
           passwordparam:orgPass
         })
 
       if (error) {
+        setLoading(false);
         alert(error.message);
       } else {
+        setLoading(false);
         if (data) {
           setOrgCode(data);
           setOrgPass("");
@@ -48,6 +55,7 @@ const Signup = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const data = {           
           name: name,
@@ -59,15 +67,18 @@ const Signup = () => {
         }
 
         if (password !== passwordConfirmation) {
+            setLoading(false);
             return alert("Password confirmation does not match")
         }
 
         const signIn = await auth.signup(email, password, data)
 
         if(signIn.error) {
-            alert(signIn.error.message)
+          setLoading(false);
+          alert(signIn.error.message)
         } else {
-            alert("Your account has been created,  please verify it by clicking the activation link that has been send to your email")
+          setLoading(false);
+          alert("Your account has been created,  please verify it by clicking the activation link that has been send to your email")
         }
 
         setEmail("")
@@ -83,6 +94,8 @@ const Signup = () => {
    
     return (
     <>
+      {loading && <LoadingModal />}
+
       {!orgCode && <Card
         style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "10em" }}
         className="box-shadow"

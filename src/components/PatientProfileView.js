@@ -15,6 +15,7 @@ import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
 import IssuesCalendar from './IssuesCalendar';
 import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
+import LoadingModal from "./modals/LoadingModal";
 
 
 const PatientProfileView = () => {
@@ -23,6 +24,7 @@ const PatientProfileView = () => {
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     
     const [infoExpanded, setInfoExpanded] = useState(false);
@@ -42,30 +44,33 @@ const PatientProfileView = () => {
     
 
     const getPatientData = async () => {
-         const queryData = await supabase
+        setLoading(true);
+        const queryData = await supabase
             .from('patients')
             .select()
             .eq('id',location.state.patientData.id)
             .eq("rec_deleted", false)
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         }else {
-            setName(queryData.data[0].name)
-            setEmail(queryData.data[0].email)
-            setPhone(queryData.data[0].phone)
-            setAddress(queryData.data[0].address)
-            setCity(queryData.data[0].city)
-            setZip(queryData.data[0].zip_code)
-            setBirdhDate(queryData.data[0].birthdate)
-            setOccupation((queryData.data[0].occupation))
+            setLoading(false);
 
+            setName(queryData.data[0].name);
+            setEmail(queryData.data[0].email);
+            setPhone(queryData.data[0].phone);
+            setAddress(queryData.data[0].address);
+            setCity(queryData.data[0].city);
+            setZip(queryData.data[0].zip_code);
+            setBirdhDate(queryData.data[0].birthdate);
+            setOccupation((queryData.data[0].occupation));
         }     
     }
     
     
 
     const handleDeletePatient = async (patientId) => {
-
+        setLoading(true);
         await handleDeleteData();
 
         const queryData = await supabase
@@ -76,16 +81,18 @@ const PatientProfileView = () => {
             .eq('id',patientId)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
-        }    
-
-        console.log("after deleting patient")
+        } else {
+            setLoading(false);        
+            navigate("/patients");
+        }   
         
-        navigate("/patients");
     }
 
     
     const updatePatient = async () => {  
+        setLoading(true);
         const queryData = await supabase
             .from('patients')
             .update({
@@ -103,8 +110,10 @@ const PatientProfileView = () => {
             .eq('id', location.state.patientData.id)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         }else {
+            setLoading(false);
         }            
         
     }
@@ -133,10 +142,12 @@ const PatientProfileView = () => {
 
     //delete all patients data. It is called on deletePatient
     const handleDeleteData = async () => {   
+        setLoading(true);
         //delete all issues of this patient        
         const issuesResult = await Promise.allSettled(issuesData.map(async (issue) => {
           await deleteIssue(issue.id);          
         }));
+        
 
         //delete apopointments of this patient
         const queryData = await supabase
@@ -147,13 +158,16 @@ const PatientProfileView = () => {
             .eq('patient_id', location.state.patientData.id)
 
             if (queryData.error) {
+                setLoading(false);
                 alert(queryData.error.message);
             } else {
+                setLoading(false);
                 return queryData;
             } 
     }
 
-    const deleteIssue = async (issueId) => {    
+    const deleteIssue = async (issueId) => {   
+        setLoading(true); 
         //delete isuses symptoms
         const deletedSymptom = await supabase
             .from('symptoms')
@@ -162,10 +176,11 @@ const PatientProfileView = () => {
             })
             .eq('issue_id', issueId)
 
-        if (deletedSymptom.error) {
+        if (deletedSymptom.error) {            
             alert(deletedSymptom.error.message);
-        }    
+        }   
 
+        
         //delete isuses interventions
         const deletedIntervention = await supabase
             .from('interventions')
@@ -178,6 +193,7 @@ const PatientProfileView = () => {
             alert(deletedIntervention.error.message);
         }    
 
+        
         const queryData = await supabase
             .from('issues')
             .update({
@@ -186,22 +202,27 @@ const PatientProfileView = () => {
             .eq('id', issueId)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         } else {
+            setLoading(false);
             return queryData;
         }           
     }
 
     const getIssuesData = async () => {
-         const queryData = await supabase
+        setLoading(true);
+        const queryData = await supabase
             .from('issues')
             .select()
             .eq('patient_id',location.state.patientData.id)
             .eq("rec_deleted", false)
             .order('start', { ascending: false })
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         }else {
+            setLoading(false);
             setIssuesData(queryData.data);          
         } 
     }
@@ -219,6 +240,8 @@ const PatientProfileView = () => {
 
     return (
         <>
+        {loading && <LoadingModal />}
+
         <ConfirmDeleteModal
             show={showConfirmDelete}
             title={"Delete Patient"}

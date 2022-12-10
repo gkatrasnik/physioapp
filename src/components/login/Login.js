@@ -4,11 +4,14 @@ import {useAuth} from "../../auth";
 import { Form, Button, Card, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BoxArrowInUp } from "react-bootstrap-icons";
+import LoadingModal from "../modals/LoadingModal";
 
 const Login = () => {
     const auth = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const handleResetPassword = () => {
@@ -18,13 +21,16 @@ const Login = () => {
 
 
     const handleSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
 
         const signIn = await auth.login(email, password);
 
         if(signIn.error) {
             alert(signIn.error.message);
+            setLoading(false);
         } 
+        setLoading(false);
 
         setEmail("");
         setPassword("");
@@ -33,6 +39,7 @@ const Login = () => {
 
     return (
     <>
+      {loading && <LoadingModal />}
       <Card
         style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "10em" }}
         className="box-shadow"
