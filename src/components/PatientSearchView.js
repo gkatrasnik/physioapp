@@ -21,19 +21,19 @@ const PatientSearchView = () => {
 
     const navigate = useNavigate();
 
-    const handleSearch = (query) => {   
+    const handleSearch = () => {   
         if (patientsData.length) {
-            if (query.length === 0) { //show all patients
+            if (searchQuery.length === 0) { //show all patients
                 setFilteredPatients(patientsData);
-            } else if (query.length > 2) {//auto filter patients when typing in search      
-            const newArr = patientsData.filter(patient => patient.name.toLowerCase().includes(query.toLowerCase()));
+            } else if (searchQuery.length > 2) {//auto filter patients when typing in search      
+            const newArr = patientsData.filter(patient => patient.name.toLowerCase().includes(searchQuery.toLowerCase()));
             setFilteredPatients(newArr);
             }
         }
     }
 
     const toggleModal = () => {
-        showNewPatientModal ? setShowNewPatientModal(false) : setShowNewPatientModal(true);
+        setShowNewPatientModal(!showNewPatientModal);
     }
 
     const getPatients = async () => {     
@@ -90,7 +90,7 @@ const PatientSearchView = () => {
             <Container>
                 <h1 className='text-center'>Patient Search View</h1>
 
-                <Form className='my-3' onSubmit={handleSearch}>
+                <Form className='my-3' onSubmit={e => { e.preventDefault()}}>
                     <Row className="align-items-center">
                         <Col>
                             <Form.Group  controlId="patientSearch">
@@ -103,7 +103,10 @@ const PatientSearchView = () => {
                             </Form.Group>
                         </Col>
                         <Col>
-                            <ButtonGroup aria-label="Basic example">                                
+                            <ButtonGroup aria-label="Basic example">   
+                                <Button variant="primary" onClick={handleSearch}>
+                                    Search
+                                </Button>                             
                                 <Button variant="primary" onClick={toggleModal}>
                                     New Patient
                                 </Button>

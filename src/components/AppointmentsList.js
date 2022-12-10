@@ -6,6 +6,7 @@ import moment from 'moment';
 import { useAuth } from '../auth';
 import NewAppointmentModal from './modals/NewAppointmentModal';
 import AppointmentModal from './modals/AppointmentModal';
+import LoadingModal from "./modals/LoadingModal"
 
 
 
@@ -17,8 +18,10 @@ const AppointmentsList = (props) => {
     const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
     const [currentEvent, setCurrentEvent] = useState(null);
     const [patientsData, setPatientsData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const getEvents = async () => {
+        setLoading(true); 
         const queryData = await supabase
             .from('appointments')
             .select()
@@ -26,8 +29,10 @@ const AppointmentsList = (props) => {
             .eq("rec_deleted", false)
             .order('end', { ascending: false })
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         } else {
+            setLoading(false); 
             queryData.data.forEach(event => {
                 event.start = moment(event.start).toDate();
                 event.end = moment(event.end).toDate();
@@ -65,15 +70,21 @@ const AppointmentsList = (props) => {
 
     //patients data
     const getPatients = async () => {  
+        setLoading(true); 
         const queryData = await supabase
             .from('patients')
             .select()
             .eq("org_id", auth.user.user_metadata.org_id)               
             .eq("rec_deleted", false)
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
+        } else {
+            setLoading(false); 
+            setPatientsData(queryData.data);     
         }
-        setPatientsData(queryData.data);               
+
+                  
     }
 
     useEffect(() => {
@@ -90,6 +101,7 @@ const AppointmentsList = (props) => {
     
     return (
         <>
+            {loading && <LoadingModal />}  
             <NewAppointmentModal 
                 patientsData={patientsData}
                 show={showNewAppointmentModal} 

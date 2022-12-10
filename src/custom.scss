@@ -64,17 +64,18 @@ $event-border-radius: 0;
 
 // Add SASS theme customizations here..
 
-.spinner {
-  position: fixed;
-  margin-left: auto;
-  margin-right: auto;
+.spinner {  
+  position: absolute;  
+  top:0;
+  bottom: 0;
   left: 0;
   right: 0;
-  top: 40vh;
-  color: #a2d5f2;
+  margin: auto;    
+  color: $primary;
   width: 4rem;
   height: 4rem;
   z-index: 10000;
+  border-width: 0.4em;
 }
 
 .center {

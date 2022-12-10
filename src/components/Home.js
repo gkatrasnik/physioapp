@@ -4,21 +4,29 @@ import {useAuth} from "../auth";
 import Layout from "./Layout";
 import { Container, Card, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import LoadingModal from "./modals/LoadingModal"
+
 
 const Home = () => {
     const auth = useAuth();
     const [orgData, setOrgData] = useState(null);
+        const [loading, setLoading] = useState(false);
 
     const getOrgData = async (org_id) => {
+        setLoading(true); 
         const queryData = await supabase
             .from('organizations')
             .select()
             .eq("id", org_id)
             .eq("rec_deleted", false)
         if (queryData.error) {
-            console.log(queryData.error.message)
+            setLoading(false); 
+            alert(queryData.error.message)
+        } else {
+            setLoading(false); 
+            setOrgData(queryData.data[0]);
         }
-        setOrgData(queryData.data[0]);
+        
     }
     
 
@@ -27,6 +35,8 @@ const Home = () => {
     }, [])
 
     return (
+        <>
+        {loading && <LoadingModal />}
         <Layout>
             <Container>
                 <h1 className='text-center'>Home</h1>
@@ -59,6 +69,7 @@ const Home = () => {
                 </Card>}                
             </Container>
         </Layout>
+        </>
     );
 };
 

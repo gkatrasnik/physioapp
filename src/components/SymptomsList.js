@@ -5,6 +5,8 @@ import { Button, Table} from "react-bootstrap";
 import SymptomModal from './modals/SymptomModal';
 import NewSymptomModal from './modals/NewSymptomModal';
 import moment from 'moment'
+import LoadingModal from "./modals/LoadingModal"
+
 
 const SymptomsList = (props) => {
     const [showSymptomModal, setShowSymptomModal] = useState(false);
@@ -12,7 +14,7 @@ const SymptomsList = (props) => {
     const [symptomsData, setSymptomsData] = useState([]);  
     const [bodypartsData, setBodypartsData] = useState([]);  
     const [currentSymptomData, setCurrentSymptomData] = useState(null);
-
+    const [loading, setLoading] = useState(false);
 
     const showUpdateSymptomModal = (symptomObj) => { 
         setCurrentSymptomData(symptomObj);  
@@ -31,27 +33,33 @@ const SymptomsList = (props) => {
 
    
     const getSymptomsData = async () => {
-         const queryData = await supabase
+        setLoading(true); 
+        const queryData = await supabase
             .from('symptoms')
             .select()
             .eq('issue_id',props.issueData.id)
             .eq("rec_deleted", false)
             .order('created_at', { ascending: false })
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         }else {
+            setLoading(false); 
             setSymptomsData(queryData.data)
         }     
     }
 
     const getBodypartsData = async () => {
+        setLoading(true); 
          const queryData = await supabase
             .from('bodyparts')
             .select()
             .eq("rec_deleted", false)
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         }else {
+            setLoading(false); 
             setBodypartsData(queryData.data)
         }     
     }
@@ -84,7 +92,7 @@ const SymptomsList = (props) => {
     return (
         
         <>
-        
+            {loading && <LoadingModal />}
             <SymptomModal 
                 show={showSymptomModal} 
                 hideModal={hideUpdateSymptomModal}   

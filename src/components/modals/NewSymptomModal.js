@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import LoadingModal from "./LoadingModal"
+
 
 const NewSymptomModal = (props) => {
     const [name, setName] = useState("");
@@ -11,7 +13,7 @@ const NewSymptomModal = (props) => {
     const [duration, setDuration] = useState("");
     const [bodypartId, setBodypartId] = useState(1);    
     const [bodypartsList, setBodypartsList] = useState([]);
-
+    const [loading, setLoading] = useState(false);
     const auth = useAuth();
 
     const handleNewSymptom = (e) => {
@@ -26,7 +28,8 @@ const NewSymptomModal = (props) => {
     }
 
 
-    const addSymptom = async () => {        
+    const addSymptom = async () => {  
+        setLoading(true);       
         const queryData = await supabase
             .from('symptoms')
             .insert({
@@ -41,21 +44,26 @@ const NewSymptomModal = (props) => {
             })
 
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         } else {
+            setLoading(false); 
             props.getSymptomsData();  
         }
     }
 
     const getBodypartsData = async() => {
+        setLoading(true); 
         const queryData = await supabase
             .from('bodyparts')
             .select()    
             .eq('rec_deleted', false)      
 
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         } else {
+            setLoading(false); 
            setBodypartsList(queryData.data);   
         }     
     }
@@ -71,6 +79,8 @@ const NewSymptomModal = (props) => {
 
 
     return (        
+        <>
+        {loading && <LoadingModal />}
         <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Add New Symptom</Modal.Title>
@@ -141,6 +151,7 @@ const NewSymptomModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 

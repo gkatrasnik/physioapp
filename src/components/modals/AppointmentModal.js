@@ -6,6 +6,8 @@ import { useAuth } from '../../auth';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import LoadingModal from "./LoadingModal"
+
 
 const AppointmentModal = (props) => {
     
@@ -16,6 +18,8 @@ const AppointmentModal = (props) => {
     const [eventPatient, setEventPatient] = useState(null);
     const [showToPatientBtn, setShowToPatientBtn] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
     const auth = useAuth();
     const navigate = useNavigate();
@@ -30,7 +34,8 @@ const AppointmentModal = (props) => {
     }
 
 
-    const deleteAppointment = async () => {        
+    const deleteAppointment = async () => {    
+        setLoading(true);    
         const queryData = await supabase
             .from('appointments')
             .update({
@@ -39,8 +44,10 @@ const AppointmentModal = (props) => {
             .eq('id', props.currentEvent.id)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         } else {
+            setLoading(false);
             props.getEvents();
         }
     }
@@ -77,6 +84,8 @@ const AppointmentModal = (props) => {
 
     return (        
         <>
+        {loading && <LoadingModal />}
+
         <ConfirmDeleteModal
             show={showConfirmDelete}
             title={"Delete Appointment"}

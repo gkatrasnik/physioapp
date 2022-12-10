@@ -9,6 +9,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import LoadingModal from "./LoadingModal"
+
 
 const NewPatientModal = (props) => {
    // const auth = useAuth();
@@ -20,7 +22,7 @@ const NewPatientModal = (props) => {
     const [zip, setZip] = useState(null);
     const [birthDate, setBirthDate] = useState(null);
     const [occupation, setOccupation] = useState("");
-
+    const [loading, setLoading] = useState(false);
     const auth = useAuth();
 
     const handleNewPatient = (e) => {
@@ -30,7 +32,7 @@ const NewPatientModal = (props) => {
     }
 
     const addPatient = async () => {     
-
+        setLoading(true); 
         const queryData = await supabase
             .from('patients')
             .insert({
@@ -48,9 +50,11 @@ const NewPatientModal = (props) => {
             })
 
         if (queryData.error) {
-            console.log(queryData.error.message);            
+            setLoading(false); 
+            alert(queryData.error.message);            
         }else {
-             props.getPatients();
+            setLoading(false); 
+            props.getPatients();
         }     
         
         
@@ -61,6 +65,8 @@ const NewPatientModal = (props) => {
 
 
     return (        
+        <>
+        {loading && <LoadingModal />}
         <Modal centered backdrop="static" show={props.show} onHide={props.handleToggleModal}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Add New Patient</Modal.Title>
@@ -158,6 +164,7 @@ const NewPatientModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 

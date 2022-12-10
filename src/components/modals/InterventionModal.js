@@ -4,11 +4,13 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import LoadingModal from "./LoadingModal"
 
 
 const InterventionModal = (props) => {
     const [editing, setEditing] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState("");
@@ -42,7 +44,8 @@ const InterventionModal = (props) => {
         setEditing(false);          
     }
 
-    const updateIntervention = async () => {        
+    const updateIntervention = async () => {    
+        setLoading(true);    
         const queryData = await supabase
             .from('interventions')
             .update({               
@@ -56,13 +59,16 @@ const InterventionModal = (props) => {
             .eq('id', props.interventionData.id)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         } else {
+            setLoading(false);
             props.getInterventionsData(); 
         }
     }
 
      const deleteIntervention = async () => {
+        setLoading(true);
         const queryData = await supabase
             .from('interventions')
             .update({
@@ -71,8 +77,10 @@ const InterventionModal = (props) => {
             .eq('id', props.interventionData.id)
 
         if (queryData.error) {
+            setLoading(false);
             alert(queryData.error.message);
         } else {
+            setLoading(false);
             props.getInterventionsData();    
         }     
                 
@@ -91,6 +99,8 @@ const InterventionModal = (props) => {
 
     return (        
         <>
+        {loading && <LoadingModal />}
+
         <ConfirmDeleteModal
             show={showConfirmDelete}
             title={"Delete Intervention"}

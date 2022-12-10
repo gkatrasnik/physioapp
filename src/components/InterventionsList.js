@@ -6,6 +6,8 @@ import InterventionModal from './modals/InterventionModal';
 import NewInterventionModal from './modals/NewInterventionModal';
 import { useAuth } from '../auth';
 import moment from 'moment';
+import LoadingModal from "./modals/LoadingModal"
+
 
 
 const InterventionsList = (props) => {
@@ -15,6 +17,7 @@ const InterventionsList = (props) => {
     const [showNewInterventionModal, setShowNewInterventionModal] = useState(false);
     const [interventionsData, setInterventionsData] = useState([]);  
     const [currentInterventionData, setCurrentInterventionData] = useState(null)
+        const [loading, setLoading] = useState(false);
 
     const showUpdateInterventionModal = (interventionObj) => { 
         setCurrentInterventionData(interventionObj);                      
@@ -31,6 +34,7 @@ const InterventionsList = (props) => {
     }
    
     const getInterventionsData = async () => {
+            setLoading(true); 
             const queryData = await supabase
             .from('interventions')
             .select()
@@ -38,8 +42,10 @@ const InterventionsList = (props) => {
             .eq("rec_deleted", false)
             .order('created_at', { ascending: false })
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         }else {
+            setLoading(false); 
             setInterventionsData(queryData.data)
         }     
     }
@@ -60,7 +66,7 @@ const InterventionsList = (props) => {
     return (
         
         <>
-            
+            {loading && <LoadingModal />}
             <InterventionModal 
                 show={showInterventionModal} 
                 hideModal={hideUpdateInterventionModal}                  

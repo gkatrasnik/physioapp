@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
+import LoadingModal from "./LoadingModal"
+
 
 const NewInterventionModal = (props) => {
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState("");
     const [notes, setNotes] = useState("");    
+    const [loading, setLoading] = useState(false);
 
     const auth = useAuth();
 
@@ -22,7 +25,8 @@ const NewInterventionModal = (props) => {
     }
 
 
-    const addIntervention = async () => {        
+    const addIntervention = async () => { 
+        setLoading(true);       
         const queryData = await supabase
             .from('interventions')
             .insert({
@@ -36,8 +40,10 @@ const NewInterventionModal = (props) => {
             })
 
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         } else {
+            setLoading(false); 
             props.getInterventionsData();
         }
     }
@@ -51,6 +57,9 @@ const NewInterventionModal = (props) => {
 
 
     return (        
+        <>
+        {loading && <LoadingModal />}
+
         <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Add New Intervention</Modal.Title>
@@ -104,6 +113,7 @@ const NewInterventionModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 

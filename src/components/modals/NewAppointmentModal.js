@@ -4,6 +4,9 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import moment from 'moment';
+import LoadingModal from "./LoadingModal"
+
+
 
 const NewAppointmentModal = (props) => {
     const [start, setStart] = useState(null);
@@ -11,6 +14,8 @@ const NewAppointmentModal = (props) => {
     const [patientId, setPatientId] = useState(1);
     const [title, setTitle] = useState("");
     const [patientFieldDisabled, setPatientFieldDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
 
     const auth = useAuth();
@@ -30,7 +35,8 @@ const NewAppointmentModal = (props) => {
     }
 
 
-    const addAppointment = async () => {        
+    const addAppointment = async () => {  
+        setLoading(true);      
         const queryData = await supabase
             .from('appointments')
             .insert({
@@ -44,8 +50,10 @@ const NewAppointmentModal = (props) => {
             })
 
         if (queryData.error) {
+            setLoading(false);     
             alert(queryData.error.message);
         } else {
+            setLoading(false);     
             props.getEvents();
         }
     }
@@ -60,7 +68,10 @@ const NewAppointmentModal = (props) => {
     }, [props.selectedSlot]);
     
 
-    return (        
+    return (     
+        <>   
+        {loading && <LoadingModal />}
+
         <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Add New Appointment</Modal.Title>
@@ -128,6 +139,7 @@ const NewAppointmentModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 

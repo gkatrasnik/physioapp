@@ -60,6 +60,7 @@
             }            
         }, [currentEvent])   
 
+        //modify issues data for displaying in calendar
         useEffect(() => {
           if (props.issuesData) {
             const clonedArr = props.issuesData.map((event) => {

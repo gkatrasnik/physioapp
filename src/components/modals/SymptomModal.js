@@ -5,11 +5,13 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
+import LoadingModal from "./LoadingModal"
+
 
 const SymptomModal = (props) => {
     const [editing, setEditing] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
-
+    const [loading, setLoading] = useState(false);
 
     const [name, setName] = useState("");
     const [intensity, setIntensity] = useState(0);
@@ -45,7 +47,8 @@ const SymptomModal = (props) => {
         setEditing(false);            
     }
 
-    const updateSymptom = async () => {        
+    const updateSymptom = async () => {      
+        setLoading(true);   
         const queryData = await supabase
             .from('symptoms')
             .update({
@@ -60,13 +63,16 @@ const SymptomModal = (props) => {
             .eq('id', props.symptomData.id)
 
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         } else {
+            setLoading(false); 
             props.getSymptomsData(); 
         }
     }
 
     const deleteSymptom = async () => {
+        setLoading(true); 
         const queryData = await supabase
             .from('symptoms')
             .update({
@@ -75,23 +81,28 @@ const SymptomModal = (props) => {
             .eq('id', props.symptomData.id)
 
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         } else {
+            setLoading(false); 
             props.getSymptomsData();    
         }     
                 
     }
 
     const getBodypartsData = async() => {
+        setLoading(true); 
         const queryData = await supabase
             .from('bodyparts')
             .select()
             .eq('rec_deleted', false)          
 
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         } else {
-           setBodypartsList(queryData.data) ;   
+            setLoading(false); 
+            setBodypartsList(queryData.data) ;   
         }     
     }
 
@@ -113,6 +124,7 @@ const SymptomModal = (props) => {
 
     return (        
         <>
+        {loading && <LoadingModal />}
         <ConfirmDeleteModal
             show={showConfirmDelete}
             title={"Delete Symptom"}
@@ -198,8 +210,7 @@ const SymptomModal = (props) => {
                     <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
                         Edit
                     </Button>
-                }
-                
+                }               
 
             </Form>
             </Modal.Body>

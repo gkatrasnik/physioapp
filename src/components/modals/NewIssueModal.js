@@ -10,6 +10,8 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import moment from 'moment';
+import LoadingModal from "./LoadingModal"
+
 
 const NewIssueModal = (props) => {
    // const auth = useAuth();
@@ -19,7 +21,7 @@ const NewIssueModal = (props) => {
     const [end, setEnd] = useState(null);
     const [resolved, setResolved] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
-
+    const [loading, setLoading] = useState(false);
     
     const auth = useAuth();
 
@@ -29,8 +31,9 @@ const NewIssueModal = (props) => {
         props.toggleShowNewIssue();
     }
 
-    const addIssue = async () => {        
-        console.log(props)
+    const addIssue = async () => {       
+
+        setLoading(true); 
         const queryData = await supabase
             .from('issues')
             .insert({
@@ -48,8 +51,10 @@ const NewIssueModal = (props) => {
             })
 
         if (queryData.error) {
+            setLoading(false); 
             alert(queryData.error.message);
         }else {
+            setLoading(false); 
             props.getIssuesData();
         }     
         
@@ -57,6 +62,8 @@ const NewIssueModal = (props) => {
 
 
     return (        
+        <>
+        {loading && <LoadingModal />}
         <Modal centered backdrop="static" show={props.showNewIssue} onHide={props.toggleShowNewIssue}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Add New Issue</Modal.Title>
@@ -128,6 +135,7 @@ const NewIssueModal = (props) => {
             </Form>
             </Modal.Body>
         </Modal>
+        </>
     );
 };
 
