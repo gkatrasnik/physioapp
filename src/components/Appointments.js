@@ -108,7 +108,7 @@
 
             <Layout>
                 <Container>
-                    <h1 className='text-center'>Appointments</h1>   
+                    <h1 className='text-center page-heading'>Appointments</h1>   
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
                         patientsData={patientsData}

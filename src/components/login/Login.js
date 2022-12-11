@@ -45,7 +45,7 @@ const Login = () => {
         className="box-shadow"
       >
         <Card.Body>
-          <h1 className="text-center">Login</h1>
+          <h1 className="text-center page-heading">Login</h1>
           <Form
             onSubmit={handleSubmit}
             style={{ width: "90%", maxWidth: "32rem", margin: "auto" }}

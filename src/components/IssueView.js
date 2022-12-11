@@ -202,11 +202,11 @@ const IssueView = () => {
         />
 
         <Layout>
-            <Container fluid={true}>
-                <h1 className="text-center">Issue View</h1>
+            <Container fluid={true} className={resolved ? 'border-success' : 'border-warning'}>
+                <h1 className="text-center page-heading">Issue View</h1>
                  <Row>
                     <Col lg={6}>
-                        <Form className="my-5 mx-auto component-big">
+                        <Form className="my-5 mx-auto component-big ">
                             <h2 className='text-center'>{location.state.issueData.name}</h2>
 
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">

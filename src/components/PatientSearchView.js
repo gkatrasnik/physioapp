@@ -88,7 +88,7 @@ const PatientSearchView = () => {
                 getPatients={getPatients}
             />
             <Container>
-                <h1 className='text-center'>Patient Search View</h1>
+                <h1 className='text-center page-heading'>Patient Search View</h1>
 
                 <Form className='my-3' onSubmit={e => { e.preventDefault()}}>
                     <Row className="align-items-center">

@@ -252,7 +252,7 @@ const PatientProfileView = () => {
         />
         <Layout>
             <Container fluid={true}>
-                <h1 className="text-center">Patient Profile View</h1>
+                <h1 className="text-center page-heading">Patient Profile View</h1>
                  <Row>
                     <Col lg={6}>
                         <Form className="my-5 mx-auto component-big">

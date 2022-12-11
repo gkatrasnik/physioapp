@@ -10,7 +10,7 @@ function Layout({children}) {
 
   return (
     <>
-        <Navbar key={false} bg="light" expand={false} className="mb-3">
+        <Navbar key={false} bg="light" expand={false}>
           <Container fluid>
             <Navbar.Brand href="#">PhysioApp</Navbar.Brand>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-false`} />

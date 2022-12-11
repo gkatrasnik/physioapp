@@ -101,7 +101,7 @@ const Signup = () => {
         className="box-shadow"
       >
         <Card.Body>
-          <h1 className="text-center">Create User</h1>
+          <h1 className="text-center page-heading">Create User</h1>
           <Form
             onSubmit={submitOrgPass}
             style={{ width: "90%", maxWidth: "32rem", margin: "auto" }}
@@ -135,7 +135,7 @@ const Signup = () => {
         className="box-shadow"
       >
         <Card.Body>
-          <h1 className="text-center">Create User</h1>
+          <h1 className="text-center page-heading">Create User</h1>
           <Form
             onSubmit={handleSubmit}
             style={{ width: "90%", maxWidth: "32rem", margin: "auto" }}

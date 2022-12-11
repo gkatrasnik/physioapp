@@ -39,7 +39,7 @@ const Home = () => {
         {loading && <LoadingModal />}
         <Layout>
             <Container>
-                <h1 className='text-center'>Home</h1>
+                <h1 className='text-center page-heading'>Home</h1>
 
                 <Card className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
                 <Card.Body className="d-flex flex-row justify-content-around">

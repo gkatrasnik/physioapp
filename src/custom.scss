@@ -127,6 +127,7 @@ $event-border-radius: 0;
 
 .component-big {
   max-width: 800px;
+  padding: 10px;
 }
 
 .btn-danger {
@@ -140,6 +141,19 @@ $event-border-radius: 0;
   width: 1.5em;
   height: 1.5em;
 }
+
+.border-success {
+  border:5px solid $success;
+}
+
+.border-warning {
+  border:5px solid $warning
+}
+
 .duration-picker {
   max-width: 150px;
+}
+
+.page-heading {
+  margin-top: 1rem;
 }

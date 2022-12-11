@@ -38,7 +38,7 @@ const UpdatePassword = () => {
         className="box-shadow"
       >
         <Card.Body>
-          <h1 className="text-center">Update Password</h1>
+          <h1 className="text-center page-heading">Update Password</h1>
           <Form
             onSubmit={handleSubmit}
             style={{ width: "90%", maxWidth: "32rem", margin: "auto" }}
