@@ -6,6 +6,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LoadingModal from "./LoadingModal"
+import Select from "react-select"
 
 
 const SymptomModal = (props) => {
@@ -102,7 +103,11 @@ const SymptomModal = (props) => {
             alert(queryData.error.message);
         } else {
             setLoading(false); 
-            setBodypartsList(queryData.data) ;   
+            const arr = queryData.data.map((bodypart) => {
+                bodypart.label = bodypart.body_side ? bodypart.body_side + " " + bodypart.name : bodypart.name
+                return bodypart
+            })
+            setBodypartsList(arr);
         }     
     }
 
@@ -180,19 +185,24 @@ const SymptomModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Body Part</Form.Label>                
-                 <Form.Select 
-                 disabled={!editing}
-                 defaultValue={bodypartId}
-                 onChange={(e) => {
-                    setBodypartId(e.target.value);
-                 }}
-                 >
-                {bodypartsList.map((part) => {
-                    return <option key={part.id} value={part.id}>{part.body_side} {part.name}</option>
-                })}
-               
-                </Form.Select>                                
+                <Form.Label>Body Part</Form.Label>              
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
+                    }}
+                    isDisabled={!editing}
+                    options={bodypartsList}          
+                    defaultValue={bodypartsList.find((bodypart) => bodypart.id === bodypartId)}
+                    getOptionLabel={(option)=>option.label}
+                    getOptionValue={(option)=>option.id}                    
+                    onChange={(option) => {
+                        setBodypartId(option.id);
+                    }}
+                >
+                </Select>                                 
                 </Form.Group>
 
                 <Button className="m-2 " variant="secondary" onClick={handleClose}>

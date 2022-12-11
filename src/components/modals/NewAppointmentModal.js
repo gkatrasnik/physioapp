@@ -5,6 +5,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import moment from 'moment';
 import LoadingModal from "./LoadingModal"
+import Select from 'react-select';
 
 
 
@@ -143,18 +144,24 @@ const NewAppointmentModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                <Form.Label>Patient</Form.Label>
-               <Form.Select 
-                    disabled={patientFieldDisabled}
-                    defaultValue={patientId}
-                    onChange={(e) => {
-                    setPatientId(e.target.value);
+                <Form.Label>Patient</Form.Label>                  
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
                     }}
-                    >
-                    {props.patientsData.map((patient) => {
-                        return <option key={patient.id} value={patient.id}>{patient.name}</option>
-                    })}               
-                </Form.Select>     
+                    options={props.patientsData}                    
+                    defaultValue={props.patientsData.find((patient) => patient.id === patientId)}
+                    isDisabled={patientFieldDisabled}
+                    getOptionLabel={(option)=>option.name}
+                    getOptionValue={(option)=>option.id}
+                    onChange={(option) => {
+                        setPatientId(option.id);
+                    }}
+                >
+                </Select>
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">

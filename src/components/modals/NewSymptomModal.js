@@ -5,6 +5,7 @@ import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import LoadingModal from "./LoadingModal"
+import Select from 'react-select';
 
 
 const NewSymptomModal = (props) => {
@@ -64,10 +65,13 @@ const NewSymptomModal = (props) => {
             alert(queryData.error.message);
         } else {
             setLoading(false); 
-           setBodypartsList(queryData.data);   
+            const arr = queryData.data.map((bodypart) => {
+                bodypart.label = bodypart.body_side ? bodypart.body_side + " " + bodypart.name : bodypart.name
+                return bodypart
+            })
+            setBodypartsList(arr);
         }     
     }
-
    
     useEffect(() => {
         setName("");
@@ -126,18 +130,23 @@ const NewSymptomModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                <Form.Label>Body Part</Form.Label>                
-                <Form.Select                  
-                defaultValue={bodypartId}
-                onChange={(e) => {
-                setBodypartId(e.target.value);
-                }}
+                <Form.Label>Body Part</Form.Label>           
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
+                    }}
+                    options={bodypartsList}          
+                    defaultValue={bodypartsList.find((bodypart) => bodypart.id === bodypartId)}
+                    getOptionLabel={(option)=>option.label}
+                    getOptionValue={(option)=>option.id}                    
+                    onChange={(option) => {
+                        setBodypartId(option.id);
+                    }}
                 >
-                {bodypartsList.map((part) => {
-                    return <option key={part.id} value={part.id}>{part.body_side} {part.name}</option>
-                })}
-               
-                </Form.Select>                                
+                </Select>                          
                 </Form.Group>
                 
                 <Button className="m-2 " variant="secondary" onClick={props.toggleModal}>

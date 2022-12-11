@@ -39,13 +39,13 @@ FIRST WORKING PROTOTYPE. BASIC FUNCTIONALITY
 --------------------------------//phase 2//--------------------------------
 ADD FEATURES
 ! add appointments calendar 
-- fix search patients (get all patients on load, filter on search (like(%X%)))
-- make all tables max height and scrollable
-- make desktop layout (patient - if show info: paralel info and issues, appointments(make it?) table)
+! fix search patients (get all patients on load, filter on search (like(%X%)))
+! make all tables max height and scrollable
+! make desktop layout (patient - if show info: paralel info and issues, appointments(make it?) table)
 
-- implement confirmation dialogues on delete functions ("are you sure you want to delete X?)
-- implement loading component/icon on async actions
-- create appointments list (table of appointments) paralel with calendar, maybe 2 tabs, data is handeled in parent component, calendar and list gets just props?
+! implement confirmation dialogues on delete functions ("are you sure you want to delete X?)
+! implement loading component/icon on async actions
+! create appointments list (table of appointments) paralel with calendar, maybe 2 tabs, data is handeled in parent component, calendar and list gets just props?
 
 - take photos, add pictures to issues(storage)
 - add, record voice memos to issues(storage)?
@@ -57,11 +57,13 @@ ADD FEATURES
 
 --------------------------------//phase 3//--------------------------------
 MAKE THINGS PRODUCTION READY, SECURITY
+- create develop branch for developing and main for production
+! what can users do(crud) row level security
 - create new user, create trigger to add entry to users table // now usig auth.users.table
 - change hardcoded reset password link with .env variable
 db RLS:
 - add custom permission levels to users(admin, not admin)?
-- what can users do(crud) row level security
+
 
 - versioning, major_v(breaking db changes), minor_v(new features)
 - error loging to db

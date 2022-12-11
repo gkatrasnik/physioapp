@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LoadingModal from "./LoadingModal"
+import Select from "react-select"
 
 
 const AppointmentModal = (props) => {
@@ -123,15 +124,24 @@ const AppointmentModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                <Form.Label>Patient</Form.Label>
-               <Form.Select 
-                 disabled={true}
-                 defaultValue={patientId}                
-                 >
-                {props.patientsData.map((patient) => {
-                    return <option key={patient.id} value={patient.id}>{patient.name}</option>
-                })}               
-                </Form.Select>     
+                <Form.Label>Patient</Form.Label>                
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
+                    }}
+                    options={props.patientsData}                    
+                    defaultValue={props.patientsData.find((patient) => patient.id === patientId)}
+                    isDisabled={true}
+                    getOptionLabel={(option)=>option.name}
+                    getOptionValue={(option)=>option.id}
+                    onChange={(option) => {
+                        setPatientId(option.id);
+                    }}
+                >
+                </Select>
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
