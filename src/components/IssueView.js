@@ -54,10 +54,10 @@ const IssueView = () => {
             if(queryData.data) {
                 setTitle(queryData.data[0].name)
                 setNotes(queryData.data[0].notes)
-                setResolved(queryData.data[0].resolved)
+                setResolved(!!queryData.data[0].end)
                 setDiagnosis(queryData.data[0].diagnosis)
                 setStart(moment(queryData.data[0].start).toDate())
-                setEnd(moment(queryData.data[0].end).toDate())
+                setEnd(queryData.data[0].end ? moment(queryData.data[0].end).toDate() : null)
                 setLastChanged(queryData.data[0].last_changed)
                 setUserId(queryData.data[0].user_id)
                 setPatientId(queryData.data[0].patient_id)
@@ -179,7 +179,14 @@ const IssueView = () => {
         window.scrollTo(0, 0);
     }, []);
   
-    
+    //update resolved local state 
+    useEffect(() => {        
+      if (end) {
+        setResolved(true);
+      } else {
+        setResolved(false);
+      }
+    }, [end])    
 
     return (
         <>
@@ -275,8 +282,9 @@ const IssueView = () => {
 
                             <Form.Group className="m-2" controlId="exampleForm.ControlInput3">
                             <Form.Check
+                                className='d-flex justify-content-center align-items-center'
                                 label="Resolved"                     
-                                checked = {end && end}
+                                checked = {resolved}
                                 disabled = {true}
                                 type="checkbox"                       
                             />                
@@ -293,7 +301,7 @@ const IssueView = () => {
                                 Update Issue
                             </Button> }   
 
-                            {editing && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
+                            {editing && resolved && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
                                 Set Not resolved
                             </Button>}  
                                     

@@ -115,8 +115,9 @@ const NewIssueModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                    <Form.Label>Resolved</Form.Label>
                     <Form.Check
+                        className='d-flex justify-content-center align-items-center'
+                        label="Resolved"
                         checked = {resolved && resolved}
                         type="checkbox"
                         onChange={(e) => {

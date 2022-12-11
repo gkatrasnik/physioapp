@@ -37,7 +37,7 @@ const NewAppointmentModal = (props) => {
         setDurationM("0");
         setStart(null);
         setEnd(null);
-        setPatientId(props.currentPatientData ? props.currentPatientData.id : null);  
+        setPatientId(props.currentPatientData ? props.currentPatientData.id : 1);  
         setTitle("");        
     }
 
@@ -76,7 +76,6 @@ const NewAppointmentModal = (props) => {
 
     useEffect(()=>{
         //if durationM and durationH are not "0"
-        console.log (durationH, durationM,start)
         if (parseInt(durationH) || parseInt(durationM)) {
 
             // if start is not null, end can be set by adding duration to start
