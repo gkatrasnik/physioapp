@@ -376,7 +376,7 @@ const PatientProfileView = () => {
                         </Form>
 
                         <AppointmentsList
-                            patientData={location.state.patientData}
+                            currentPatientData={location.state.patientData}
                         />
                     </Col>
                     <Col lg={6}>

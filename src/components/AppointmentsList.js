@@ -25,7 +25,7 @@ const AppointmentsList = (props) => {
         const queryData = await supabase
             .from('appointments')
             .select()
-            .eq("patient_id", props.patientData.id)
+            .eq("patient_id", props.currentPatientData.id)
             .eq("rec_deleted", false)
             .order('end', { ascending: false })
         if (queryData.error) {
@@ -103,6 +103,7 @@ const AppointmentsList = (props) => {
         <>
             {loading && <LoadingModal />}  
             <NewAppointmentModal 
+                currentPatientData={props.currentPatientData}
                 patientsData={patientsData}
                 show={showNewAppointmentModal} 
                 toggleModal={toggleNewAppointmentModal} 
@@ -143,7 +144,7 @@ const AppointmentsList = (props) => {
                                 <td>{event.title}</td>                             
                                 <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
                                 <td>{getDuration(event.start, event.end) + ' min'}</td>
-                                <td>{props.patientData.name}</td>
+                                <td>{props.currentPatientData.name}</td>
                                 </tr>
                                 )
                             }):                     

@@ -15,6 +15,8 @@ const NewAppointmentModal = (props) => {
     const [title, setTitle] = useState("");
     const [patientFieldDisabled, setPatientFieldDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [durationH, setDurationH] = useState("0");
+    const [durationM, setDurationM] = useState("0");
 
 
 
@@ -23,15 +25,20 @@ const NewAppointmentModal = (props) => {
     const handleNewAppointment = (e) => {
         e.preventDefault();
         if (!(end > start)) {
-            return alert("Please set appointment duration")
+            return alert("Please set appointment duration");
+        }
+        if (!patientId) {
+            return alert("Please choose a patient");
         }
        
         addAppointment();
         props.toggleModal(); 
+        setDurationH("0");
+        setDurationM("0");
         setStart(null);
         setEnd(null);
-        setPatientId(null);
-        setTitle("");
+        setPatientId(props.currentPatientData ? props.currentPatientData.id : null);  
+        setTitle("");        
     }
 
 
@@ -66,6 +73,29 @@ const NewAppointmentModal = (props) => {
         let url = window.location.href;
         setPatientFieldDisabled(url.includes("/patient"))
     }, [props.selectedSlot]);
+
+    useEffect(()=>{
+        //if durationM and durationH are not "0"
+        console.log (durationH, durationM,start)
+        if (parseInt(durationH) || parseInt(durationM)) {
+
+            // if start is not null, end can be set by adding duration to start
+            if (start) {
+            setEnd(moment(start).add((parseInt(durationH)*60 + parseInt(durationM)), 'm').toDate()); 
+            } else {
+                alert('Please set appointment "Start" first')
+            }
+        }
+             
+    },[durationH, durationM, start])
+
+    //if NewAppointmentModalis opened from patientProfile, set patientId,
+    useEffect(() => {
+      if (props.currentPatientData) {
+        setPatientId(props.currentPatientData.id);
+      }
+    }, [])
+    
     
 
     return (     
@@ -92,28 +122,39 @@ const NewAppointmentModal = (props) => {
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>Duration (h:m)</Form.Label>
+                <div className="d-flex duration-picker">
                 <Form.Control
                     required
-                    type="time"
-                    defaultValue={"00:00"}                    
+                    type="number"
+                    min="0"                    
+                    defaultValue={durationH}                    
                     onChange={(e) => {
-                    setEnd(moment(start).add(e.target.valueAsNumber, 'ms').toDate());                    
+                    setDurationH(e.target.value)                  
                     }}
-                />                       
+                />
+                <Form.Control
+                    required
+                    type="number"
+                    min="0"
+                    max="59"
+                    defaultValue={durationM}                    
+                    onChange={(e) => setDurationM(e.target.value)}
+                />   
+                </div>                       
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
                 <Form.Label>Patient</Form.Label>
                <Form.Select 
-                 disabled={patientFieldDisabled}
-                 defaultValue={patientId}
-                 onChange={(e) => {
+                    disabled={patientFieldDisabled}
+                    defaultValue={patientId}
+                    onChange={(e) => {
                     setPatientId(e.target.value);
-                 }}
-                 >
-                {props.patientsData.map((patient) => {
-                    return <option key={patient.id} value={patient.id}>{patient.name}</option>
-                })}               
+                    }}
+                    >
+                    {props.patientsData.map((patient) => {
+                        return <option key={patient.id} value={patient.id}>{patient.name}</option>
+                    })}               
                 </Form.Select>     
                 </Form.Group>
 
