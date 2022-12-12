@@ -260,7 +260,7 @@ const IssueView = () => {
                             </Form.Group>  
 
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
-                            <Form.Label>To</Form.Label>
+                            <Form.Label>To (Setting "To" date will mark issue as resolved)</Form.Label>
                             <Form.Control
                                 value = {moment(end).format("YYYY-MM-DDTHH:mm")}
                                 disabled = {!editing}
