@@ -27,14 +27,14 @@ const Login = () => {
         const signIn = await auth.login(email, password);
 
         if(signIn.error) {
-            alert(signIn.error.message);
-            setLoading(false);
-        } 
-        setLoading(false);
-
-        setEmail("");
-        setPassword("");
-        navigate("/");
+          setLoading(false);
+          alert(signIn.error.message);  
+        } else {
+          setLoading(false);
+          setEmail("");
+          setPassword("");
+          navigate("/");
+        }        
     }
 
     return (

@@ -26,10 +26,10 @@ function Layout({children}) {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Link to={"/"} class="btn btn-secondary mb-2">Home</Link>
-                  <Link to={"/patients"} class="btn btn-secondary mb-2">Patients</Link>
-                  <Link to={"/appointments"} class="btn btn-secondary mb-2">Appointments</Link>
-                  <Link onClick={auth.logout} class="btn btn-secondary mb-2">Logout</Link>                  
+                  <Link to={"/"} className="btn btn-secondary mb-2">Home</Link>
+                  <Link to={"/patients"} className="btn btn-secondary mb-2">Patients</Link>
+                  <Link to={"/appointments"} className="btn btn-secondary mb-2">Appointments</Link>
+                  <Link onClick={auth.logout} className="btn btn-secondary mb-2">Logout</Link>                  
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
