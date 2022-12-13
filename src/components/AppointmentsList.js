@@ -74,7 +74,6 @@ const AppointmentsList = (props) => {
         const queryData = await supabase
             .from('patients')
             .select()
-            .eq("org_id", auth.user.user_metadata.org_id)               
             .eq("rec_deleted", false)
         if (queryData.error) {
             setLoading(false); 

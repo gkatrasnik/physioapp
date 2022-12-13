@@ -17,6 +17,7 @@ import Appointments from './components/Appointments';
 import SendResetPassword from './components/login/SendResetPassword';
 import PatientProfileView from './components/PatientProfileView';
 import IssueView from './components/IssueView';
+import { supabase } from './supabase';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -53,3 +54,19 @@ serviceWorkerRegistration.unregister();
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+//send errors to db 
+window.onerror = function(msg, url, line, col, error) {
+    const errText = "Error logged: " + msg + url + line + col + error;
+    logError(errText)
+    console.log("Error log sent to db: ", msg, url)
+}
+
+const  logError = async (errText) => {
+    const { error } = await supabase
+    .from('logs')
+    .insert({ log: errText })
+    if (error) {
+        alert(error)
+    }
+}
