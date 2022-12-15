@@ -59,6 +59,11 @@ $event-border-radius: 0;
 .rbc-toolbar button {
   border-radius: 0 !important;
 }
+
+.rbc-agenda-event-cell:hover {
+  cursor: pointer;
+}
+
 @import 'react-big-calendar/lib/sass/styles';
 
 

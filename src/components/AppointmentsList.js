@@ -1,12 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
-import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
+import { Button, Table} from "react-bootstrap";
 import moment from 'moment';
 import { useAuth } from '../auth';
 import NewAppointmentModal from './modals/NewAppointmentModal';
 import AppointmentModal from './modals/AppointmentModal';
 import LoadingModal from "./modals/LoadingModal"
+import { Link } from 'react-router-dom';
 
 
 
@@ -122,6 +123,10 @@ const AppointmentsList = (props) => {
                 <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>
                     New Appointment
                 </Button>
+                
+                <Link to={"/appointments"} className="btn btn-primary m-2">
+                    Calendar View
+                </Link>
                 <div className='table-container mb-5'>                
                     <Table>
                         <thead>

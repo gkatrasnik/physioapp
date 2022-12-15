@@ -54,11 +54,8 @@
             let fontColor =  "white";
             let style = {
                 backgroundColor: backgroundColor,
-                borderRadius: '0px',
-                opacity: 1,
-                color: fontColor,
-                border: '1px',
-                display: 'block'
+                borderRadius: '0px',                
+                color: fontColor,             
             };
             return {
                 style: style
