@@ -82,7 +82,6 @@ const AppointmentsList = (props) => {
             setLoading(false); 
             setPatientsData(queryData.data);     
         }
-
                   
     }
 
@@ -131,7 +130,7 @@ const AppointmentsList = (props) => {
                             <th>Title</th>                            
                             <th>Date</th>
                             <th>Duration</th>  
-                            <th>Patient</th>                    
+                            <th>Therapist</th>                    
                             </tr>
                         </thead>
 
@@ -143,7 +142,7 @@ const AppointmentsList = (props) => {
                                 <td>{event.title}</td>                             
                                 <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
                                 <td>{getDuration(event.start, event.end) + ' min'}</td>
-                                <td>{props.currentPatientData.name}</td>
+                                <td>{event.user_id === auth.user.id ? auth.user.user_metadata.name : event.user_id}</td>
                                 </tr>
                                 )
                             }):                     

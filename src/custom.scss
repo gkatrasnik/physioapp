@@ -48,7 +48,7 @@ $modal-content-border-radius: 0;
 
 
 
-$event-bg :#0051ff;
+$event-bg :#00ccff;
 $event-border-radius: 0;
 
 .rbc-toolbar {
@@ -156,4 +156,10 @@ $event-border-radius: 0;
 
 .page-heading {
   margin-top: 1rem;
+}
+
+.my-appointments-switch {  
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

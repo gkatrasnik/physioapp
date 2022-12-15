@@ -3,7 +3,7 @@
     import React, {useState, useEffect} from 'react';
     import Layout from "./Layout";
     import {useAuth} from "../auth";
-    import { Container } from 'react-bootstrap';
+    import { Container, Form } from 'react-bootstrap';
     import { supabase } from '../supabase';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
@@ -16,15 +16,17 @@
         const auth = useAuth();
         const localizer = momentLocalizer(moment)
         const [eventList, setEventList] = useState([]);
+        const [filteredEventList, setFilteredEventList] = useState([]);
         const [patientsData, setPatientsData] = useState([]);
         const [showAppointmentModal, setShowAppointmentModal] = useState(false);
         const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
         const [currentEvent, setCurrentEvent] = useState(null);
         const [selectedSlot, setSelectedSlot] = useState(null);
         const [loading, setLoading] = useState(false);
+        const [filterEvents, setFilterEvents] = useState(false);
 
         
-         const handleSelectSlot = (slot) => {
+        const handleSelectSlot = (slot) => {
             setSelectedSlot(slot)            
         }
          
@@ -44,6 +46,24 @@
             setCurrentEvent(null);
         }
             
+
+        const eventStyleGetter = (event, start, end, isSelected) => {
+
+            console.log("eveeent", auth.user.id)
+            let backgroundColor = event.user_id === auth.user.id ? "#0051ff" :"#00a1cc";//"#0051ff" : "00caff";
+            let fontColor =  "white";
+            let style = {
+                backgroundColor: backgroundColor,
+                borderRadius: '0px',
+                opacity: 1,
+                color: fontColor,
+                border: '1px',
+                display: 'block'
+            };
+            return {
+                style: style
+            };
+        }
         
     
     
@@ -79,8 +99,25 @@
             setLoading(false);
             setPatientsData(queryData.data);               
         }
-    
-    
+
+        //filter event list to only contain my events
+        const filterEventList = async() => {
+            console.log("filter events: ", filterEvents)
+            if (filterEvents) { // if switch is turned ON
+                const newArr =  eventList.map((event) => {
+                    //if event user_id = me, push to cloned arr
+                    if (event.user_id === auth.user.id) {
+                        return event;
+                    }
+                })
+
+                setFilteredEventList(newArr);
+
+            } else { //if switch turned OFF
+                setFilteredEventList(eventList)
+            }
+        }
+        
         
         useEffect(() => {
             getPatients(); 
@@ -98,6 +135,11 @@
             toggleNewAppointmentModal();
           }
         }, [selectedSlot])
+
+        //in event change or switch change filter events
+        useEffect(() => {
+          filterEventList();
+        }, [filterEvents, eventList])
         
     
         return (
@@ -106,7 +148,17 @@
 
             <Layout>
                 <Container>
-                    <h1 className='text-center page-heading'>Appointments</h1>   
+                    <h1 className='text-center page-heading'>Appointments</h1> 
+                    <Form>
+                        <Form.Check 
+                            defaultValue={filterEvents}
+                            type="switch"
+                            id="custom-switch"
+                            label="Show only my appointments"
+                            onChange={()=>{setFilterEvents(!filterEvents)}}
+                            className="my-appointments-switch"
+                        />
+                    </Form>
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
                         patientsData={patientsData}
@@ -126,12 +178,13 @@
                     <div className='my-5'>
                         <Calendar
                         localizer={localizer}
-                        events={eventList}
+                        events={filteredEventList}
                         startAccessor="start"
                         endAccessor="end"
                         style={{ height: 500 }}
                         onSelectEvent={handleSelectEvent}
                         onSelectSlot={handleSelectSlot}
+                        eventPropGetter={(eventStyleGetter)}
                         longPressThreshold={250} 
                         selectable
                         />

@@ -30,8 +30,8 @@ const Home = () => {
     }
     
 
-    useEffect(() => {        
-      getOrgData(auth.user.user_metadata.org_id);
+    useEffect(() => {              
+      getOrgData(auth.user.user_metadata.org_id);      
     }, [])
 
     return (
