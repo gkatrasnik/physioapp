@@ -22,24 +22,26 @@ const AppointmentsList = (props) => {
     const [loading, setLoading] = useState(false);
 
     const getEvents = async () => {
-        setLoading(true); 
-        const queryData = await supabase
-            .from('appointments')
-            .select()
-            .eq("patient_id", props.currentPatientData.id)
-            .eq("rec_deleted", false)
-            .order('end', { ascending: false })
-        if (queryData.error) {
-            setLoading(false); 
-            alert(queryData.error.message);
-        } else {
-            setLoading(false); 
-            queryData.data.forEach(event => {
-                event.start = moment(event.start).toDate();
-                event.end = moment(event.end).toDate();
-            });
-            setEventsList(queryData.data);
-        }     
+        if (props.currentPatientData) { //handle if there is o props.currentPatientData
+            setLoading(true); 
+            const queryData = await supabase
+                .from('appointments')
+                .select()
+                .eq("patient_id", props.currentPatientData.id)
+                .eq("rec_deleted", false)
+                .order('end', { ascending: false })
+            if (queryData.error) {
+                setLoading(false); 
+                alert(queryData.error.message);
+            } else {
+                setLoading(false); 
+                queryData.data.forEach(event => {
+                    event.start = moment(event.start).toDate();
+                    event.end = moment(event.end).toDate();
+                });
+                setEventsList(queryData.data);
+            }     
+        }
     }
 
     const isEventPast = (eventEnd) => {

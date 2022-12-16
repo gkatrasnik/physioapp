@@ -247,7 +247,7 @@ const PatientProfileView = () => {
             title={"Delete Patient"}
             message={"Do you really want to delete this patient and all of its data?"}
             callback={handleDeletePatient}
-            callbackArgs={location.state.patientData.id}
+            callbackArgs={location.state ? location.state.patientData.id : null}
             cancelCallback={toggleConfirmDelete}            
         />
         <Layout>
@@ -256,7 +256,7 @@ const PatientProfileView = () => {
                  <Row>
                     <Col lg={6}>
                         <Form className="my-5 mx-auto component-big">
-                            <h2 className='text-center'>{location.state.patientData.name}</h2>
+                            <h2 className='text-center'>{location.state ? location.state.patientData.name : null}</h2>
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
@@ -376,14 +376,14 @@ const PatientProfileView = () => {
                         </Form>
 
                         <AppointmentsList
-                            currentPatientData={location.state.patientData}
+                            currentPatientData={location.state ? location.state.patientData : null}
                         />
                     </Col>
                     <Col lg={6}>
                         <IssueList 
                         issuesData={issuesData}
                         getIssuesData={getIssuesData}
-                        patientData={location.state.patientData}
+                        patientData={location.state ? location.state.patientData : null}
                         />
 
                         <IssuesCalendar

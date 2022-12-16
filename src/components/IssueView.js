@@ -197,7 +197,7 @@ const IssueView = () => {
             title={"Delete Issue"}
             message={"Do you really want to delete this issue with all of its symptoms and interventions?"}
             callback={deleteIssue}
-            callbackArgs={location.state.issueData.id}
+            callbackArgs={location.state ? location.state.issueData.id : null}
             cancelCallback={toggleConfirmDelete}            
         />
 
@@ -207,7 +207,7 @@ const IssueView = () => {
                  <Row>
                     <Col lg={6}>
                         <Form className="my-5 mx-auto component-big ">
-                            <h2 className='text-center'>{location.state.issueData.name}</h2>
+                            <h2 className='text-center'>{location.state ? location.state.issueData.name : null}</h2>
 
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Title</Form.Label>
@@ -308,8 +308,8 @@ const IssueView = () => {
                         </Form>
                     </Col>
                      <Col lg={6}>
-                        <SymptomsList issueData={location.state.issueData}/>
-                        <InterventionsList issueData={location.state.issueData}/>
+                        <SymptomsList issueData={location.state ? location.state.issueData : null}/>
+                        <InterventionsList issueData={location.state ? location.state.issueData : null}/>
                      </Col>
                 </Row>              
             </Container>
