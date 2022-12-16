@@ -6,6 +6,8 @@ import SymptomModal from './modals/SymptomModal';
 import NewSymptomModal from './modals/NewSymptomModal';
 import moment from 'moment'
 import LoadingModal from "./modals/LoadingModal"
+import BodyPicture from './BodyPicture';
+
 
 
 const SymptomsList = (props) => {
@@ -89,8 +91,7 @@ const SymptomsList = (props) => {
     
     
    
-    return (
-        
+    return (        
         <>
             {loading && <LoadingModal />}
             <SymptomModal 
@@ -147,7 +148,11 @@ const SymptomsList = (props) => {
                         </tbody>
                     </Table>
                 </div>  
-            </div>           
+            </div>         
+            <BodyPicture
+                bodypartsData={bodypartsData}
+                symptomsData={symptomsData}
+            />
         </> 
     );
 };

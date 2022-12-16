@@ -32,12 +32,7 @@ const IssueView = () => {
     const [lastChanged, setLastChanged] = useState("");
     const [userId, setUserId] = useState("");
     const [patientId, setPatientId] = useState("");
-
     const [patientData, setPatientData] =useState();   
-
-    const [InterventionsData, setInterventionsData] =useState([]);   
-    const [symptomsData, setSymptomsData] =useState([]);   
-
 
     const getIssueData = async () => {
         setLoading(true);
@@ -310,10 +305,9 @@ const IssueView = () => {
                      <Col lg={6}>
                         <SymptomsList issueData={location.state ? location.state.issueData : null}/>
                         <InterventionsList issueData={location.state ? location.state.issueData : null}/>
-                     </Col>
+                     </Col>                    
                 </Row>              
-            </Container>
-            
+            </Container>            
         </Layout>
         </>
     );

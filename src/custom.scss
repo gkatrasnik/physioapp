@@ -168,3 +168,22 @@ $event-border-radius: 0;
     justify-content: center;
     align-items: center;
 }
+
+.humanbody-container {
+  display: flex;
+  justify-content: center;
+}
+
+.humanbody {
+ 
+  height: 500px;
+}
+
+.symptom-div {
+  height: 20px;
+  width: 20px;
+  
+background: radial-gradient(red, #00000000);
+
+  border-radius: 50%;
+}
