@@ -21,14 +21,14 @@ const UpdatePassword = () => {
         const passwordReset = await auth.updatePassword(password);       
 
         if(passwordReset.error) {
-            alert(passwordReset.error.message);
+          alert(passwordReset.error.message);
         } else {
-            alert("Your password was updated successfuly");
+          alert("Your password was updated successfuly");
+          setPassword("");
+          setPasswordConfirmation("");
+          navigate("/");
         }
 
-        setPassword("");
-        setPasswordConfirmation("");
-        navigate("/");
     }
 
     return (

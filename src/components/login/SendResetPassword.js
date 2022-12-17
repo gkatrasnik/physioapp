@@ -16,12 +16,13 @@ const SendResetPassword = () => {
 
         if(response.error) {
             alert(response.error.message);
-        } 
+        } else {
+          alert("Reset password link was set to your email");
+          setEmail("");
+          navigate("/");
+        }
 
-        alert("Reset password link was set to your email");
-
-        setEmail("");
-        navigate("/");
+        
     }
 
     return (

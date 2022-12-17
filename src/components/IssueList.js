@@ -29,7 +29,7 @@ const IssueList = (props) => {
                 getIssuesData={props.getIssuesData} 
                 toggleShowNewIssue={toggleShowNewIssue}
             />
-            <div className="my-5 mx-auto component-big">
+            <div className="my-3 mx-auto component-big">
                 <h2 className='text-center'>Issues</h2>
                 <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
                     New Issue

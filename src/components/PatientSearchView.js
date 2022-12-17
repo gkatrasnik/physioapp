@@ -95,7 +95,7 @@ const PatientSearchView = () => {
                             <Form.Group  controlId="patientSearch">
                                 <Form.Control 
                                 type="search" 
-                                placeholder="Start typing to search..." 
+                                placeholder="Type to search..." 
                                 onChange={(e) => {
                                 setSearchQuery(e.target.value);
                                 }}/>                

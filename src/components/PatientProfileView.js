@@ -248,7 +248,7 @@ const PatientProfileView = () => {
                     defaultActiveKey="Info"                    
                  >
                     <Tab title="Info" eventKey="Info">
-                        <Form className="my-5 mx-auto component-big">
+                        <Form className="my-3 mx-auto component-big">
                             <h2 className='text-center'>{location.state ? location.state.patientData.name : null}</h2>
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Name</Form.Label>

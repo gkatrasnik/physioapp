@@ -106,10 +106,10 @@ const SymptomsList = (props) => {
                 issueData = {props.issueData}    
                 getSymptomsData = {getSymptomsData}
             />
-            <div className="my-5 mx-auto component-big">
+            <div className="my-3 mx-auto component-big">
                 <h2 className='text-center'>Symptoms</h2>
                 <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
-                        Add Symptom
+                        New Symptom
                 </Button>
                 <div className='table-container mb-5'>  
                     <Table striped hover>

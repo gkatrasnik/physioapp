@@ -42,6 +42,9 @@ $btn-border-radius-lg:0;
 $card-border-radius:0;
 $modal-content-border-radius: 0;
 
+$nav-tabs-border-radius: 0;
+$nav-link-padding-x:0.5rem;
+
 
 
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -131,8 +134,7 @@ $event-border-radius: 0;
 }
 
 .component-big {
-  max-width: 800px;
-  padding: 10px;
+  max-width: 800px; 
 }
 
 .btn-danger {

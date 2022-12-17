@@ -119,7 +119,7 @@ const AppointmentsList = (props) => {
                 getEvents={getEvents}       
             />
 
-            <div className='mx-auto component-big'>
+            <div className='mx-auto my-3 component-big'>
                 <h2 className='text-center'>Appointments</h2>
 
                 <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>

@@ -69,7 +69,7 @@
         
         return (
             
-                <div className="mb-5 mx-auto component-big">                     
+                <div className="my-3 mx-auto component-big">                     
                     <h2 className='text-center'>Issues Calendar</h2>
                     <div className='my-5'>
                         <Calendar
