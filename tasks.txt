@@ -50,7 +50,7 @@ ADD FEATURES
 - take photos, add pictures to issues(storage)
 - add, record voice memos to issues(storage)?
 
-- body map(map body parts rows to picture areas)
+! body map(map body parts rows to picture areas) - for now only on issueView
     - color body parts to symptom intensity
     - color body parts to how fresh the issue is
 
@@ -59,7 +59,7 @@ ADD FEATURES
 MAKE THINGS PRODUCTION READY, SECURITY
 - create develop branch for developing and main for production
 ! what can users do(crud) row level security
-- create new user, create trigger to add entry to users table // now usig auth.users.table
+- create new user, create trigger to add entry to users table // now usig auth.users table with user.metadata
 - change hardcoded reset password link with .env variable
 db RLS:
 - add custom permission levels to users(admin, not admin)?
