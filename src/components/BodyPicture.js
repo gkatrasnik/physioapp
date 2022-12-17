@@ -28,6 +28,7 @@ const BodyPicture = (props) => {
                 tempSymptomDivs.push(symptomObj)
             }                      
         })
+
         setSymptomDivs(tempSymptomDivs);
     }
 
@@ -54,7 +55,7 @@ const BodyPicture = (props) => {
         }        
     }, [props])
 
-    
+    /*
     //find click position on image in %
     useEffect(() => {
       const handleClick = e => {
@@ -78,11 +79,11 @@ const BodyPicture = (props) => {
       element.removeEventListener('click', handleClick);
     };
     }, [])
-    
+    */
 
     return (
         <div className="humanbody-container">
-            <img ref={bodyImage} src={humanbody} className="humanbody"/>            
+            <img alt="" ref={bodyImage} src={humanbody} className="humanbody"/>            
             {symptomDivs.map((symptom) => {
                 return <div key={symptom.id} className="symptom-div" style={{position: "absolute", left: symptom.x, top: symptom.y}}></div>
             })}                      
