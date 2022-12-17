@@ -24,6 +24,7 @@ const BodyPicture = (props) => {
                 symptomObj.y = symptomCoordinates.y - 10 ; // -10 = half of div height
                 symptomObj.intensity = symptom.intensity;
                 symptomObj.createdAt = symptom.created_at;
+                symptomObj.id = symptom.id
                 tempSymptomDivs.push(symptomObj)
             }                      
         })
@@ -47,9 +48,10 @@ const BodyPicture = (props) => {
     }
 
     useEffect(() => {
-        createSymptomDivs();   
-        //TODO scrolling page before rendering missplaces symptom divs     
-        
+        //render symptom divs everytime symptom is added/deleted, or "symptoms" tab is clicked
+        if (props.activeTab === "Symptoms") {
+            createSymptomDivs(); 
+        }        
     }, [props])
 
     

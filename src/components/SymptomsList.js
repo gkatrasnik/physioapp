@@ -87,9 +87,7 @@ const SymptomsList = (props) => {
             setShowSymptomModal(true); 
         }
           
-    }, [currentSymptomData])
-    
-    
+    }, [currentSymptomData])   
    
     return (        
         <>
@@ -152,6 +150,7 @@ const SymptomsList = (props) => {
             <BodyPicture
                 bodypartsData={bodypartsData}
                 symptomsData={symptomsData}
+                activeTab={props.activeTab}
             />
         </> 
     );

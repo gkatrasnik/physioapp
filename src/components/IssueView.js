@@ -32,7 +32,8 @@ const IssueView = () => {
     const [lastChanged, setLastChanged] = useState("");
     const [userId, setUserId] = useState("");
     const [patientId, setPatientId] = useState("");
-    const [patientData, setPatientData] =useState();   
+    const [patientData, setPatientData] =useState();  
+    const [activeTab, setActiveTab] = useState(""); 
 
     const getIssueData = async () => {
         setLoading(true);
@@ -166,6 +167,10 @@ const IssueView = () => {
         setShowConfirmDelete(!showConfirmDelete);
     }
 
+    const handleSelectTab = (key) => {
+        setActiveTab(key);
+    }
+
 
     // useEffects
     useEffect(() => {
@@ -200,7 +205,8 @@ const IssueView = () => {
             <Container fluid={true} className={(resolved ? 'border-success' : 'border-warning') + " min-h-100-without-navbar"}>
                 <h1 className="text-center page-heading">Issue View</h1>
                  <Tabs 
-                    defaultActiveKey="Info"                    
+                    defaultActiveKey="Info" 
+                    onSelect={handleSelectTab}                   
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-5 mx-auto component-big ">
@@ -304,7 +310,10 @@ const IssueView = () => {
                         </Form>
                     </Tab>
                     <Tab title="Symptoms" eventKey="Symptoms">
-                        <SymptomsList issueData={location.state ? location.state.issueData : null}/>
+                        <SymptomsList 
+                            issueData={location.state ? location.state.issueData : null}
+                            activeTab={activeTab}
+                        />
                     </Tab> 
                     <Tab title="Interventions" eventKey="Interventions">
                         <InterventionsList issueData={location.state ? location.state.issueData : null}/>
