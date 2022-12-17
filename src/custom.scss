@@ -181,9 +181,17 @@ $event-border-radius: 0;
 
 .symptom-div {
   height: 20px;
-  width: 20px;
-  
-background: radial-gradient(red, #00000000);
-
+  width: 20px;  
+  background: radial-gradient(red, #00000000);
   border-radius: 50%;
+}
+
+.min-h-100-without-navbar {
+  min-height: -moz-calc(100vh -  56px);
+  min-height: -webkit-calc(100vh - 56px);
+  min-height: calc(100vh - 56px);
+}
+
+.min-h-100{
+  min-height: 100vh;
 }

@@ -5,7 +5,7 @@ import { supabase } from '../supabase';
 import Layout from "./Layout";
 import { useAuth } from '../auth';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Container, Button, Form, Row, Col } from 'react-bootstrap';
+import { Container, Button, Form, Tab, Tabs } from 'react-bootstrap';
 import SymptomsList from './SymptomsList';
 import InterventionsList from './InterventionsList';
 import moment from "moment";
@@ -197,10 +197,12 @@ const IssueView = () => {
         />
 
         <Layout>
-            <Container fluid={true} className={resolved ? 'border-success' : 'border-warning'}>
+            <Container fluid={true} className={(resolved ? 'border-success' : 'border-warning') + " min-h-100-without-navbar"}>
                 <h1 className="text-center page-heading">Issue View</h1>
-                 <Row>
-                    <Col lg={6}>
+                 <Tabs 
+                    defaultActiveKey="Info"                    
+                 >
+                    <Tab title="Info" eventKey="Info">
                         <Form className="my-5 mx-auto component-big ">
                             <h2 className='text-center'>{location.state ? location.state.issueData.name : null}</h2>
 
@@ -298,15 +300,16 @@ const IssueView = () => {
 
                             {editing && resolved && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
                                 Set Not resolved
-                            </Button>}  
-                                    
+                            </Button>}                                      
                         </Form>
-                    </Col>
-                     <Col lg={6}>
+                    </Tab>
+                    <Tab title="Symptoms" eventKey="Symptoms">
                         <SymptomsList issueData={location.state ? location.state.issueData : null}/>
+                    </Tab> 
+                    <Tab title="Interventions" eventKey="Interventions">
                         <InterventionsList issueData={location.state ? location.state.issueData : null}/>
-                     </Col>                    
-                </Row>              
+                    </Tab>                    
+                </Tabs>              
             </Container>            
         </Layout>
         </>

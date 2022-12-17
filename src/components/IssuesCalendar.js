@@ -10,7 +10,6 @@
     const IssuesCalendar = (props) => {
         const localizer = momentLocalizer(moment);        
         const [currentEvent, setCurrentEvent] = useState(null);
-        const [showIssuesCalendar, setShowIssuesCalendar] = useState(false);
         const [calendarIssues, setCalendarIssues] = useState([]);
 
         const navigate = useNavigate();
@@ -23,15 +22,7 @@
 
             //open appointment modal (event)
             setCurrentEvent(props.issuesData[index]);
-        } 
-
-        const handleShowCalendar = () => {
-            setShowIssuesCalendar(true);
-        }
-
-        const handleHideCalendar = () => {
-            setShowIssuesCalendar(false);
-        }
+        }       
 
         const toIssueView=(issue)=>{
             navigate('/issue',{state:{issueData:issue}});
@@ -74,28 +65,12 @@
             }); 
             setCalendarIssues(clonedArr);
           }
-        }, [props])
-
-        useEffect(() => {
-            if (window.innerWidth >= 992) {
-                setShowIssuesCalendar(true);
-            }
-        }, [])
+        }, [props])       
         
-        
-      
         return (
             
-                <div className="mb-5 mx-auto component-big"> 
-                    {showIssuesCalendar && 
-                    <h2 className='text-center'>Issues Calendar</h2>} 
-
-                    {showIssuesCalendar ?
-                    <Button className="m-2" onClick={handleHideCalendar}>Hide Calendar</Button> :
-                    <Button className="m-2" onClick={handleShowCalendar}>Show Issues Calendar</Button>   
-                    }
-
-                    {showIssuesCalendar && 
+                <div className="mb-5 mx-auto component-big">                     
+                    <h2 className='text-center'>Issues Calendar</h2>
                     <div className='my-5'>
                         <Calendar
                         localizer={localizer}
@@ -109,7 +84,7 @@
                         longPressThreshold={250} 
                         selectable
                         />
-                    </div>}
+                    </div>
                 </div>                
             
     

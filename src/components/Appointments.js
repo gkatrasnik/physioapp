@@ -144,7 +144,7 @@
             {loading && <LoadingModal />}
 
             <Layout>
-                <Container>
+                <Container className="min-h-100-without-navbar">
                     <h1 className='text-center page-heading'>Appointments</h1> 
                     <Form>
                         <Form.Check 

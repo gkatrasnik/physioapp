@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../auth";
-import { Form, Button, Card, Nav } from "react-bootstrap";
+import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BoxArrowInUp } from "react-bootstrap-icons";
 import LoadingModal from "../modals/LoadingModal";
@@ -93,11 +93,11 @@ const Signup = () => {
 
    
     return (
-    <>
+    <Container className="min-h-100">
       {loading && <LoadingModal />}
 
       {!orgCode && <Card
-        style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "10em" }}
+        style={{ width: "90%", maxWidth: "32rem", margin: "auto", top: "10rem" }}
         className="box-shadow"
       >
         <Card.Body>
@@ -237,7 +237,7 @@ const Signup = () => {
           </Link>
         </Card.Body>
       </Card>}
-    </>
+    </Container>
   );
 };
 

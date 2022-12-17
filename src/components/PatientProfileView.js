@@ -9,13 +9,13 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
-import { Container, Button, Form, Row, Col } from 'react-bootstrap';
+import { Container, Button, Form, Row, Col, Tab, Tabs } from 'react-bootstrap';
 import { useAuth } from '../auth';
 import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
 import IssuesCalendar from './IssuesCalendar';
 import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
-import LoadingModal from "./modals/LoadingModal";
+import LoadingModal from "./modals/LoadingModal"; 
 
 
 const PatientProfileView = () => {
@@ -25,9 +25,7 @@ const PatientProfileView = () => {
     const [editing, setEditing] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [loading, setLoading] = useState(false);
-
     
-    const [infoExpanded, setInfoExpanded] = useState(false);
     const [issuesData, setIssuesData] = useState([]);
 
 
@@ -125,12 +123,8 @@ const PatientProfileView = () => {
 
     const toggleEdit = () => {
         setEditing(!editing);
-        setInfoExpanded(true); //always show info if editing
     }
 
-    const toggleShowInfo = () => {
-        setInfoExpanded(!infoExpanded);
-    }
 
     const toggleConfirmDelete = () => {
         setShowConfirmDelete(!showConfirmDelete);
@@ -231,10 +225,7 @@ const PatientProfileView = () => {
     useEffect(() => {
         getPatientData();    
         getIssuesData();    
-        window.scrollTo(0, 0);
-        if (window.innerWidth >= 992) {
-            setInfoExpanded(true);
-        }
+        window.scrollTo(0, 0);        
     }, []);
 
 
@@ -251,10 +242,12 @@ const PatientProfileView = () => {
             cancelCallback={toggleConfirmDelete}            
         />
         <Layout>
-            <Container fluid={true}>
+            <Container fluid={true} className="min-h-100-without-navbar">
                 <h1 className="text-center page-heading">Patient Profile View</h1>
-                 <Row>
-                    <Col lg={6}>
+                 <Tabs 
+                    defaultActiveKey="Info"                    
+                 >
+                    <Tab title="Info" eventKey="Info">
                         <Form className="my-5 mx-auto component-big">
                             <h2 className='text-center'>{location.state ? location.state.patientData.name : null}</h2>
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
@@ -269,8 +262,8 @@ const PatientProfileView = () => {
                                 }}
                             />                
                             </Form.Group>
-                            {infoExpanded &&
-                            <>
+                           
+                            
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                             <Form.Label>Email Address</Form.Label>
                             <Form.Control
@@ -365,32 +358,27 @@ const PatientProfileView = () => {
 
                             {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                 Delete Patient
-                            </Button>}  
-                            
-                            </>}   
-
-                            {!editing &&
-                            <Button className="m-2 " variant="secondary" onClick={toggleShowInfo}>
-                                {infoExpanded ? "Hide Info" : "Show Info"}
-                            </Button>}           
+                            </Button>}                      
                         </Form>
-
+                    </Tab>
+                    <Tab title="Appointments" eventKey="Appointments">
                         <AppointmentsList
                             currentPatientData={location.state ? location.state.patientData : null}
                         />
-                    </Col>
-                    <Col lg={6}>
+                    </Tab>
+                    <Tab title="Issues" eventKey="Issues">
                         <IssueList 
                         issuesData={issuesData}
                         getIssuesData={getIssuesData}
                         patientData={location.state ? location.state.patientData : null}
-                        />
-
-                        <IssuesCalendar
+                        />                       
+                    </Tab>
+                    <Tab title="Issues Calendar" eventKey="Issues Calendar">
+                         <IssuesCalendar
                             issuesData={issuesData}
                         />
-                    </Col>
-                </Row>
+                    </Tab>
+                </Tabs>
             </Container>
         </Layout>
         </>

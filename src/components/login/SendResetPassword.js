@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../auth";
-import { Form, Button, Card} from "react-bootstrap";
+import { Form, Button, Card, Container} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const SendResetPassword = () => {
@@ -25,9 +25,9 @@ const SendResetPassword = () => {
     }
 
     return (
-    <>
+    <Container className="min-h-100">
       <Card
-        style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "10em" }}
+        style={{ width: "90%", maxWidth: "32rem", margin: "auto", top: "10rem" }}
         className="box-shadow"
       >
         <Card.Body>
@@ -57,7 +57,7 @@ const SendResetPassword = () => {
           </Link>
         </Card.Body>
       </Card>
-    </>
+    </Container>
   );
 };
 

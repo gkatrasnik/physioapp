@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useAuth} from "../../auth";
 import { useNavigate } from "react-router-dom";
-import { Form, Button, Card} from "react-bootstrap";
+import { Form, Button, Card, Container} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const UpdatePassword = () => {
@@ -32,9 +32,9 @@ const UpdatePassword = () => {
     }
 
     return (
-    <>
+    <Container className="min-h-100">
       <Card
-        style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "10em" }}
+        style={{ width: "90%", maxWidth: "32rem", margin: "auto", top: "10rem" }}
         className="box-shadow"
       >
         <Card.Body>
@@ -74,7 +74,7 @@ const UpdatePassword = () => {
           </Form>
         </Card.Body>
       </Card>
-    </>
+    </Container>
   );
 };
 

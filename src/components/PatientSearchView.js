@@ -86,7 +86,7 @@ const PatientSearchView = () => {
                 handleToggleModal={toggleModal}
                 getPatients={getPatients}
             />
-            <Container>
+            <Container className="min-h-100-without-navbar">
                 <h1 className='text-center page-heading'>Patient Search View</h1>
 
                 <Form className='my-3' onSubmit={e => { e.preventDefault()}}>
