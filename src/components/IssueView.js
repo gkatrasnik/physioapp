@@ -171,7 +171,6 @@ const IssueView = () => {
         setActiveTab(key);
     }
 
-
     // useEffects
     useEffect(() => {
         getIssueData();    

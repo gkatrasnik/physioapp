@@ -2,17 +2,30 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth';
+import { ChevronLeft } from "react-bootstrap-icons";
 
 function Layout({children}) {
     const auth = useAuth();
+    const navigate = useNavigate();
+
+    const goHome = () => {
+      navigate("/");
+    }
+
+    const goBack = () => {
+      navigate(-1);
+    }
 
   return (
     <>
         <Navbar key={false} bg="light" expand={false}>
           <Container fluid>
-            <Navbar.Brand href="#">PhysioApp</Navbar.Brand>
+            <div className='d-flex align-items-center'>
+              <ChevronLeft onClick={goBack} className="cursor-pointer mx-2" size={24}/>
+              <Navbar.Brand onClick={goHome} className="cursor-pointer mx-4">PhysioApp</Navbar.Brand>
+            </div>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-false`} />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-false`}
