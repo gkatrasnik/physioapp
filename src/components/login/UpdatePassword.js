@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {useAuth} from "../../auth";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card, Container} from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 const UpdatePassword = () => {
     const auth = useAuth();

@@ -44,6 +44,8 @@ $modal-content-border-radius: 0;
 
 $nav-tabs-border-radius: 0;
 $nav-link-padding-x:0.5rem;
+$nav-tabs-border-color:#a9a9a9;
+$nav-tabs-link-active-border-color: #a9a9a9 #a9a9a9 #ffffff;
 
 
 
@@ -196,4 +198,14 @@ $event-border-radius: 0;
 
 .min-h-100{
   min-height: 100vh;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.new-patient-button {
+  margin-left: 1rem;
 }

@@ -49,7 +49,6 @@
 
         const eventStyleGetter = (event, start, end, isSelected) => {
 
-            console.log("eveeent", auth.user.id)
             let backgroundColor = event.user_id === auth.user.id ? "#0051ff" :"#00a1cc";//"#0051ff" : "00caff";
             let fontColor =  "white";
             let style = {
@@ -99,7 +98,6 @@
 
         //filter event list to only contain my events
         const filterEventList = async() => {
-            console.log("filter events: ", filterEvents)
             if (filterEvents) { // if switch is turned ON
                 const newArr =  eventList.map((event) => {
                     //if event user_id = me, push to cloned arr

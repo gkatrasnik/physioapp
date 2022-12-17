@@ -25,12 +25,14 @@ function ConfirmDeleteModal(props) {
         </Modal.Header>
         <Modal.Body>{props.message}</Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.cancelCallback}>
-            Close
-          </Button>
-          <Button variant="danger" onClick={callbackAndHide}>
-            Delete
-          </Button>
+          <div className='buttons-container'>            
+            <Button className="mx-2" variant="danger" onClick={callbackAndHide}>
+              Delete
+            </Button>
+            <Button className="mx-2" variant="secondary" onClick={props.cancelCallback}>
+              Close
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>

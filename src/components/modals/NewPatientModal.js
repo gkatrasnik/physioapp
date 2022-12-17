@@ -5,7 +5,7 @@
 // search issues?
 // current (open) issues (maybe show only those on bodyPicture?)
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
@@ -154,13 +154,14 @@ const NewPatientModal = (props) => {
                     }}
                 />                
                 </Form.Group>
-                <Button className="m-2 " variant="secondary" onClick={props.handleToggleModal}>
-                    Close
-                </Button>
-                <Button className="m-2" variant="primary" type="submit">
-                    Add Patient
-                </Button>                
-
+                <div className='buttons-container'>                    
+                    <Button className="m-2" variant="primary" type="submit">
+                        Add Patient
+                    </Button>
+                    <Button className="m-2 " variant="secondary" onClick={props.handleToggleModal}>
+                        Close
+                    </Button>                
+                </div>
             </Form>
             </Modal.Body>
         </Modal>

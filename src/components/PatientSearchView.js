@@ -5,14 +5,12 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth';
-import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
+import { Form, Button, Container, Table} from "react-bootstrap";
 import NewPatientModal from './modals/NewPatientModal';
 import moment from 'moment'
 import LoadingModal from "./modals/LoadingModal";
 
 const PatientSearchView = () => {
-    const auth = useAuth();
     const [searchQuery, setSearchQuery] = useState("");
     const [showNewPatientModal, setShowNewPatientModal] = useState(false);
     const [patientsData, setPatientsData] = useState([]);  
@@ -89,26 +87,20 @@ const PatientSearchView = () => {
             <Container className="min-h-100-without-navbar">
                 <h1 className='text-center page-heading'>Patient Search View</h1>
 
-                <Form className='my-3' onSubmit={e => { e.preventDefault()}}>
-                    <Row className="align-items-center">
-                        <Col>
-                            <Form.Group  controlId="patientSearch">
-                                <Form.Control 
-                                type="search" 
-                                placeholder="Type to search..." 
-                                onChange={(e) => {
-                                setSearchQuery(e.target.value);
-                                }}/>                
-                            </Form.Group>
-                        </Col>
-                        <Col>
-                            <ButtonGroup aria-label="Basic example">                                
-                                <Button variant="primary" onClick={toggleModal}>
-                                    New Patient
-                                </Button>
-                            </ButtonGroup>
-                        </Col>
-                    </Row>            
+                <Form className='my-4' onSubmit={e => { e.preventDefault()}}>
+                    <div className="d-flex">                      
+                            <Form.Control 
+                            className="col"
+                            type="search" 
+                            placeholder="Type to search..." 
+                            onChange={(e) => {
+                            setSearchQuery(e.target.value);
+                            }}/>              
+                                             
+                            <Button variant="primary" onClick={toggleModal} className="new-patient-button">
+                                New Patient
+                            </Button>                        
+                    </div>               
                 </Form>   
 
                 <div className='table-container mb-5'>                

@@ -5,7 +5,7 @@
 // search issues?
 // current (open) issues (maybe show only those on bodyPicture?)
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
@@ -18,7 +18,6 @@ const NewIssueModal = (props) => {
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
     const [start, setStart] = useState(null);
-    const [end, setEnd] = useState(null);
     const [resolved, setResolved] = useState(false);
     const [diagnosis, setDiagnosis] = useState("");
     const [loading, setLoading] = useState(false);
@@ -124,15 +123,15 @@ const NewIssueModal = (props) => {
                         setResolved(e.target.checked);
                         }}
                     />                
-                    </Form.Group>
-
-                <Button className="m-2 " variant="secondary" onClick={props.toggleShowNewIssue}>
-                    Close
-                </Button>
-                <Button className="m-2" variant="primary" type="submit">
-                    Add Issue
-                </Button>                
-
+                </Form.Group>
+                <div className='buttons-container'>                    
+                    <Button className="m-2" variant="primary" type="submit">
+                        Add Issue
+                    </Button>
+                    <Button className="m-2 " variant="secondary" onClick={props.toggleShowNewIssue}>
+                        Close
+                    </Button>                
+                </div>
             </Form>
             </Modal.Body>
         </Modal>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {  Button, Table} from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import NewIssueModal from './modals/NewIssueModal';
@@ -31,9 +31,11 @@ const IssueList = (props) => {
             />
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center'>Issues</h2>
-                <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
-                    New Issue
-                </Button>
+                <div className='buttons-container'>
+                    <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
+                        New Issue
+                    </Button>
+                </div>
                 <div className='table-container'>                
                     <Table>
                         <thead>

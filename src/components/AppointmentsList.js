@@ -121,14 +121,15 @@ const AppointmentsList = (props) => {
 
             <div className='mx-auto my-3 component-big'>
                 <h2 className='text-center'>Appointments</h2>
-
-                <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>
-                    New Appointment
-                </Button>
+                <div className='buttons-container'>
+                    <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>
+                        New Appointment
+                    </Button>
                 
-                <Link to={"/appointments"} className="btn btn-primary m-2">
-                    Calendar View
-                </Link>
+                    <Link to={"/appointments"} className="btn btn-primary m-2">
+                        Calendar View
+                    </Link>
+                </div>
                 <div className='table-container mb-5'>                
                     <Table>
                         <thead>

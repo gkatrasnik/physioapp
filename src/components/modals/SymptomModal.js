@@ -204,24 +204,24 @@ const SymptomModal = (props) => {
                 >
                 </Select>                                 
                 </Form.Group>
-
-                <Button className="m-2 " variant="secondary" onClick={handleClose}>
-                    {!editing ? "Close" : "Cancel"}
-                </Button>
-                {editing ? 
-                    <> 
-                        <Button  className="m-2" variant="primary" type="submit">
-                            Update
-                        </Button> 
-                        <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                            Delete
-                        </Button>    
-                    </> :
-                    <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
-                        Edit
-                    </Button>
-                }               
-
+                <div className='buttons-container'>                    
+                    {editing ? 
+                        <> 
+                            <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
+                                Delete
+                            </Button> 
+                            <Button  className="m-2" variant="primary" type="submit">
+                                Update
+                            </Button>                                
+                        </> :
+                        <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
+                            Edit
+                        </Button>
+                    }
+                    <Button className="m-2 " variant="secondary" onClick={handleClose}>
+                        {!editing ? "Close" : "Cancel"}
+                    </Button>               
+                </div>
             </Form>
             </Modal.Body>
         </Modal>

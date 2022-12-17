@@ -1,17 +1,14 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
-import { Form, Button,Col, Row, ButtonGroup, Container, Table} from "react-bootstrap";
+import { Button, Table} from "react-bootstrap";
 import InterventionModal from './modals/InterventionModal';
 import NewInterventionModal from './modals/NewInterventionModal';
-import { useAuth } from '../auth';
 import moment from 'moment';
 import LoadingModal from "./modals/LoadingModal"
 
 
-
 const InterventionsList = (props) => {
-    const auth = useAuth();
 
     const [showInterventionModal, setShowInterventionModal] = useState(false);
     const [showNewInterventionModal, setShowNewInterventionModal] = useState(false);
@@ -85,9 +82,11 @@ const InterventionsList = (props) => {
 
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center'>Interventions</h2>
-                <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
-                        New Intervention
-                </Button>
+                <div className='buttons-container'>
+                    <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
+                            New Intervention
+                    </Button>
+                </div>
                 <div className='table-container mb-5'>  
                     <Table striped hover>
                         <thead>

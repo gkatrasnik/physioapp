@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useAuth } from '../../auth';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment'
 import ConfirmDeleteModal from './ConfirmDeleteModal';
@@ -21,8 +20,6 @@ const AppointmentModal = (props) => {
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [loading, setLoading] = useState(false);
 
-
-    const auth = useAuth();
     const navigate = useNavigate();
 
     const toggleConfirmDelete = () => {
@@ -60,9 +57,6 @@ const AppointmentModal = (props) => {
    
     const findEventPatient = () => {
         const eventPatient = props.patientsData.find(patient => patient.id === props.currentEvent.patient_id);
-        console.log("eventPatient", eventPatient)
-        console.log("props.patientsData", props.patientsData)
-        console.log("props.currentEvent", props.currentEvent)
         setEventPatient(eventPatient);
     }
 
@@ -152,21 +146,20 @@ const AppointmentModal = (props) => {
                     defaultValue={title}
                 />                
                 </Form.Group>
-                
-                <Button className="m-2 " variant="secondary" onClick={props.hideAppointmentModal}>
-                    Close
-                </Button>
-                
-                <Button className="m-2" variant="danger" onClick={toggleConfirmDelete}>
-                   Delete
-                </Button> 
-                
-                {showToPatientBtn &&
-                <Button className="m-2" variant="primary" onClick={()=>{toPatientProfile(eventPatient)}}>
-                    Patient Profile
-                </Button>}     
+                <div className='buttons-container'>                  
+                    <Button className="m-2" variant="danger" onClick={toggleConfirmDelete}>
+                    Delete
+                    </Button> 
+                    
+                    {showToPatientBtn &&
+                    <Button className="m-2" variant="primary" onClick={()=>{toPatientProfile(eventPatient)}}>
+                        Patient Profile
+                    </Button>}    
 
-                
+                    <Button className="m-2 " variant="secondary" onClick={props.hideAppointmentModal}>
+                        Close
+                    </Button>
+                </div>
                
             </Form>
             </Modal.Body>

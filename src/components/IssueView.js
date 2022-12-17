@@ -291,21 +291,24 @@ const IssueView = () => {
                                 type="checkbox"                       
                             />                
                             </Form.Group>
+                            <div className='buttons-container'>
+                                 
 
-                            <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                                {editing ? "Cancel" : "Edit Issue"}
-                            </Button>    
+                                {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
+                                    Delete Issue
+                                </Button>}                
+                                {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
+                                    Update Issue
+                                </Button> }   
 
-                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                                Delete Issue
-                            </Button>}                
-                            {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
-                                Update Issue
-                            </Button> }   
-
-                            {editing && resolved && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
-                                Set Not resolved
-                            </Button>}                                      
+                                {editing && resolved && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
+                                    Set Not resolved
+                                </Button>}
+                                
+                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                    {editing ? "Cancel" : "Edit Issue"}
+                                </Button>   
+                            </div>                                      
                         </Form>
                     </Tab>
                     <Tab title="Symptoms" eventKey="Symptoms">

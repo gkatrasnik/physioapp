@@ -174,15 +174,14 @@ const NewAppointmentModal = (props) => {
                     }}
                 />                
                 </Form.Group>
-                
-                <Button className="m-2 " variant="secondary" onClick={props.toggleModal}>
-                    Close
-                </Button>
-                
-                <Button className="m-2" variant="primary" type="submit">
-                    Add Appointment
-                </Button>     
-               
+                <div className='buttons-container'>
+                    <Button className="m-2" variant="primary" type="submit">
+                        Add Appointment
+                    </Button>     
+                    <Button className="m-2 " variant="secondary" onClick={props.toggleModal}>
+                        Close
+                    </Button>
+                </div>
             </Form>
             </Modal.Body>
         </Modal>

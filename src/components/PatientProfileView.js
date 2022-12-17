@@ -9,7 +9,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
-import { Container, Button, Form, Row, Col, Tab, Tabs } from 'react-bootstrap';
+import { Container, Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { useAuth } from '../auth';
 import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
@@ -347,18 +347,17 @@ const PatientProfileView = () => {
                                 }}
                             />                
                             </Form.Group>
-                            
-                            <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                                {editing ? "Cancel" : "Edit Patient"}
-                            </Button> 
-
-                            {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                                Update Patient
-                            </Button> }
-
-                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                                Delete Patient
-                            </Button>}                      
+                            <div className='buttons-container'>                               
+                                {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
+                                    Delete Patient
+                                </Button>}
+                                {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                                    Update Patient
+                                </Button> }                                
+                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                    {editing ? "Cancel" : "Edit Patient"}
+                                </Button> 
+                            </div>                      
                         </Form>
                     </Tab>
                     <Tab title="Appointments" eventKey="Appointments">
