@@ -45,7 +45,7 @@ ADD FEATURES
 
 ! implement confirmation dialogues on delete functions ("are you sure you want to delete X?)
 ! implement loading component/icon on async actions
-! create appointments list (table of appointments) paralel with calendar, maybe 2 tabs, data is handeled in parent component, calendar and list gets just props?
+! create appointments list (table of appointments) paralel with calendar, maybe 2 tabs, data is handeled in parent component, calendar and list gets just props? -- Agenta is alredy on calendar - enough?
 
 - take photos, add pictures to issues(storage)
 - add, record voice memos to issues(storage)?
