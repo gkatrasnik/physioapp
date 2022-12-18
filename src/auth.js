@@ -14,6 +14,7 @@ export const useAuth = () => {
 
 function useProvideAuth() {
     const [user, setUser] = useState(null);
+    const [userObj, setUserObj] = useState(null);
 
     const signup = async (email, password, data) => {
         const {error, user} = await supabase.auth.signUp({
@@ -76,14 +77,32 @@ function useProvideAuth() {
         return {error, user}
     }
 
+    //get user data from public.users 
+    const getUserData = async (sessionUser) => {     
+        const queryData = await supabase
+            .from('users')
+            .select()            
+            .eq("id", sessionUser.id)
+            .limit(1)
+            .single()
+        if (queryData.error) {            
+            alert(queryData.error.message);
+        } else {
+            setUserObj(queryData.data)
+        }                      
+    }
+
+
     useEffect(() => {        
         const auth = supabase.auth.onAuthStateChange(async (event, session) => {
             if (event === 'SIGNED_IN') {
+               // getUserData(session.user);
                 setUser(session.user);
             }
 
             if (event === 'SIGNED_OUT') {
                 setUser(null);
+               // setUserObj(null);
             }            
             
         })
@@ -95,6 +114,7 @@ function useProvideAuth() {
 
     return {
         user,
+        userObj,
         signup,
         login,
         logout,
