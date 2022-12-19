@@ -17,7 +17,7 @@ const Signup = () => {
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
     const [name, setName ]= useState("");
-    const [phone, setPhone ]= useState(null);
+    const [phone, setPhone ]= useState("");
     const [address, setAddress ]= useState("");
     const [city, setCity ]= useState("");
     const [zipCode, setZipCode ]= useState("");
@@ -79,12 +79,12 @@ const Signup = () => {
         } else {
           setLoading(false);
           alert("Your account has been created,  please verify it by clicking the activation link that has been send to your email")
-        }
-
-        setEmail("")
-        setPassword("")
-        setPasswordConfirmation("")
-        navigate("/");
+          
+          setEmail("")
+          setPassword("")
+          setPasswordConfirmation("")
+          navigate("/");
+        }        
 
     }
 
