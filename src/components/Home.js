@@ -31,8 +31,8 @@ const Home = () => {
     
 
     useEffect(() => {              
-      getOrgData(auth.user.user_metadata.org_id);      
-    }, [])
+      getOrgData(auth.userObj.org_id);      
+    }, [auth.userObj])
 
     return (
         <>
@@ -58,13 +58,13 @@ const Home = () => {
                 </Card.Body>
                 </Card>}
 
-                {auth.user.user_metadata && 
+                {auth.userObj && 
                 <Card className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
                 <Card.Body>
                     <Card.Title className='text-center'>Therapist</Card.Title>
-                    <Card.Text>{auth.user.user_metadata.name}</Card.Text> 
-                    <Card.Text>{auth.user.email}</Card.Text> 
-                    <Card.Text>{auth.user.user_metadata.phone}</Card.Text>                   
+                    <Card.Text>{auth.userObj.name}</Card.Text> 
+                    <Card.Text>{auth.userObj.email}</Card.Text> 
+                    <Card.Text>{auth.userObj.phone}</Card.Text>                   
                 </Card.Body>
                 </Card>}                
             </Container>

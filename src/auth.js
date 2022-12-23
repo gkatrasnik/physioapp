@@ -96,13 +96,13 @@ function useProvideAuth() {
     useEffect(() => {        
         const auth = supabase.auth.onAuthStateChange(async (event, session) => {
             if (event === 'SIGNED_IN') {
-               // getUserData(session.user);
+                getUserData(session.user);
                 setUser(session.user);
             }
 
             if (event === 'SIGNED_OUT') {
                 setUser(null);
-               // setUserObj(null);
+                setUserObj(null);
             }            
             
         })
