@@ -102,8 +102,8 @@ const PatientProfileView = () => {
                 zip_code: zip,
                 birthdate: birthDate,
                 occupation: occupation,
-                user_id: auth.user.id,
-                org_id: auth.user.user_metadata.org_id
+                user_id: auth.userObj.id,
+                org_id: auth.userObj.org_id
             })
             .eq('id', location.state.patientData.id)
 

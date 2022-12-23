@@ -58,8 +58,8 @@ const SymptomModal = (props) => {
                 duration: duration,
                 bodypart_id: bodypartId,
                 issue_id: props.issueData.id,
-                user_id: auth.user.id,
-                org_id: auth.user.user_metadata.org_id
+                user_id: auth.userObj.id,
+                org_id: auth.userObj.org_id
             })
             .eq('id', props.symptomData.id)
 

@@ -52,9 +52,9 @@ const InterventionModal = (props) => {
                 treatment: treatment,
                 duration: duration,
                 notes: notes,
-                user_id: auth.user.id,
+                user_id: auth.userObj.id,
                 issue_id: props.issueData.id,
-                org_id: auth.user.user_metadata.org_id
+                org_id: auth.userObj.org_id
             })
             .eq('id', props.interventionData.id)
 

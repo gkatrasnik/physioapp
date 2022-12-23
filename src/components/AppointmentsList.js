@@ -150,7 +150,7 @@ const AppointmentsList = (props) => {
                                 <td>{event.title}</td>                             
                                 <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
                                 <td>{getDuration(event.start, event.end) + ' min'}</td>
-                                <td>{event.user_id === auth.user.id ? auth.user.user_metadata.name : event.user_id}</td>
+                                <td>{event.user_id === auth.userObj.id ? auth.userObj.name : event.user_id}</td>
                                 </tr>
                                 )
                             }):                     

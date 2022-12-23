@@ -40,10 +40,10 @@ const NewIssueModal = (props) => {
                 notes: notes,                
                 diagnosis: diagnosis,
                 patient_id: props.patientData.id,
-                user_id: auth.user.id,
+                user_id: auth.userObj.id,
                 start: start,
                 end: resolved ? moment().toDate() : null,
-                org_id: auth.user.user_metadata.org_id,
+                org_id: auth.userObj.org_id,
                 rec_deleted: false
 
                 //last_changed - add this

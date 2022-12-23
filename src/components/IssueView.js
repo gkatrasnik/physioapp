@@ -116,7 +116,7 @@ const IssueView = () => {
                 last_changed: lastChanged,
                 start: start,
                 end: end,
-                org_id: auth.user.user_metadata.org_id          
+                org_id: auth.userObj.org_id          
             })
             .eq('id', location.state.issueData.id)
 

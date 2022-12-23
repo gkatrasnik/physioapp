@@ -49,7 +49,7 @@
 
         const eventStyleGetter = (event, start, end, isSelected) => {
 
-            let backgroundColor = event.user_id === auth.user.id ? "#0051ff" :"#00a1cc";//"#0051ff" : "00caff";
+            let backgroundColor = event.user_id === auth.userObj.id ? "#0051ff" :"#00a1cc";//"#0051ff" : "00caff";
             let fontColor =  "white";
             let style = {
                 backgroundColor: backgroundColor,
@@ -101,7 +101,7 @@
             if (filterEvents) { // if switch is turned ON
                 const newArr =  eventList.map((event) => {
                     //if event user_id = me, push to cloned arr
-                    if (event.user_id === auth.user.id) {
+                    if (event.user_id === auth.userObj.id) {
                         return event;
                     }
                 })
