@@ -57,7 +57,7 @@ function useProvideAuth() {
 
     const resetPassword = async (email) => {
         const {error, user} = await supabase.auth.resetPasswordForEmail(email, {
-            redirectTo: 'http://localhost:3000/update-password', //TODO change hardcoded link for production
+            redirectTo: 'https://physioapp.netlify.app/update-password', //TODO change hardcoded link for production
         })
 
         if(error) {
