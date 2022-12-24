@@ -36,6 +36,16 @@ const Home = () => {
         }                   
     }, [auth.userObj])
 
+    // if organization is blocked, show alert and logout
+    useEffect(() => {  
+        if (orgData) {
+            if (orgData.blocked) {
+                alert("Your organization is blocked. You can not use your account.");
+                auth.logout();
+            }  
+        }                   
+    }, [orgData])
+
     return (
         <>
         {loading && <LoadingModal />}
