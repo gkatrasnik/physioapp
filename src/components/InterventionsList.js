@@ -14,7 +14,9 @@ const InterventionsList = (props) => {
     const [showNewInterventionModal, setShowNewInterventionModal] = useState(false);
     const [interventionsData, setInterventionsData] = useState([]);  
     const [currentInterventionData, setCurrentInterventionData] = useState(null)
-        const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [usersData, setUsersData] = useState([]);
+
 
     const showUpdateInterventionModal = (interventionObj) => { 
         setCurrentInterventionData(interventionObj);                      
@@ -46,10 +48,33 @@ const InterventionsList = (props) => {
             setInterventionsData(queryData.data)
         }     
     }
+
+     //therapsis data
+    const getUsers = async () => {  
+        setLoading(true); 
+        const queryData = await supabase
+            .from('users')
+            .select()
+            .eq("rec_deleted", false)
+        if (queryData.error) {
+            setLoading(false); 
+            alert(queryData.error.message);
+        } else {
+            setLoading(false); 
+            setUsersData(queryData.data);     
+        }
+                  
+    }
+
+    const getUserName = (userId) => {
+        const userObj = usersData.find(user => user.id === userId);
+        return userObj ? userObj.name : "Unknown";
+    }
    
     //on component mount find all interventions for this issue
     useEffect(() => {
       getInterventionsData();
+      getUsers();
     }, [])
 
     // only show intervention modal afer current intervention data is updated
@@ -68,6 +93,7 @@ const InterventionsList = (props) => {
                 show={showInterventionModal} 
                 hideModal={hideUpdateInterventionModal}                  
                 issueData = {props.issueData}    
+                usersData = {usersData}
                 interventionData = {currentInterventionData}
                 getInterventionsData = {getInterventionsData}
             />
@@ -76,6 +102,7 @@ const InterventionsList = (props) => {
                 show={showNewInterventionModal} 
                 toggleModal={toggleNewInterventionModal}  
                 issueData = {props.issueData}    
+                usersData = {usersData}
                 interventionData = {currentInterventionData}
                 getInterventionsData = {getInterventionsData}
             />
@@ -95,6 +122,7 @@ const InterventionsList = (props) => {
                             <th>Intervention</th>
                             <th>Date</th>                    
                             <th>Duration</th>
+                            <th>Therapist</th>
                             <th>Notes</th>
                             </tr>
                         </thead>
@@ -107,7 +135,8 @@ const InterventionsList = (props) => {
                                     <td>{intervention.treatment}</td>
                                     <td>{moment(intervention.created_at).toDate().toLocaleDateString("sl")}</td>
                                     <td>{intervention.duration}</td>
-                                    <td>{intervention.notes ? intervention.notes : "Empty"}</td>
+                                    <td>{getUserName(intervention.user_id)}</td> 
+                                    <td>{intervention.notes ? intervention.notes : "Empty"}</td>                                    
                                     </tr>
                                 )
                             }):                     

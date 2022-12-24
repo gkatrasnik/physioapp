@@ -5,6 +5,7 @@ import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LoadingModal from "./LoadingModal"
+import Select from 'react-select';
 
 
 const InterventionModal = (props) => {
@@ -15,6 +16,8 @@ const InterventionModal = (props) => {
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState("");
     const [notes, setNotes] = useState("");    
+    const [therapistId, setTherapistId] = useState(null);
+
 
     const auth = useAuth();
 
@@ -52,7 +55,7 @@ const InterventionModal = (props) => {
                 treatment: treatment,
                 duration: duration,
                 notes: notes,
-                user_id: auth.userObj.id,
+                user_id: therapistId,
                 issue_id: props.issueData.id,
                 org_id: auth.userObj.org_id
             })
@@ -92,9 +95,11 @@ const InterventionModal = (props) => {
             setTreatment(props.interventionData.treatment);
             setNotes(props.interventionData.notes);
             setDuration(props.interventionData.duration);
+            setTherapistId(props.interventionData.user_id);
         } 
         
     }, [props.interventionData]);
+    
 
 
     return (        
@@ -126,6 +131,27 @@ const InterventionModal = (props) => {
                     setTreatment(e.target.value);
                     }}
                 />                
+                </Form.Group>
+
+                <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                <Form.Label>Therapist</Form.Label>                  
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
+                    }}
+                    options={props.usersData}                    
+                    defaultValue={props.usersData.find((user) => user.id === therapistId)}
+                    isDisabled={!editing}
+                    getOptionLabel={(option)=>option.name}
+                    getOptionValue={(option)=>option.id}
+                    onChange={(option) => {
+                        setTherapistId(option.id);
+                    }}
+                >
+                </Select>
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">

@@ -3,7 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../auth';
-import LoadingModal from "./LoadingModal"
+import LoadingModal from "./LoadingModal";
+import Select from 'react-select';
 
 
 const NewInterventionModal = (props) => {
@@ -11,6 +12,8 @@ const NewInterventionModal = (props) => {
     const [duration, setDuration] = useState("");
     const [notes, setNotes] = useState("");    
     const [loading, setLoading] = useState(false);
+    const [therapistId, setTherapistId] = useState(null);
+
 
     const auth = useAuth();
 
@@ -33,7 +36,7 @@ const NewInterventionModal = (props) => {
                 treatment: treatment,
                 duration: duration,
                 notes: notes,
-                user_id: auth.userObj.id,
+                user_id: therapistId,
                 issue_id: props.issueData.id,
                 org_id: auth.userObj.org_id,
                 rec_deleted: false
@@ -53,6 +56,7 @@ const NewInterventionModal = (props) => {
         setTreatment("");
         setNotes("");
         setDuration(null);
+        setTherapistId(auth.userObj.id);
     }, []);
 
 
@@ -78,6 +82,28 @@ const NewInterventionModal = (props) => {
                     }}
                 />                
                 </Form.Group>
+
+                <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                <Form.Label>Therapist</Form.Label>                  
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
+                    }}
+                    options={props.usersData}                    
+                    defaultValue={props.usersData.find((user) => user.id === therapistId)}
+                    isDisabled={false}
+                    getOptionLabel={(option)=>option.name}
+                    getOptionValue={(option)=>option.id}
+                    onChange={(option) => {
+                        setTherapistId(option.id);                        
+                    }}
+                >
+                </Select>
+                </Form.Group>
+
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>Duration</Form.Label>
