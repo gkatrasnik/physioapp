@@ -2,16 +2,19 @@ import React, {useState} from 'react';
 import {useAuth} from "../../auth";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Card, Container} from "react-bootstrap";
+import LoadingModal from "../modals/LoadingModal";
 
 const UpdatePassword = () => {
     const auth = useAuth();
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         if (password !== passwordConfirmation) {
             return alert("Password confirmation does not match");
@@ -20,9 +23,12 @@ const UpdatePassword = () => {
         const passwordReset = await auth.updatePassword(password);       
 
         if(passwordReset.error) {
+          setLoading(false);
           alert(passwordReset.error.message);
         } else {
+          setLoading(false);
           alert("Your password was updated successfuly");
+
           setPassword("");
           setPasswordConfirmation("");
           navigate("/");
@@ -32,6 +38,7 @@ const UpdatePassword = () => {
 
     return (
     <Container className="min-h-100">
+      {loading && <LoadingModal />}
       <Card
         style={{ width: "90%", maxWidth: "32rem", margin: "auto", top: "10rem" }}
         className="box-shadow"

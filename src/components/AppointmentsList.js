@@ -19,6 +19,8 @@ const AppointmentsList = (props) => {
     const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
     const [currentEvent, setCurrentEvent] = useState(null);
     const [patientsData, setPatientsData] = useState([]);
+    const [usersData, setUsersData] = useState([]);
+
     const [loading, setLoading] = useState(false);
 
     const getEvents = async () => {
@@ -70,6 +72,28 @@ const AppointmentsList = (props) => {
         setCurrentEvent(null);
     }
 
+     //therapsis data
+    const getUsers = async () => {  
+        setLoading(true); 
+        const queryData = await supabase
+            .from('users')
+            .select()
+            .eq("rec_deleted", false)
+        if (queryData.error) {
+            setLoading(false); 
+            alert(queryData.error.message);
+        } else {
+            setLoading(false); 
+            setUsersData(queryData.data);     
+        }
+                  
+    }
+
+    const getUserName = (userId) => {
+        const userObj = usersData.find(user => user.id === userId);
+        return userObj ? userObj.name : "Unknown";
+    }
+
 
     //patients data
     const getPatients = async () => {  
@@ -91,6 +115,7 @@ const AppointmentsList = (props) => {
     useEffect(() => {
       getEvents();
       getPatients();
+      getUsers();
     }, [props])
 
     useEffect(()=>{
@@ -150,7 +175,7 @@ const AppointmentsList = (props) => {
                                 <td>{event.title}</td>                             
                                 <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
                                 <td>{getDuration(event.start, event.end) + ' min'}</td>
-                                <td>{event.user_id === auth.userObj.id ? auth.userObj.name : event.user_id}</td>
+                                <td>{usersData && getUserName(event.user_id)}</td>
                                 </tr>
                                 )
                             }):                     

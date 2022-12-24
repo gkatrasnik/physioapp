@@ -132,8 +132,9 @@ const IssueView = () => {
 
      const handleUpdateIssue = () => {
         if (start && end && start >= end) {
-            return alert('Please adjust "From" and "To" dates')
+            return alert('Please adjust "From" and "To" dates');
         }
+        
         updateIssue();
         setEditing(false);
     }

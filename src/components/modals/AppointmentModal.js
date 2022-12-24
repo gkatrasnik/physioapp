@@ -7,6 +7,7 @@ import moment from 'moment'
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LoadingModal from "./LoadingModal"
 import Select from "react-select"
+import { useAuth } from '../../auth';
 
 
 const AppointmentModal = (props) => {
@@ -19,11 +20,16 @@ const AppointmentModal = (props) => {
     const [showToPatientBtn, setShowToPatientBtn] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [editing, setEditing] = useState(false);
+
 
     const navigate = useNavigate();
+    const auth = useAuth();
+
 
     const toggleConfirmDelete = () => {
         setShowConfirmDelete(!showConfirmDelete);
+        setEditingFalse();
     }
 
     const handleDeleteAppointment = () => {       
@@ -52,28 +58,80 @@ const AppointmentModal = (props) => {
 
     const toPatientProfile=(patient)=>{
         navigate('/patient',{state:{patientData:patient}});
-        console.log("patient" , patient)
+        setEditingFalse();
     }
    
-    const findEventPatient = () => {
-        const eventPatient = props.patientsData.find(patient => patient.id === props.currentEvent.patient_id);
+    const findEventPatient = (searchedPatientId) => {
+        const eventPatient = props.patientsData.find(patient => patient.id === searchedPatientId);
         setEventPatient(eventPatient);
     }
 
-   
+    const updateAppointment = async () => {  
+        setLoading(true);
+        const queryData = await supabase
+            .from('appointments')
+            .update({
+                start: start,
+                end: end,
+                patient_id: patientId,
+                title: title,
+                user_id: auth.userObj.id,
+                org_id: auth.userObj.org_id,
+                rec_deleted: false
+            })
+            .eq('id', props.currentEvent.id)
+
+        if (queryData.error) {
+            setLoading(false);
+            alert(queryData.error.message);
+        }else {
+            setLoading(false);
+            props.getEvents();
+        }            
+        
+    }
+
+    const setEditingTrue = () => {
+        setEditing(true);
+    }
+    
+    const setEditingFalse = () => {
+        setEditing(false);
+    }
+
+    const handleCloseBtn = () => {
+        props.hideAppointmentModal();
+        setEditingFalse();
+    }
+
+    const onPatientProfile = () => {
+        let url = window.location.href;
+        return url.includes("/patient")
+    }
+
+    const handleUpdatePatient = () => {
+        if (!start || !end || start >= end) {
+            return alert('Please adjust "From" and "To" dates');
+        }
+
+        updateAppointment();        
+        findEventPatient(patientId);
+        props.hideAppointmentModal();
+        setEditingFalse();
+    }
+
     useEffect(() => {
         
         if (props.currentEvent) {
-            findEventPatient(); //to fill up fields on modal
+            findEventPatient(props.currentEvent.patient_id); //to fill up fields on modal
 
             setStart(props.currentEvent.start);
             setEnd(props.currentEvent.end);
             setPatientId(props.currentEvent.patient_id);
             setTitle(props.currentEvent.title);
         }  
-
-        let url = window.location.href;
-        setShowToPatientBtn(!url.includes("/patient"))
+        
+        setShowToPatientBtn(!onPatientProfile());
         
     }, [props.currentEvent]);
 
@@ -98,22 +156,26 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>From</Form.Label>
                 <Form.Control
-                    disabled={true}
+                    disabled={!editing}
                     required
-                    value={moment(start).toDate().toLocaleString("sl")}
-                    type="text"                 
-                    
+                    defaultValue={moment(start).format("YYYY-MM-DDTHH:mm")}
+                    type="datetime-local"                
+                    onChange={(e) => {
+                    setStart(moment(e.target.value).toDate());
+                    }}
                 />                
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>To</Form.Label>
                 <Form.Control
-                    disabled={true}
+                    disabled={!editing}
                     required
-                    type="text"
-                    value={moment(end).toDate().toLocaleString("sl")}                    
-                    
+                    defaultValue={moment(end).format("YYYY-MM-DDTHH:mm")}
+                    type="datetime-local"                   
+                    onChange={(e) => {
+                    setEnd(moment(e.target.value).toDate());
+                    }}
                 />                       
                 </Form.Group>
 
@@ -128,7 +190,7 @@ const AppointmentModal = (props) => {
                     }}
                     options={props.patientsData}                    
                     defaultValue={props.patientsData.find((patient) => patient.id === patientId)}
-                    isDisabled={true}
+                    isDisabled={!editing}
                     getOptionLabel={(option)=>option.name}
                     getOptionValue={(option)=>option.id}
                     onChange={(option) => {
@@ -141,22 +203,35 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
-                    disabled={true}
+                    disabled={!editing}
                     type="text"
                     defaultValue={title}
+                    onChange={(e) => {
+                    setTitle(e.target.value);
+                    }}
                 />                
                 </Form.Group>
-                <div className='buttons-container'>                  
+                <div className='buttons-container'>      
+                {editing ?        
+                    <>  
                     <Button className="m-2" variant="danger" onClick={toggleConfirmDelete}>
-                    Delete
+                        Delete
                     </Button> 
-                    
-                    {showToPatientBtn &&
+
+                    <Button className="m-2" variant="primary" onClick={handleUpdatePatient}>
+                        Save
+                    </Button> 
+                    </> :
+                    <Button className="m-2" variant="primary" onClick={setEditingTrue}>
+                        Edit
+                    </Button> 
+                }     
+                    {showToPatientBtn && !editing &&
                     <Button className="m-2" variant="primary" onClick={()=>{toPatientProfile(eventPatient)}}>
                         Patient Profile
                     </Button>}    
 
-                    <Button className="m-2 " variant="secondary" onClick={props.hideAppointmentModal}>
+                    <Button className="m-2 " variant="secondary" onClick={handleCloseBtn}>
                         Close
                     </Button>
                 </div>
