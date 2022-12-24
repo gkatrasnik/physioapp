@@ -24,6 +24,8 @@
         const [selectedSlot, setSelectedSlot] = useState(null);
         const [loading, setLoading] = useState(false);
         const [filterEvents, setFilterEvents] = useState(false);
+        const [usersData, setUsersData] = useState([]);
+
 
         
         const handleSelectSlot = (slot) => {
@@ -96,6 +98,23 @@
             setPatientsData(queryData.data);               
         }
 
+        //therapsis data
+        const getUsers = async () => {  
+            setLoading(true); 
+            const queryData = await supabase
+                .from('users')
+                .select()
+                .eq("rec_deleted", false)
+            if (queryData.error) {
+                setLoading(false); 
+                alert(queryData.error.message);
+            } else {
+                setLoading(false); 
+                setUsersData(queryData.data);     
+            }
+                  
+        }
+
         //filter event list to only contain my events
         const filterEventList = async() => {
             if (filterEvents) { // if switch is turned ON
@@ -117,6 +136,7 @@
         useEffect(() => {
             getPatients(); 
             getEvents();
+            getUsers();
         }, [])    
         
         useEffect(()=>{
@@ -157,6 +177,7 @@
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
                         patientsData={patientsData}
+                        usersData={usersData}  
                         show={showNewAppointmentModal} 
                         toggleModal={toggleNewAppointmentModal} 
                         getEvents={getEvents}                    
@@ -164,6 +185,7 @@
     
                     <AppointmentModal
                         patientsData={patientsData}
+                        usersData={usersData}  
                         currentEvent={currentEvent}
                         hideAppointmentModal={hideAppointmentModal}
                         show={showAppointmentModal}

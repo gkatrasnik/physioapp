@@ -21,6 +21,7 @@ const AppointmentModal = (props) => {
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [loading, setLoading] = useState(false);
     const [editing, setEditing] = useState(false);
+    const [therapistId, setTherapistId] = useState(null);
 
 
     const navigate = useNavigate();
@@ -75,7 +76,7 @@ const AppointmentModal = (props) => {
                 end: end,
                 patient_id: patientId,
                 title: title,
-                user_id: auth.userObj.id,
+                user_id: therapistId,
                 org_id: auth.userObj.org_id,
                 rec_deleted: false
             })
@@ -129,6 +130,7 @@ const AppointmentModal = (props) => {
             setEnd(props.currentEvent.end);
             setPatientId(props.currentEvent.patient_id);
             setTitle(props.currentEvent.title);
+            setTherapistId(props.currentEvent.user_id)
         }  
         
         setShowToPatientBtn(!onPatientProfile());
@@ -195,6 +197,27 @@ const AppointmentModal = (props) => {
                     getOptionValue={(option)=>option.id}
                     onChange={(option) => {
                         setPatientId(option.id);
+                    }}
+                >
+                </Select>
+                </Form.Group>
+
+                <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                <Form.Label>Therapist</Form.Label>                  
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
+                    }}
+                    options={props.usersData}                    
+                    defaultValue={props.usersData.find((user) => user.id === therapistId)}
+                    isDisabled={!editing}
+                    getOptionLabel={(option)=>option.name}
+                    getOptionValue={(option)=>option.id}
+                    onChange={(option) => {
+                        setTherapistId(option.id);
                     }}
                 >
                 </Select>

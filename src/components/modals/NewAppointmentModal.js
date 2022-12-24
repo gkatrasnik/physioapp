@@ -18,6 +18,7 @@ const NewAppointmentModal = (props) => {
     const [loading, setLoading] = useState(false);
     const [durationH, setDurationH] = useState("0");
     const [durationM, setDurationM] = useState("0");
+    const [therapistId, setTherapistId] = useState(null);
 
 
 
@@ -52,7 +53,7 @@ const NewAppointmentModal = (props) => {
                 end: end,
                 patient_id: patientId,
                 title: title,
-                user_id: auth.userObj.id,
+                user_id: therapistId,
                 org_id: auth.userObj.org_id,
                 rec_deleted: false
             })
@@ -94,6 +95,7 @@ const NewAppointmentModal = (props) => {
       if (props.currentPatientData) {
         setPatientId(props.currentPatientData.id);
       }
+      setTherapistId(auth.userObj.id);
     }, [])
     
     
@@ -164,7 +166,28 @@ const NewAppointmentModal = (props) => {
                 </Select>
                 </Form.Group>
 
-                <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
+                <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                <Form.Label>Therapist</Form.Label>                  
+                <Select
+                    styles={{
+                        control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderRadius: 0,
+                        }),
+                    }}
+                    options={props.usersData}                    
+                    defaultValue={props.usersData.find((user) => user.id === therapistId)}
+                    isDisabled={false}
+                    getOptionLabel={(option)=>option.name}
+                    getOptionValue={(option)=>option.id}
+                    onChange={(option) => {
+                        setTherapistId(option.id);                        
+                    }}
+                >
+                </Select>
+                </Form.Group>
+
+                <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
                     type="text"

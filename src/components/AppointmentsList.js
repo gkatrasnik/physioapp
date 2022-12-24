@@ -131,17 +131,19 @@ const AppointmentsList = (props) => {
             <NewAppointmentModal 
                 currentPatientData={props.currentPatientData}
                 patientsData={patientsData}
+                usersData={usersData}
                 show={showNewAppointmentModal} 
                 toggleModal={toggleNewAppointmentModal} 
-                getEvents={getEvents}                    
+                getEvents={getEvents}                                       
             />
 
-            <AppointmentModal
-                patientsData={patientsData}
+            <AppointmentModal                
                 currentEvent={currentEvent}
-                hideAppointmentModal={hideAppointmentModal}
+                patientsData={patientsData}
+                usersData={usersData}  
                 show={showAppointmentModal}
-                getEvents={getEvents}       
+                hideAppointmentModal={hideAppointmentModal}                
+                getEvents={getEvents}                     
             />
 
             <div className='mx-auto my-3 component-big'>
