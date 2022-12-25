@@ -164,6 +164,10 @@ const IssueView = () => {
         setEnd(null);
     }    
 
+    const setEndNow = () => {
+        setEnd(moment().toDate());
+    }    
+
     const toggleConfirmDelete = () => {
         setShowConfirmDelete(!showConfirmDelete);
     }
@@ -302,9 +306,17 @@ const IssueView = () => {
                                     Update Issue
                                 </Button> }   
 
-                                {editing && resolved && <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
-                                    Set Not resolved
-                                </Button>}
+                                {editing && 
+                                <>
+                                    {resolved ? <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
+                                        Set Not Resolved
+                                    </Button> :
+                                    <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNow()}}>
+                                        Set Resolved Now
+                                    </Button>
+                                    }
+                                </>
+                                }
                                 
                                 <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
                                     {editing ? "Cancel" : "Edit Issue"}
