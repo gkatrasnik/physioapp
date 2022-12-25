@@ -242,10 +242,10 @@ const AppointmentModal = (props) => {
                     </Button> 
 
                     <Button className="m-2" variant="primary" onClick={handleUpdatePatient}>
-                        Save
+                        Update
                     </Button> 
                     </> :
-                    <Button className="m-2" variant="primary" onClick={setEditingTrue}>
+                    <Button className="m-2" variant="secondary" onClick={setEditingTrue}>
                         Edit
                     </Button> 
                 }     

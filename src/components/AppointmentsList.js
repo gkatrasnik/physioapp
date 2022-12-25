@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
-import { Button, Table} from "react-bootstrap";
+import { Button, Table, Form} from "react-bootstrap";
 import moment from 'moment';
 import { useAuth } from '../auth';
 import NewAppointmentModal from './modals/NewAppointmentModal';
@@ -20,6 +20,8 @@ const AppointmentsList = (props) => {
     const [currentEvent, setCurrentEvent] = useState(null);
     const [patientsData, setPatientsData] = useState([]);
     const [usersData, setUsersData] = useState([]);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [filteredEventsList, setFilteredEventsList] = useState([]);
 
     const [loading, setLoading] = useState(false);
 
@@ -112,6 +114,21 @@ const AppointmentsList = (props) => {
                   
     }
 
+    const handleSearch = () => {   
+        if (eventsList.length) {
+            if (searchQuery.length === 0) { //show all events 
+                setFilteredEventsList(eventsList);
+            } else if (searchQuery.length) {//auto filter events when typing in search      
+            const newArr = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()));
+            setFilteredEventsList(newArr);
+            }
+        }
+    }
+
+    useEffect(() => { //on search query change, handle search
+        handleSearch(searchQuery);
+    }, [eventsList, searchQuery])
+
     useEffect(() => {
       getEvents();
       getPatients();
@@ -161,6 +178,21 @@ const AppointmentsList = (props) => {
                     <Table>
                         <thead>
                             <tr>
+                                <th colSpan={6}>
+                                     <Form  onSubmit={e => {e.preventDefault()}}>
+                                        <div className="d-flex">                      
+                                                <Form.Control 
+                                                className="col"
+                                                type="search" 
+                                                placeholder="Search by appointment title..." 
+                                                onChange={(e) => {    
+                                                    setSearchQuery(e.target.value);                                            
+                                                }}/>     
+                                        </div>               
+                                    </Form>   
+                                </th>
+                            </tr>
+                            <tr>
                             <th>Id</th>
                             <th>Title</th>                            
                             <th>Date</th>
@@ -170,7 +202,7 @@ const AppointmentsList = (props) => {
                         </thead>
 
                         <tbody className='cursor-pointer'>                        
-                        {eventsList && eventsList.length ? eventsList.map((event, index) => {
+                        {filteredEventsList && filteredEventsList.length ? filteredEventsList.map((event, index) => {
                             return (
                                 <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'} onClick={() => {setCurrentEvent(event)}}>
                                 <td>{event.id}</td>

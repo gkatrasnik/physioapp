@@ -245,7 +245,7 @@ const PatientProfileView = () => {
             <Container fluid={true} className="min-h-100-without-navbar">
                 <h1 className="text-center page-heading">Patient Profile View</h1>
                  <Tabs 
-                    defaultActiveKey="Info"                    
+                    defaultActiveKey="Issues"                    
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big">
