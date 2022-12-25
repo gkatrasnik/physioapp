@@ -104,7 +104,7 @@ const PatientSearchView = () => {
                 </Form>   
 
                 <div className='table-container mb-5'>                
-                    <Table striped hover>
+                    <Table hover>
                         <thead>
                             <tr>
                             <th>Patient Id</th>

@@ -51,12 +51,10 @@
 
         const eventStyleGetter = (event, start, end, isSelected) => {
 
-            let backgroundColor = event.user_id === auth.userObj.id ? "#0051ff" :"#00a1cc";//"#0051ff" : "00caff";
-            let fontColor =  "white";
+            let backgroundColor = event.user_id === auth.userObj.id ? "#0D6EFD" :"#6C757D";//"#0051ff" : "00caff";            
             let style = {
-                backgroundColor: backgroundColor,
-                borderRadius: '0px',                
-                color: fontColor,             
+                backgroundColor: backgroundColor,                               
+                color: "white",             
             };
             return {
                 style: style

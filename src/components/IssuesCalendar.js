@@ -30,10 +30,8 @@
 
         const eventStyleGetter = (event, start, end, isSelected) => {
             let backgroundColor = event.hasEnd ? "#58ac5c85" : "#e2b85c88";
-            let fontColor = event.hasEnd ? "white" : "black"
             let style = {
-                backgroundColor: backgroundColor,
-                borderRadius: '0px',                
+                backgroundColor: backgroundColor,                              
                 color: "black"
             };
             return {

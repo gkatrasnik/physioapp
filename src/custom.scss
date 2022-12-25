@@ -1,26 +1,7 @@
 /*! `Custom` Bootstrap 5 theme */
-@import url(https://use.fontawesome.com/releases/v5.0.10/css/all.css);
-@import url(https://fonts.googleapis.com/css?family=Quicksand:200,300,400,700);
-$font-family-base: Quicksand;
-@import url(https://fonts.googleapis.com/css?family=Quicksand:200,300,400,700);
-$headings-font-family: Quicksand;
 
-$enable-grid-classes: false;
-$primary: #0e4dd6;
-$secondary: #c9d6df;
-$success: #58ac5c;
-$danger: #c42f2f;
-$info: #faf391;
-$warning: #e2b85c;
-$light: #fafafa;
-$dark: #4e4e4e;
-$enable-gradients: false;
-$spacer: 1rem;
-$border-width: 1px;
-$enable-shadows: true;
 
-$enable-rounded: false;
-$body-text-align: null;
+
 
 /*! Import Bootstrap 5 variables */
 
@@ -29,40 +10,18 @@ $body-text-align: null;
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 
-$body-color: $gray-900;
-$body-bg: $white;
-
-$btn-box-shadow: inset 2px 2px 2px rgba($white, 0.3),
-  2px 2px 2px rgba($black, 0.2);
-$btn-border-width: 0;
-$btn-border-radius: 0;
-
-$btn-border-radius-lg:0;
-
-$card-border-radius:0;
-$modal-content-border-radius: 0;
-
-$nav-tabs-border-radius: 0;
-$nav-link-padding-x:0.5rem;
-$nav-tabs-border-color:#a9a9a9;
-$nav-tabs-link-active-border-color: #a9a9a9 #a9a9a9 #ffffff;
-
-
 
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 
-
-$event-bg :#00ccff;
-$event-border-radius: 0;
 
 .rbc-toolbar {
   justify-content: start !important;
   margin-bottom: 5px !important;
 }
 
-.rbc-toolbar button {
-  border-radius: 0 !important;
+.rbc-btn-group {
+  margin-bottom: 5px;
 }
 
 .rbc-agenda-event-cell:hover {
@@ -127,11 +86,11 @@ $event-border-radius: 0;
 }
 
 .custom-bg-light-success {
-  background-color: #58ac5c85;
+  background-color: $gray-400// #58ac5c85;
 }
 
 .custom-bg-light-warning {
-  background-color: #e2b85c88;
+  background-color: $white;
 
 }
 
