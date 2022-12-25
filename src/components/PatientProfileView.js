@@ -243,13 +243,13 @@ const PatientProfileView = () => {
         />
         <Layout>
             <Container fluid={true} className="min-h-100-without-navbar">
-                <h1 className="text-center page-heading">Patient Profile View</h1>
+                <h1 className="text-center page-heading">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
                  <Tabs 
                     defaultActiveKey="Issues"                    
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big">
-                            <h2 className='text-center'>{location.state ? location.state.patientData.name : null}</h2>
+                            <h2 className='text-center'>Patient Info</h2>
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Name</Form.Label>
                             <Form.Control

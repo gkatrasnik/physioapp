@@ -204,7 +204,7 @@ const AppointmentsList = (props) => {
                         <tbody className='cursor-pointer'>                        
                         {filteredEventsList && filteredEventsList.length ? filteredEventsList.map((event, index) => {
                             return (
-                                <tr key={index}  className={isEventPast(event.end) ? 'appointment-past' : 'appointment-future'} onClick={() => {setCurrentEvent(event)}}>
+                                <tr key={index}  className={isEventPast(event.end) ? 'custom-bg-light-success' : 'custom-bg-light-warning'} onClick={() => {setCurrentEvent(event)}}>
                                 <td>{event.id}</td>
                                 <td>{event.title}</td>                             
                                 <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>

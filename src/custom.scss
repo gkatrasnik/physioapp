@@ -126,11 +126,11 @@ $event-border-radius: 0;
 
 }
 
-.appointment-past {
+.custom-bg-light-success {
   background-color: #58ac5c85;
 }
 
-.appointment-future {
+.custom-bg-light-warning {
   background-color: #e2b85c88;
 
 }
@@ -140,7 +140,7 @@ $event-border-radius: 0;
 }
 
 .btn-danger {
-  background-color: #d50000;
+  background-color: $danger;
   color: #fff;
 }
 
@@ -151,12 +151,12 @@ $event-border-radius: 0;
   height: 1.5em;
 }
 
-.border-success {
-  border:5px solid $success;
+.custom-border-success {
+  border:5px solid #58ac5c85;
 }
 
-.border-warning {
-  border:5px solid $warning
+.custom-border-warning {
+  border:5px solid #e2b85c88;
 }
 
 .duration-picker {

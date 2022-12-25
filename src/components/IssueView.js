@@ -206,15 +206,15 @@ const IssueView = () => {
         />
 
         <Layout>
-            <Container fluid={true} className={(resolved ? 'border-success' : 'border-warning') + " min-h-100-without-navbar"}>
-                <h1 className="text-center page-heading">Issue View</h1>
+            <Container fluid={true} className={(resolved ? 'custom-border-success' : 'custom-border-warning') + " min-h-100-without-navbar"}>
+                <h1 className="text-center page-heading">Issue {location.state ? ( " - " + location.state.issueData.name) : null}</h1>
                  <Tabs 
                     defaultActiveKey="Info" 
                     onSelect={handleSelectTab}                   
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big ">
-                            <h2 className='text-center'>{location.state ? location.state.issueData.name : null}</h2>
+                            <h2 className='text-center'>Issue Info</h2>
 
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Title</Form.Label>
