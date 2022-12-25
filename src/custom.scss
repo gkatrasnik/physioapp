@@ -70,7 +70,7 @@
    position: sticky;
     top: 0;
     z-index: 1; 
-    background-color: darkgray;
+    //background-color: darkgray;
   }
 
 .table-container td {
@@ -81,6 +81,10 @@
     max-height: 500px;
     overflow-y: auto;
     font-size: medium;
+}
+
+.table-header-search {
+  border: none;
 }
 
 }

@@ -178,7 +178,7 @@ const AppointmentsList = (props) => {
                     <Table>
                         <thead>
                             <tr>
-                                <th colSpan={6}>
+                                <th colSpan={6} className="table-header-search">
                                      <Form  onSubmit={e => {e.preventDefault()}}>
                                         <div className="d-flex">                      
                                                 <Form.Control 
