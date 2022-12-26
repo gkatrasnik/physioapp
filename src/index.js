@@ -27,7 +27,7 @@ root.render(
                 <Route index element={<ProtectedRoute><Home/></ProtectedRoute>}/>
                 <Route path={"patients"} element={<ProtectedRoute><PatientSearchView/></ProtectedRoute>}/>
                 <Route path={"appointments"} element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
-                <Route path={"patient"} element={<ProtectedRoute><PatientProfileView/></ProtectedRoute>}/>
+                <Route path={"profile"} element={<ProtectedRoute><PatientProfileView/></ProtectedRoute>}/>
                 <Route path={"issue"} element={<ProtectedRoute><IssueView/></ProtectedRoute>}/>
 
 

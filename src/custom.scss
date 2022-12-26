@@ -11,6 +11,7 @@ a {
 $nav-link-padding-x:0.5rem;
 
 
+
 @import "../node_modules/bootstrap/scss/functions";
 @import "../node_modules/bootstrap/scss/variables";
 
@@ -97,7 +98,17 @@ $nav-link-padding-x:0.5rem;
   justify-content: center;
   align-items: center;
   max-width: 60px;
+  color: #000;
 }
+
+.custom-navigation-item p{
+  margin: 0;
+}
+
+.custom-navigation-item svg {    
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 
 // main container
 .main-container {
@@ -216,12 +227,12 @@ $nav-link-padding-x:0.5rem;
 
 
 
-.custom-border-success {
-  border:5px solid #58ac5c85;
+.custom-color-success {
+  color: $success;
 }
 
-.custom-border-warning {
-  border:5px solid #e2b85c88;
+.custom-color-warning {
+  color: $warning;
 }
 
 .duration-picker {
@@ -286,4 +297,8 @@ $nav-link-padding-x:0.5rem;
     font-size: 4rem;
     font-style: italic ;
     color: $primary;
+}
+
+.navbar-brand-logo {
+  font-style: italic;
 }

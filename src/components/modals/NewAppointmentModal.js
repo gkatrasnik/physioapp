@@ -73,7 +73,7 @@ const NewAppointmentModal = (props) => {
             setStart(props.selectedSlot.start);
         }
         let url = window.location.href;
-        setPatientFieldDisabled(url.includes("/patient"))
+        setPatientFieldDisabled(url.includes("/profile"))
     }, [props.selectedSlot]);
 
     useEffect(()=>{

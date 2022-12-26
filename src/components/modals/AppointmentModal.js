@@ -58,7 +58,7 @@ const AppointmentModal = (props) => {
     }
 
     const toPatientProfile=(patient)=>{
-        navigate('/patient',{state:{patientData:patient}});
+        navigate('/profile',{state:{patientData:patient}});
         setEditingFalse();
     }
    
@@ -107,7 +107,7 @@ const AppointmentModal = (props) => {
 
     const onPatientProfile = () => {
         let url = window.location.href;
-        return url.includes("/patient")
+        return url.includes("/profile")
     }
 
     const handleUpdatePatient = () => {

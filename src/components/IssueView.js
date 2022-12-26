@@ -208,7 +208,7 @@ const IssueView = () => {
 
         <Layout>
             <Container fluid={true} className={"min-h-100-without-navbar"}>
-                <h1 className="text-center page-heading">Issue {location.state ? ( " - " + location.state.issueData.name ) : null} {resolved ? <Check2Square/> : <Square/>}</h1>
+                <h1 className="text-center page-heading">Issue {location.state ? ( " - " + location.state.issueData.name ) : null} {resolved ? <Check2Square className="custom-color-success"/> : <Square className="custom-color-warning"/>}</h1>
                  <Tabs 
                     defaultActiveKey="Info" 
                     onSelect={handleSelectTab}                   
@@ -289,16 +289,11 @@ const IssueView = () => {
                             </Form.Group>
 
                             <Form.Group className="m-2" controlId="exampleForm.ControlInput3">
-                            <Form.Check
-                                className='d-flex justify-content-center align-items-center'
-                                label="Resolved"                     
-                                checked = {resolved}
-                                disabled = {true}
-                                type="checkbox"                       
-                            />                
+                                <div className='text-center'>Resolved {resolved ? <Check2Square className="custom-color-success"/> : <Square className="custom-color-warning"/>} </div>
+                                       
                             </Form.Group>
-                            <div className='buttons-container'>
-                                 
+
+                            <div className='buttons-container'>                                 
 
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                     Delete Issue

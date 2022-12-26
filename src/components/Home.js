@@ -54,9 +54,12 @@ const Home = () => {
                 <h1 className='text-center page-heading'>Home</h1>
 
                 {orgData &&                 
-                <Card  className="px-5 custom-box-shadow" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
+                <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
+                
+                   
+                
                 <Card.Body>
-                    <Card.Title className='text-center'>Organization</Card.Title>
+                    <Card.Title className='text-center'>Organization</Card.Title>                    
                     <Card.Text>{orgData.name}</Card.Text> 
                     <Card.Text>{orgData.address}</Card.Text> 
                     <Card.Text>{orgData.zip_code}, {orgData.city}</Card.Text>                     
@@ -64,7 +67,7 @@ const Home = () => {
                 </Card>}
 
                 {auth.userObj && 
-                <Card className="px-5 custom-box-shadow" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
+                <Card className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
                 <Card.Body>
                     <Card.Title className='text-center'>Therapist</Card.Title>
                     <Card.Text>{auth.userObj.name}</Card.Text> 

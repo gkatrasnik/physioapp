@@ -93,7 +93,7 @@ const IssueList = (props) => {
                                 <td>{issue.start ? moment(issue.start).toDate().toLocaleDateString("sl") : ""}</td>
                                 <td>{issue.end ? moment(issue.end).toDate().toLocaleDateString("sl") : ""}</td>
                                 <td>{issue.diagnosis}</td>
-                                <td className='text-center issue-check-icon'>{issue.end ? <Check2Square size={18}/> : <Square size={18}/>}</td>
+                                <td className='text-center issue-check-icon'>{issue.end ? <Check2Square size={18} className="custom-color-success"/> : <Square size={18} className="custom-color-warning"/>}</td>
                                 </tr>
                                 )
                             }):                     
