@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../auth";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BoxArrowInUp } from "react-bootstrap-icons";
+import { BoxArrowInUp, Key } from "react-bootstrap-icons";
 import LoadingModal from "../modals/LoadingModal";
 
 const Login = () => {
@@ -40,6 +40,7 @@ const Login = () => {
     return (
     <Container className="min-h-100">
       {loading && <LoadingModal />}
+      <h1 className="login-logo">PhysioApp</h1>
       <Card
         style={{ width: "90%", maxWidth: "32rem", margin: "auto", top:"10rem"}}
         className="box-shadow"
@@ -82,7 +83,7 @@ const Login = () => {
              <BoxArrowInUp/> Create User
           </Link>
           <Link to="/send-reset-password" className="float-start mx-4">
-             Forgot Password?
+             <Key/> Change Password
           </Link>
 
         </Card.Body>

@@ -4,7 +4,11 @@
 
 
 /*! Import Bootstrap 5 variables */
+a {
+  text-decoration: none !important;
+}
 
+$nav-link-padding-x:0.5rem;
 
 
 @import "../node_modules/bootstrap/scss/functions";
@@ -33,6 +37,123 @@
 
 // Add SASS theme customizations here..
 
+// tables with fixed header
+.table-container {
+    max-height: 500px;
+    overflow-y: auto;
+    font-size: small;
+    margin-left: -12px;
+    margin-right: -12px;
+}
+
+.table-container thead th {
+   position: sticky;
+    top: 0;
+    z-index: 1; 
+    background-color: white;
+  }
+
+.table-container td {
+  vertical-align: middle;
+}
+
+
+
+@include media-breakpoint-up(md) {
+  //tables
+  .table-container {
+      max-height: 500px;
+      overflow-y: auto;
+      font-size: medium;
+      margin-left: 0px;
+      margin-right: 0px;
+  }
+
+  .table-header-search {
+    border: none;
+  }
+
+}
+
+//NAVIGATION BOTTOM/ LEFT DRAWER 
+
+.custom-navigation-nav {
+  background: #F1F1F1;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 65px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  box-shadow: 0px 0px 10px grey;
+}
+
+.custom-navigation-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 60px;
+}
+
+// main container
+.main-container {
+  padding-top: 56px;
+  padding-bottom: 65px;
+}
+
+@include media-breakpoint-up(lg) {
+  //navigation
+  .custom-navigation-nav {    
+
+    height: 100%; /* 100% Full-height */
+    width: 300px; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 56px; /* Stay at the top */
+    left: 0;
+    background-color: #F1F1F1; 
+    overflow-x: hidden; 
+    padding-top: 2rem; 
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: flex-start;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    box-shadow: 0px 0px 10px grey;
+  }
+
+  .custom-navigation-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3rem;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    font-size: large;
+    max-width: none;
+  }
+
+  .custom-navigation-item svg {
+    margin-right: 1rem;
+    size: 1.5rem;
+  }
+
+  //main container
+  .main-container {
+    padding-top: 56px;
+    padding-bottom: 0;
+    margin-left: 300px;
+  }
+}
+
+
+
 .spinner {  
   position: absolute;  
   top:0;
@@ -60,41 +181,6 @@
 }
 
 
-
-// tables with fixed header
-.table-container {
-    max-height: 500px;
-    overflow-y: auto;
-    font-size: small;
-    margin-left: -12px;
-    margin-right: -12px;
-}
-
-.table-container thead th {
-   position: sticky;
-    top: 0;
-    z-index: 1; 
-    background-color: white;
-  }
-
-.table-container td {
-  vertical-align: middle;
-}
-
-@include media-breakpoint-up(md) {
-.table-container {
-    max-height: 500px;
-    overflow-y: auto;
-    font-size: medium;
-    margin-left: 0px;
-    margin-right: 0px;
-}
-
-.table-header-search {
-  border: none;
-}
-
-}
 
 .custom-bg-light-success {
   background-color: $gray-400// #58ac5c85;
@@ -127,6 +213,8 @@
   width: 1.5em;
   height: 1.5em;
 }
+
+
 
 .custom-border-success {
   border:5px solid #58ac5c85;
@@ -185,4 +273,17 @@
 
 .custom-new-button {
   margin-left: 1rem;
+}
+
+.custom-box-shadow {
+  box-shadow: 0px 0px 10px grey;
+}
+
+.login-logo {
+  text-align: center !important;
+    top: 5rem;
+    position: relative;
+    font-size: 4rem;
+    font-style: italic ;
+    color: $primary;
 }

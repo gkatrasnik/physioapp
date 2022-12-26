@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import {useAuth} from "../../auth";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { BoxArrowInUp } from "react-bootstrap-icons";
+import { BoxArrowInRight } from "react-bootstrap-icons";
 import LoadingModal from "../modals/LoadingModal";
 
 
@@ -113,6 +113,7 @@ const Signup = () => {
               <Form.Control
                 required
                 type="password"
+                placeholder="Enter organization password"
                 onChange={(e) => {
                   setOrgPass(e.target.value);
                 }}
@@ -124,7 +125,7 @@ const Signup = () => {
             </Button>
           </Form>
           <Link to="/login" className="float-start mx-4">
-            Login
+            <BoxArrowInRight/> Login
           </Link>
         </Card.Body>
       </Card>}
@@ -233,7 +234,7 @@ const Signup = () => {
             </Button>
           </Form>
           <Link to="/login" className="float-start mx-4">
-            Login
+            <BoxArrowInRight/>  Login
           </Link>
         </Card.Body>
       </Card>}

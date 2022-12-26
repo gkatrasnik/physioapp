@@ -4,6 +4,8 @@ import {useAuth} from "../../auth";
 import { Form, Button, Card, Container} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import LoadingModal from "../modals/LoadingModal";
+import { BoxArrowInRight } from "react-bootstrap-icons";
+
 
 const SendResetPassword = () => {
     const auth = useAuth();
@@ -60,7 +62,7 @@ const SendResetPassword = () => {
             </Button>
           </Form>
           <Link to="/login" className="float-start mx-4">
-              Login
+            <BoxArrowInRight/> Login
           </Link>
         </Card.Body>
       </Card>
