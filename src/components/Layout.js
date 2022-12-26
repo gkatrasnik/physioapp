@@ -20,10 +20,10 @@ function Layout({children}) {
 
   return (
     <>
-        <Navbar key={false} bg="light" expand={false}>
-          <Container fluid>
+        <Navbar key={false} bg="primary" variant="dark" expand={false} fixed="top">
+          <Container fluid >
             <div className='d-flex align-items-center'>
-              <ChevronLeft onClick={goBack} className="cursor-pointer mx-2" size={24}/>
+              <ChevronLeft onClick={goBack} className="cursor-pointer mx-2" size={24} color="white"/>
               <Navbar.Brand onClick={goHome} className="cursor-pointer mx-4">PhysioApp</Navbar.Brand>
             </div>
             <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-false`} />
@@ -48,7 +48,7 @@ function Layout({children}) {
             </Navbar.Offcanvas>
           </Container>
         </Navbar>
-        <div>
+        <div className='pt-5'>
            {children} 
         </div>      
     </>

@@ -165,33 +165,25 @@ const AppointmentsList = (props) => {
 
             <div className='mx-auto my-3 component-big'>
                 <h2 className='text-center'>Appointments</h2>
-                <div className='buttons-container'>
-                    <Button  className="m-2" variant="primary" onClick={toggleNewAppointmentModal}>
-                        New Appointment
-                    </Button>
-                
-                    <Link to={"/appointments"} className="btn btn-primary m-2">
-                        Calendar View
-                    </Link>
-                </div>
+                    <Form className='my-4' onSubmit={e => {e.preventDefault()}}>
+                        <div className="d-flex">                      
+                                <Form.Control 
+                                className="col"
+                                type="search" 
+                                placeholder="Search by appointment title..." 
+                                onChange={(e) => {    
+                                    setSearchQuery(e.target.value);                                            
+                                }}/>
+                                
+                                <Button  className="custom-new-button" variant="primary" onClick={toggleNewAppointmentModal}>
+                                    New Appointment
+                                </Button>       
+                        </div>               
+                    </Form>   
+                                 
                 <div className='table-container mb-5'>                
                     <Table>
-                        <thead>
-                            <tr>
-                                <th colSpan={6} className="table-header-search">
-                                     <Form  onSubmit={e => {e.preventDefault()}}>
-                                        <div className="d-flex">                      
-                                                <Form.Control 
-                                                className="col"
-                                                type="search" 
-                                                placeholder="Search by appointment title..." 
-                                                onChange={(e) => {    
-                                                    setSearchQuery(e.target.value);                                            
-                                                }}/>     
-                                        </div>               
-                                    </Form>   
-                                </th>
-                            </tr>
+                        <thead>                            
                             <tr>
                             <th>Id</th>
                             <th>Title</th>                            

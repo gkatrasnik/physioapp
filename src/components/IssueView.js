@@ -11,6 +11,7 @@ import InterventionsList from './InterventionsList';
 import moment from "moment";
 import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
 import LoadingModal from "./modals/LoadingModal";
+import { Check2Square, Square } from 'react-bootstrap-icons';
 
 const IssueView = () => {
     const auth = useAuth();
@@ -206,8 +207,8 @@ const IssueView = () => {
         />
 
         <Layout>
-            <Container fluid={true} className={(resolved ? 'custom-border-success' : 'custom-border-warning') + " min-h-100-without-navbar"}>
-                <h1 className="text-center page-heading">Issue {location.state ? ( " - " + location.state.issueData.name) : null}</h1>
+            <Container fluid={true} className={"min-h-100-without-navbar"}>
+                <h1 className="text-center page-heading">Issue {location.state ? ( " - " + location.state.issueData.name ) : null} {resolved ? <Check2Square/> : <Square/>}</h1>
                  <Tabs 
                     defaultActiveKey="Info" 
                     onSelect={handleSelectTab}                   

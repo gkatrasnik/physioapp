@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import NewIssueModal from './modals/NewIssueModal';
 import { CheckSquare } from 'react-bootstrap-icons';
 import moment from 'moment'
+import { Check2Square, Square } from 'react-bootstrap-icons';
+
 
 const IssueList = (props) => {
     const navigate = useNavigate();
@@ -49,29 +51,29 @@ const IssueList = (props) => {
             />
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center'>Issues</h2>
-                <div className='buttons-container'>
-                    <Button  className="m-2" variant="primary" onClick={toggleShowNewIssue}>
-                        New Issue
-                    </Button>
-                </div>
-                <div className='table-container'>                
+                
+
+                <Form  className='my-4' onSubmit={e => {e.preventDefault()}}>
+                    <div className="d-flex">                      
+                            <Form.Control 
+                            className="col"
+                            type="search" 
+                            placeholder="Search by issue name or diagnosis..." 
+                            onChange={(e) => {    
+                                setSearchQuery(e.target.value);                                            
+                            }}/>
+                            
+                            <Button   variant="primary" onClick={toggleShowNewIssue} className="custom-new-button">
+                                New Issue
+                            </Button>     
+                    </div>               
+                </Form>   
+                
+                    
+                
+                <div className='table-container mx-n2'>                
                     <Table>
-                        <thead>
-                            <tr>
-                                <th colSpan={6} className="table-header-search">
-                                     <Form  onSubmit={e => {e.preventDefault()}}>
-                                        <div className="d-flex">                      
-                                                <Form.Control 
-                                                className="col"
-                                                type="search" 
-                                                placeholder="Search by issue name or diagnosis..." 
-                                                onChange={(e) => {    
-                                                    setSearchQuery(e.target.value);                                            
-                                                }}/>     
-                                        </div>               
-                                    </Form>   
-                                </th>
-                            </tr>
+                        <thead>                            
                             <tr>
                             <th>Id</th>
                             <th>Issue</th>
@@ -91,7 +93,7 @@ const IssueList = (props) => {
                                 <td>{issue.start ? moment(issue.start).toDate().toLocaleDateString("sl") : ""}</td>
                                 <td>{issue.end ? moment(issue.end).toDate().toLocaleDateString("sl") : ""}</td>
                                 <td>{issue.diagnosis}</td>
-                                <td className='text-center'>{issue.end ? <CheckSquare/> : ""}</td>
+                                <td className='text-center issue-check-icon'>{issue.end ? <Check2Square size={18}/> : <Square size={18}/>}</td>
                                 </tr>
                                 )
                             }):                     

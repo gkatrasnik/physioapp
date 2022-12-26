@@ -59,21 +59,26 @@
   /*box-shadow: 5px 5px 10px grey;*/
 }
 
+
+
 // tables with fixed header
 .table-container {
     max-height: 500px;
     overflow-y: auto;
     font-size: small;
+    margin-left: -12px;
+    margin-right: -12px;
 }
 
 .table-container thead th {
    position: sticky;
     top: 0;
     z-index: 1; 
-    //background-color: darkgray;
+    background-color: white;
   }
 
 .table-container td {
+  vertical-align: middle;
 }
 
 @include media-breakpoint-up(md) {
@@ -81,6 +86,8 @@
     max-height: 500px;
     overflow-y: auto;
     font-size: medium;
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 .table-header-search {
@@ -105,6 +112,13 @@
 .btn-danger {
   background-color: $danger;
   color: #fff;
+}
+
+//check boxes
+
+.issue-check-icon {
+  width: 1.5em;
+  height: 1.5em;
 }
 
 .form-check-input {
@@ -169,6 +183,6 @@
   align-items: center;
 }
 
-.new-patient-button {
+.custom-new-button {
   margin-left: 1rem;
 }
