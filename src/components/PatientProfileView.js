@@ -250,6 +250,17 @@ const PatientProfileView = () => {
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big">
                             <h2 className='text-center'>Patient Info</h2>
+                            <div className='buttons-container'>                               
+                                {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
+                                    Delete Patient
+                                </Button>}
+                                {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                                    Update Patient
+                                </Button> }                                
+                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                    {editing ? "Cancel" : "Edit Patient"}
+                                </Button> 
+                            </div>              
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
@@ -347,17 +358,7 @@ const PatientProfileView = () => {
                                 }}
                             />                
                             </Form.Group>
-                            <div className='buttons-container'>                               
-                                {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                                    Delete Patient
-                                </Button>}
-                                {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                                    Update Patient
-                                </Button> }                                
-                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                                    {editing ? "Cancel" : "Edit Patient"}
-                                </Button> 
-                            </div>                      
+                                   
                         </Form>
                     </Tab>
                     <Tab title="Appointments" eventKey="Appointments">

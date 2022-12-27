@@ -216,6 +216,31 @@ const IssueView = () => {
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big ">
                             <h2 className='text-center'>Issue Info</h2>
+                            <div className='buttons-container'>                                 
+
+                                {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
+                                    Delete Issue
+                                </Button>}                
+                                {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
+                                    Update Issue
+                                </Button> }   
+
+                                {editing && 
+                                <>
+                                    {resolved ? <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
+                                        Set Not Resolved
+                                    </Button> :
+                                    <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNow()}}>
+                                        Set Resolved Now
+                                    </Button>
+                                    }
+                                </>
+                                }
+                                
+                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                    {editing ? "Cancel" : "Edit Issue"}
+                                </Button>   
+                            </div>
 
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label>Title</Form.Label>
@@ -293,31 +318,7 @@ const IssueView = () => {
                                        
                             </Form.Group>
 
-                            <div className='buttons-container'>                                 
-
-                                {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                                    Delete Issue
-                                </Button>}                
-                                {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
-                                    Update Issue
-                                </Button> }   
-
-                                {editing && 
-                                <>
-                                    {resolved ? <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
-                                        Set Not Resolved
-                                    </Button> :
-                                    <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNow()}}>
-                                        Set Resolved Now
-                                    </Button>
-                                    }
-                                </>
-                                }
-                                
-                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
-                                    {editing ? "Cancel" : "Edit Issue"}
-                                </Button>   
-                            </div>                                      
+                                                                  
                         </Form>
                     </Tab>
                     <Tab title="Symptoms" eventKey="Symptoms">
