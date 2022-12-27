@@ -40,7 +40,7 @@ const SendResetPassword = () => {
         className="box-shadow"
       >
         <Card.Body>
-          <h1 className="text-center page-heading">Forgot Password</h1>
+          <h1 className="text-center custom-page-heading-1">Forgot Password</h1>
           <Form
             onSubmit={handleSubmit}
             style={{ width: "90%", maxWidth: "32rem", margin: "auto" }}

@@ -53,12 +53,12 @@ const IssueList = (props) => {
                 <h2 className='text-center'>Issues</h2>
                 <Form>
                     <Form.Check 
-                        defaultValue={props.filterIssues}
+                        checked={props.filterIssues}
                         type="switch"
                         id="custom-switch"
                         label="Show only not resolved issues"
                         onChange={props.toggleFilterIssues}
-                        className="my-issues-switch"
+                        className="custom-filter-switch"
                     />
                 </Form>
                 
@@ -68,7 +68,7 @@ const IssueList = (props) => {
                             <Form.Control 
                             className="col"
                             type="search" 
-                            placeholder="Search by issue name or diagnosis..." 
+                            placeholder="Search by name or diagnosis..." 
                             onChange={(e) => {    
                                 setSearchQuery(e.target.value);                                            
                             }}/>

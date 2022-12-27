@@ -71,12 +71,12 @@
                     <h2 className='text-center'>Issues Calendar</h2>
                     <Form>
                         <Form.Check 
-                            defaultValue={props.filterIssues}
+                            checked={props.filterIssues}
                             type="switch"
                             id="custom-switch"
                             label="Show only not resolved issues"
                             onChange={props.toggleFilterIssues}
-                            className="my-issues-switch"
+                            className="custom-filter-switch"
                         />
                     </Form>
                     <div className='my-5'>

@@ -22,7 +22,7 @@ const AppointmentsList = (props) => {
     const [usersData, setUsersData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredEventsList, setFilteredEventsList] = useState([]);
-
+    const [showOnlyMine, setShowOnlyMine] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const getEvents = async () => {
@@ -117,17 +117,33 @@ const AppointmentsList = (props) => {
     const handleSearch = () => {   
         if (eventsList.length) {
             if (searchQuery.length === 0) { //show all events 
-                setFilteredEventsList(eventsList);
-            } else if (searchQuery.length) {//auto filter events when typing in search      
-            const newArr = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()));
-            setFilteredEventsList(newArr);
+                if (showOnlyMine) {
+                    const myEvents =  eventsList.filter((event) => {                        
+                        return event.user_id === auth.userObj.id;
+                    })
+                    setFilteredEventsList(myEvents)
+                } else {
+                    setFilteredEventsList(eventsList);
+                }
+                
+            } else if (searchQuery.length) {//auto filter events when typing in search  
+
+                if (showOnlyMine) {//show filtered by search + mine
+                    const myFileredEvents = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()) && event.user_id === auth.userObj.id);
+                    setFilteredEventsList(myFileredEvents);
+                    
+                } else { //show only filtered by search
+                    const filteredEvents = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()));
+                    setFilteredEventsList(filteredEvents);
+                }
+                
             }
         }
     }
 
     useEffect(() => { //on search query change, handle search
         handleSearch(searchQuery);
-    }, [eventsList, searchQuery])
+    }, [eventsList, searchQuery, showOnlyMine])
 
     useEffect(() => {
       getEvents();
@@ -165,12 +181,22 @@ const AppointmentsList = (props) => {
 
             <div className='mx-auto my-3 component-big'>
                 <h2 className='text-center'>Appointments</h2>
+                    <Form>
+                        <Form.Check 
+                            defaultValue={showOnlyMine}
+                            type="switch"
+                            id="custom-switch"
+                            label="Show only my appointments"
+                            onChange={()=>{setShowOnlyMine(!showOnlyMine)}}
+                            className="custom-filter-switch"
+                        />
+                    </Form>
                     <Form className='my-4' onSubmit={e => {e.preventDefault()}}>
                         <div className="d-flex">                      
                                 <Form.Control 
                                 className="col"
                                 type="search" 
-                                placeholder="Search by appointment title..." 
+                                placeholder="Search by title..." 
                                 onChange={(e) => {    
                                     setSearchQuery(e.target.value);                                            
                                 }}/>

@@ -1,5 +1,8 @@
 /*! `Custom` Bootstrap 5 theme */
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
+$font-family-base: "Open Sans";
 
 $primary: #00c086;
 
@@ -255,11 +258,15 @@ $navbar-brand-padding-y: 0;
   max-width: 150px;
 }
 
-.page-heading {
+.custom-page-heading-1 {
   margin-top: 1rem;
 }
 
-.my-appointments-switch {  
+
+
+    
+
+.custom-filter-switch {  
     display: flex;
     justify-content: center;
     align-items: center;

@@ -227,16 +227,13 @@ const PatientProfileView = () => {
     //filter issues list to only contain NOT resolved
     const handleFilterIssuesData = async() => {
         if (filterIssues) { // if switch is turned ON
-            const newArr =  issuesData.map((issue) => {
+            const newArr =  issuesData.filter((issue) => {
                 //if event user_id = me, push to cloned arr
-                if (!issue.end) {
-                    return issue;
-                }
+                return issue.end === null;
             })
-
             setFilteredIssuesData(newArr);
 
-        } else { //if switch turned OFF
+        } else { //if switch turned OFF show all issues
             setFilteredIssuesData(issuesData)
         }
     }
@@ -273,7 +270,7 @@ const PatientProfileView = () => {
         />
         <Layout>
             <Container fluid={true} className="min-h-100-without-navbar">
-                <h1 className="text-center page-heading">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
+                <h1 className="text-center custom-page-heading-1">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
                  <Tabs 
                     defaultActiveKey="Issues"                    
                  >
@@ -397,10 +394,10 @@ const PatientProfileView = () => {
                         />
                     </Tab>
                     <Tab title="Issues" eventKey="Issues">
-                        <IssueList 
-                        issuesData={filteredIssuesData}
+                        <IssueList                         
                         getIssuesData={getIssuesData}
                         patientData={location.state ? location.state.patientData : null}
+                        issuesData={filteredIssuesData}
                         filterIssues={filterIssues}
                         toggleFilterIssues={toggleFilterIssues}
                         />                        

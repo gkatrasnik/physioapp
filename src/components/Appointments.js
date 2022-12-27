@@ -116,13 +116,10 @@
         //filter event list to only contain my events
         const filterEventList = async() => {
             if (filterEvents) { // if switch is turned ON
-                const newArr =  eventList.map((event) => {
+                const newArr =  eventList.filter((event) => {
                     //if event user_id = me, push to cloned arr
-                    if (event.user_id === auth.userObj.id) {
-                        return event;
-                    }
+                    return event.user_id === auth.userObj.id;
                 })
-
                 setFilteredEventList(newArr);
 
             } else { //if switch turned OFF
@@ -161,15 +158,15 @@
 
             <Layout>
                 <Container className="min-h-100-without-navbar">
-                    <h1 className='text-center page-heading'>Appointments</h1> 
+                    <h1 className='text-center page-heading-1'>Appointments</h1> 
                     <Form>
                         <Form.Check 
-                            defaultValue={filterEvents}
+                            checked={filterEvents}
                             type="switch"
                             id="custom-switch"
                             label="Show only my appointments"
                             onChange={()=>{setFilterEvents(!filterEvents)}}
-                            className="my-appointments-switch"
+                            className="custom-filter-switch"
                         />
                     </Form>
                      <NewAppointmentModal 

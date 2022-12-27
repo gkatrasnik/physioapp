@@ -85,7 +85,7 @@ const PatientSearchView = () => {
                 getPatients={getPatients}
             />
             <Container className="min-h-100-without-navbar">
-                <h1 className='text-center page-heading'>Patient Search View</h1>
+                <h1 className='text-center custom-page-heading-1'>Patient Search View</h1>
 
                 <Form className='my-4' onSubmit={e => { e.preventDefault()}}>
                     <div className="d-flex">                      
