@@ -11,9 +11,10 @@ a {
   text-decoration: none !important;
 }
 
-$nav-link-padding-x:0.5rem;
+$nav-link-padding-x:0.4rem;
 $navbar-padding-y: 0;
 $navbar-brand-padding-y: 0;
+$nav-link-font-size:14px;
 
 
 @import "../node_modules/bootstrap/scss/functions";
