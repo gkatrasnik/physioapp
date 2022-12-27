@@ -2,9 +2,7 @@
 
  $primary: #00c086;
 
-.btn-primary {
-  color: #fff;
-}
+
 
 
 
@@ -43,6 +41,12 @@ $nav-link-padding-x:0.5rem;
 
 
 // Add SASS theme customizations here..
+
+.btn-primary {
+  color: #fff;
+}
+
+
 
 // tables with fixed header
 .table-container {
