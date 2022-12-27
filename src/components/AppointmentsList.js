@@ -131,7 +131,7 @@ const AppointmentsList = (props) => {
                 if (showOnlyMine) {//show filtered by search + mine
                     const myFileredEvents = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()) && event.user_id === auth.userObj.id);
                     setFilteredEventsList(myFileredEvents);
-                    
+
                 } else { //show only filtered by search
                     const filteredEvents = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()));
                     setFilteredEventsList(filteredEvents);
@@ -180,7 +180,7 @@ const AppointmentsList = (props) => {
             />
 
             <div className='mx-auto my-3 component-big'>
-                <h2 className='text-center'>Appointments</h2>
+                <h2 className='text-center mt-4 mb-4'>Appointments</h2>
                     <Form>
                         <Form.Check 
                             defaultValue={showOnlyMine}

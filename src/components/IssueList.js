@@ -50,7 +50,7 @@ const IssueList = (props) => {
                 toggleShowNewIssue={toggleShowNewIssue}
             />
             <div className="my-3 mx-auto component-big">
-                <h2 className='text-center'>Issues</h2>
+                <h2 className='text-center mt-4 mb-4'>Issues</h2>
                 <Form>
                     <Form.Check 
                         checked={props.filterIssues}

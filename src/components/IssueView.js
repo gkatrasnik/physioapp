@@ -208,14 +208,14 @@ const IssueView = () => {
 
         <Layout>
             <Container fluid={true} className={"min-h-100-without-navbar"}>
-                <h1 className="text-center custom-page-heading-1">Issue {location.state ? ( " - " + location.state.issueData.name ) : null} {resolved ? <Check2Square className="custom-color-success"/> : <Square className="custom-color-warning"/>}</h1>
+                <h1 className="text-center custom-page-heading-1 mt-5 mb-4">Issue {location.state ? ( " - " + location.state.issueData.name ) : null} {resolved ? <Check2Square className="custom-color-success"/> : <Square className="custom-color-warning"/>}</h1>
                  <Tabs 
                     defaultActiveKey="Info" 
                     onSelect={handleSelectTab}                   
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big ">
-                            <h2 className='text-center'>Issue Info</h2>
+                            <h2 className='text-center mt-4 mb-4'>Issue Info</h2>
                             <div className='buttons-container'>                                 
 
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>

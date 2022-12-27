@@ -270,13 +270,13 @@ const PatientProfileView = () => {
         />
         <Layout>
             <Container fluid={true} className="min-h-100-without-navbar">
-                <h1 className="text-center custom-page-heading-1">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
+                <h1 className="text-center custom-page-heading-1 mt-5 mb-4">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
                  <Tabs 
                     defaultActiveKey="Issues"                    
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big">
-                            <h2 className='text-center'>Patient Info</h2>                            
+                            <h2 className='text-center mt-4 mb-4'>Patient Info</h2>                            
                             <div className='buttons-container'>                               
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                     Delete Patient

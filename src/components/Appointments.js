@@ -158,7 +158,7 @@
 
             <Layout>
                 <Container className="min-h-100-without-navbar">
-                    <h1 className='text-center page-heading-1'>Appointments</h1> 
+                    <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Appointments</h1> 
                     <Form>
                         <Form.Check 
                             checked={filterEvents}

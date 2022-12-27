@@ -51,7 +51,7 @@ const Home = () => {
         {loading && <LoadingModal />}
         <Layout>
             <Container>
-                <h1 className='text-center custom-page-heading-1'>Home</h1>
+                <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Home</h1>
 
                 {orgData &&                 
                 <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
