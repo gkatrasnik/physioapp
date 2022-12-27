@@ -1,7 +1,7 @@
     // implement adding new events/appointments --- handle error in getEvents()      
 
     import React, {useState, useEffect} from 'react';
-    import { Button } from 'react-bootstrap';
+    import { Button, Form } from 'react-bootstrap';
     import { useNavigate } from 'react-router-dom';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
