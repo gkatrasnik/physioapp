@@ -87,7 +87,7 @@ const IssueList = (props) => {
                         <tbody className='cursor-pointer'>                                                        
                         {filteredIssuesData && filteredIssuesData.length ? filteredIssuesData.map((issue, index) => {
                             return (
-                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.end ?'custom-bg-light-success' : 'custom-bg-light-warning'}>
+                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.end ?'table-success' : 'table-warning'}>
                                 <td>{issue.id}</td>
                                 <td>{issue.name}</td>
                                 <td>{issue.start ? moment(issue.start).toDate().toLocaleDateString("sl") : ""}</td>

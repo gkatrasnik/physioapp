@@ -1,5 +1,6 @@
 /*! `Custom` Bootstrap 5 theme */
 
+$primary: $teal;
 
 
 
@@ -79,7 +80,7 @@ $nav-link-padding-x:0.5rem;
 //NAVIGATION BOTTOM/ LEFT DRAWER 
 
 .custom-navigation-nav {
-  background: #F1F1F1;
+  background: $gray-100;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -117,11 +118,11 @@ $nav-link-padding-x:0.5rem;
 }
 
 @include media-breakpoint-up(lg) {
-  //navigation
-  .custom-navigation-nav {    
+  // custom navigation
+  .custom-navigation-nav {   
 
     height: 100%; /* 100% Full-height */
-    width: 300px; /* 0 width - change this with JavaScript */
+    width: 260px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
     top: 56px; /* Stay at the top */
@@ -193,11 +194,11 @@ $nav-link-padding-x:0.5rem;
 
 
 
-.custom-bg-light-success {
-  background-color: $gray-400// #58ac5c85;
+.event-past {
+  background-color: $gray-300// #58ac5c85;
 }
 
-.custom-bg-light-warning {
+.event-future {
   background-color: $white;
 
 }
@@ -252,6 +253,7 @@ $nav-link-padding-x:0.5rem;
 .humanbody-container {
   display: flex;
   justify-content: center;
+  padding-bottom: 2rem;
 }
 
 .humanbody {   

@@ -29,7 +29,7 @@
         }
 
         const eventStyleGetter = (event, start, end, isSelected) => {
-            let backgroundColor = event.hasEnd ? "#58ac5c85" : "#e2b85c88";
+            let backgroundColor = event.hasEnd ? "#d1e7dd" : "#fff3cd";
             let style = {
                 backgroundColor: backgroundColor,                              
                 color: "black"
