@@ -36,7 +36,7 @@ function Layout({children}) {
 
   return (
     <>
-        <Navbar key={false} bg="primary" variant="dark" expand={false} fixed="top" className='custom-box-shadow'>
+        <Navbar key={false} bg="primary" variant="dark" expand={false} fixed="top" className='custom-box-shadow custom-navbar'>
           <Container fluid >
             
               {showBackBtn ? <ChevronLeft onClick={goBack} className="cursor-pointer mx-2" size={24} color="white"/>:<div style={{width:"40px"}}></div>}
