@@ -27,6 +27,9 @@ const PatientProfileView = () => {
     const [loading, setLoading] = useState(false);
     
     const [issuesData, setIssuesData] = useState([]);
+    const [filteredIssuesData, setFilteredIssuesData] = useState([]);
+    const [filterIssues, setFilterIssues] = useState(false);
+
 
 
     //patient profile editing state
@@ -221,6 +224,29 @@ const PatientProfileView = () => {
         } 
     }
 
+    //filter issues list to only contain NOT resolved
+    const handleFilterIssuesData = async() => {
+        if (filterIssues) { // if switch is turned ON
+            const newArr =  issuesData.map((issue) => {
+                //if event user_id = me, push to cloned arr
+                if (!issue.end) {
+                    return issue;
+                }
+            })
+
+            setFilteredIssuesData(newArr);
+
+        } else { //if switch turned OFF
+            setFilteredIssuesData(issuesData)
+        }
+    }
+
+    //in event change or switch change filter events
+    useEffect(() => {
+        handleFilterIssuesData();
+    }, [issuesData, filterIssues])
+
+
     // useEffects
     useEffect(() => {
         getPatientData();    
@@ -250,6 +276,16 @@ const PatientProfileView = () => {
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big">
                             <h2 className='text-center'>Patient Info</h2>
+                            <Form>
+                                <Form.Check 
+                                    defaultValue={filterIssues}
+                                    type="switch"
+                                    id="custom-switch"
+                                    label="Show only not resolved issues"
+                                    onChange={()=>{setFilterIssues(!filterIssues)}}
+                                    className="my-issues-switch"
+                                />
+                            </Form>
                             <div className='buttons-container'>                               
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                     Delete Patient

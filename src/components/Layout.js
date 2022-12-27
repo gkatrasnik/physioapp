@@ -3,7 +3,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth';
-import { ChevronLeft, House, Search, CalendarWeek, BoxArrowLeft   } from "react-bootstrap-icons";
+import { ChevronLeft, House, People, CalendarWeek, BoxArrowLeft   } from "react-bootstrap-icons";
 
 function Layout({children}) {
     const auth = useAuth();
@@ -46,7 +46,7 @@ function Layout({children}) {
               
               <nav className="custom-navigation-nav">
                 <Link to={"/"} className="custom-navigation-item"><House/><p>Home</p></Link>
-                <Link to={"/patients"} className="custom-navigation-item"><Search/><p>Patients</p></Link>
+                <Link to={"/patients"} className="custom-navigation-item"><People/><p>Patients</p></Link>
                 <Link to={"/appointments"} className="custom-navigation-item"><CalendarWeek/><p>Appointments</p></Link>
                 <Link onClick={auth.logout} className="custom-navigation-item"><BoxArrowLeft/><p>Logout</p></Link>                  
               </nav>            
