@@ -51,6 +51,16 @@ const IssueList = (props) => {
             />
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center'>Issues</h2>
+                <Form>
+                    <Form.Check 
+                        defaultValue={props.filterIssues}
+                        type="switch"
+                        id="custom-switch"
+                        label="Show only not resolved issues"
+                        onChange={()=>{props.toggleFilterIssues}}
+                        className="my-issues-switch"
+                    />
+                </Form>
                 
 
                 <Form  className='my-4' onSubmit={e => {e.preventDefault()}}>

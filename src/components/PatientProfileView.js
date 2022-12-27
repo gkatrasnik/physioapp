@@ -241,6 +241,10 @@ const PatientProfileView = () => {
         }
     }
 
+    const toggleFilterIssues = () => {
+        setFilterIssues(!filterIssues);
+    }
+
     //in event change or switch change filter events
     useEffect(() => {
         handleFilterIssuesData();
@@ -275,17 +279,7 @@ const PatientProfileView = () => {
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big">
-                            <h2 className='text-center'>Patient Info</h2>
-                            <Form>
-                                <Form.Check 
-                                    defaultValue={filterIssues}
-                                    type="switch"
-                                    id="custom-switch"
-                                    label="Show only not resolved issues"
-                                    onChange={()=>{setFilterIssues(!filterIssues)}}
-                                    className="my-issues-switch"
-                                />
-                            </Form>
+                            <h2 className='text-center'>Patient Info</h2>                            
                             <div className='buttons-container'>                               
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                     Delete Patient
@@ -404,14 +398,18 @@ const PatientProfileView = () => {
                     </Tab>
                     <Tab title="Issues" eventKey="Issues">
                         <IssueList 
-                        issuesData={issuesData}
+                        issuesData={filteredIssuesData}
                         getIssuesData={getIssuesData}
                         patientData={location.state ? location.state.patientData : null}
-                        />                       
+                        filterIssues={filterIssues}
+                        toggleFilterIssues={toggleFilterIssues}
+                        />                        
                     </Tab>
                     <Tab title="Issues Calendar" eventKey="Issues Calendar">
                          <IssuesCalendar
-                            issuesData={issuesData}
+                            issuesData={filteredIssuesData}
+                            filterIssues={filterIssues}
+                            toggleFilterIssues={toggleFilterIssues}
                         />
                     </Tab>
                 </Tabs>
