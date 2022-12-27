@@ -40,7 +40,7 @@ const Login = () => {
     return (
     <Container className="min-h-100">
       {loading && <LoadingModal />}
-      <h1 className="login-logo">PhysioApp</h1>
+      <h1 className="login-logo lobster-font">PhysioApp</h1>
       <Card
         style={{ width: "90%", maxWidth: "32rem", margin: "auto", top:"10rem"}}
         className="box-shadow"

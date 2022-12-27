@@ -1,11 +1,7 @@
 /*! `Custom` Bootstrap 5 theme */
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
- $primary: #00c086;
-
-
-
-
-
+$primary: #00c086;
 
 /*! Import Bootstrap 5 variables */
 a {
@@ -46,6 +42,9 @@ $nav-link-padding-x:0.5rem;
   color: #fff;
 }
 
+.lobster-font {
+  font-family: Lobster;
+}
 
 
 // tables with fixed header

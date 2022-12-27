@@ -40,7 +40,7 @@ function Layout({children}) {
           <Container fluid >
             
               {showBackBtn ? <ChevronLeft onClick={goBack} className="cursor-pointer mx-2" size={24} color="white"/>:<div style={{width:"40px"}}></div>}
-              <Navbar.Brand onClick={goHome} className="cursor-pointer mx-4 navbar-brand-logo">PhysioApp</Navbar.Brand>
+              <Navbar.Brand onClick={goHome} className="cursor-pointer mx-4 navbar-brand-logo lobster-font">PhysioApp</Navbar.Brand>
               <div style={{width:"40px"}}></div>
           
               
