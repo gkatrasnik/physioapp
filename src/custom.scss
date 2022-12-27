@@ -92,7 +92,7 @@ $navbar-brand-padding-y: 0;
 
 }
 
-//NAVIGATION BOTTOM/ LEFT DRAWER 
+// custom navigation - bottom navigation on sm and md screens
 
 .custom-navigation-nav {
   background: $gray-100;
@@ -103,8 +103,6 @@ $navbar-brand-padding-y: 0;
   width: 100%;
   display: flex;
   justify-content: space-around;
-  border-top-left-radius: 0.5rem;
-  border-top-right-radius: 0.5rem;
   box-shadow: 0px 0px 10px grey;
 }
 
@@ -134,7 +132,7 @@ $navbar-brand-padding-y: 0;
 }
 
 @include media-breakpoint-up(lg) {
-  // custom navigation
+  // custom navigation - left drawer on large screens
   .custom-navigation-nav {   
 
     height: 100%; /* 100% Full-height */
@@ -177,7 +175,7 @@ $navbar-brand-padding-y: 0;
   .main-container {
     padding-top: 56px;
     padding-bottom: 0;
-    margin-left: 300px;
+    margin-left: 260px;
   }
 }
 
