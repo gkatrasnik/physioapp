@@ -211,7 +211,7 @@ const SymptomModal = (props) => {
                                 Delete
                             </Button> 
                             <Button  className="m-2" variant="primary" type="submit">
-                                Update
+                                Save
                             </Button>                                
                         </> :
                         <Button className="m-2 " variant="secondary" onClick={toggleEditing}>

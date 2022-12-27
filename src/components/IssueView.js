@@ -219,19 +219,19 @@ const IssueView = () => {
                             <div className='buttons-container'>                                 
 
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                                    Delete Issue
+                                    Delete
                                 </Button>}                
                                 {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
-                                    Update Issue
+                                    Save
                                 </Button> }   
 
-                                {editing && 
+                                {!editing && 
                                 <>
                                     {resolved ? <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
                                         Set Not Resolved
                                     </Button> :
-                                    <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNow()}}>
-                                        Set Resolved Now
+                                    <Button className="m-2 mr-5" variant="primary" onClick={() => {setEndNow()}}>
+                                        Set Resolved
                                     </Button>
                                     }
                                 </>

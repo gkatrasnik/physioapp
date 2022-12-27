@@ -279,10 +279,10 @@ const PatientProfileView = () => {
                             <h2 className='text-center mt-4 mb-4'>Patient Info</h2>                            
                             <div className='buttons-container'>                               
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                                    Delete Patient
+                                    Delete
                                 </Button>}
                                 {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
-                                    Update Patient
+                                    Save
                                 </Button> }                                
                                 <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
                                     {editing ? "Cancel" : "Edit Patient"}
