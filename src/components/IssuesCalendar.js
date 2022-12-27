@@ -75,7 +75,7 @@
                             type="switch"
                             id="custom-switch"
                             label="Show only not resolved issues"
-                            onChange={()=>{props.toggleFilterIssues}}
+                            onChange={props.toggleFilterIssues}
                             className="my-issues-switch"
                         />
                     </Form>
