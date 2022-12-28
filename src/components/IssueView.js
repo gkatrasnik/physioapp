@@ -245,7 +245,8 @@ const IssueView = () => {
                 <h1 className="text-center custom-page-heading-1 mt-5 mb-4">Issue {location.state ? ( " - " + location.state.issueData.name ) : null} {resolved ? <Check2Square className="custom-color-success"/> : <Square className="custom-color-warning"/>}</h1>
                  <Tabs 
                     defaultActiveKey="Info" 
-                    onSelect={handleSelectTab}                   
+                    onSelect={handleSelectTab}   
+                    justify            
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big ">
