@@ -13,7 +13,6 @@ const NewSymptomModal = (props) => {
     const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
     const [bodypartId, setBodypartId] = useState(1);    
-    const [bodypartsList, setBodypartsList] = useState([]);
     const [loading, setLoading] = useState(false);
     const auth = useAuth();
 
@@ -51,34 +50,13 @@ const NewSymptomModal = (props) => {
             setLoading(false); 
             props.getSymptomsData();  
         }
-    }
-
-    const getBodypartsData = async() => {
-        setLoading(true); 
-        const queryData = await supabase
-            .from('bodyparts')
-            .select()    
-            .eq('rec_deleted', false)      
-
-        if (queryData.error) {
-            setLoading(false); 
-            alert(queryData.error.message);
-        } else {
-            setLoading(false); 
-            const arr = queryData.data.map((bodypart) => {
-                bodypart.label = bodypart.body_side ? bodypart.body_side + " " + bodypart.name : bodypart.name
-                return bodypart
-            })
-            setBodypartsList(arr);
-        }     
-    }
+    }   
    
     useEffect(() => {
         setName("");
         setIntensity(0);
         setDuration("");
-        setBodypartId(1);
-        getBodypartsData();
+        setBodypartId(1);        
     }, []);
 
 
@@ -138,8 +116,8 @@ const NewSymptomModal = (props) => {
                         borderRadius: 0,
                         }),
                     }}
-                    options={bodypartsList}          
-                    defaultValue={bodypartsList.find((bodypart) => bodypart.id === bodypartId)}
+                    options={props.bodypartsData}          
+                    defaultValue={props.bodypartsData.find((bodypart) => bodypart.id === bodypartId)}
                     getOptionLabel={(option)=>option.label}
                     getOptionValue={(option)=>option.id}                    
                     onChange={(option) => {

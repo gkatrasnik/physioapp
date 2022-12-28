@@ -18,8 +18,7 @@ const SymptomModal = (props) => {
     const [intensity, setIntensity] = useState(0);
     const [duration, setDuration] = useState("");
     const [bodypartId, setBodypartId] = useState(0);    
-    const [bodypartsList, setBodypartsList] = useState([]);
-
+    
     const auth = useAuth();
 
     const toggleConfirmDelete = () => {
@@ -91,26 +90,6 @@ const SymptomModal = (props) => {
                 
     }
 
-    const getBodypartsData = async() => {
-        setLoading(true); 
-        const queryData = await supabase
-            .from('bodyparts')
-            .select()
-            .eq('rec_deleted', false)          
-
-        if (queryData.error) {
-            setLoading(false); 
-            alert(queryData.error.message);
-        } else {
-            setLoading(false); 
-            const arr = queryData.data.map((bodypart) => {
-                bodypart.label = bodypart.body_side ? bodypart.body_side + " " + bodypart.name : bodypart.name
-                return bodypart
-            })
-            setBodypartsList(arr);
-        }     
-    }
-
     useEffect(() => {       
         if (props.symptomData) {
             setName(props.symptomData.name);
@@ -119,13 +98,7 @@ const SymptomModal = (props) => {
             setBodypartId(props.symptomData.bodypart_id);
         } 
         
-    }, [props.symptomData]);
-
-    useEffect(() => {
-      getBodypartsData();
-    }, [])
-    
-
+    }, [props.symptomData]);   
 
     return (        
         <>
@@ -194,8 +167,8 @@ const SymptomModal = (props) => {
                         }),
                     }}
                     isDisabled={!editing}
-                    options={bodypartsList}          
-                    defaultValue={bodypartsList.find((bodypart) => bodypart.id === bodypartId)}
+                    options={props.bodypartsData}          
+                    defaultValue={props.bodypartsData.find((bodypart) => bodypart.id === bodypartId)}
                     getOptionLabel={(option)=>option.label}
                     getOptionValue={(option)=>option.id}                    
                     onChange={(option) => {

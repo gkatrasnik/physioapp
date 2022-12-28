@@ -51,18 +51,23 @@ const SymptomsList = (props) => {
         }     
     }
 
-    const getBodypartsData = async () => {
+    const getBodypartsData = async() => {
         setLoading(true); 
-         const queryData = await supabase
+        const queryData = await supabase
             .from('bodyparts')
-            .select()
-            .eq("rec_deleted", false)
+            .select()    
+            .eq('rec_deleted', false)      
+
         if (queryData.error) {
             setLoading(false); 
             alert(queryData.error.message);
-        }else {
+        } else {
             setLoading(false); 
-            setBodypartsData(queryData.data)
+            const arr = queryData.data.map((bodypart) => {
+                bodypart.label = bodypart.body_side ? bodypart.body_side + " " + bodypart.name : bodypart.name
+                return bodypart
+            })
+            setBodypartsData(arr);
         }     
     }
 
@@ -94,18 +99,20 @@ const SymptomsList = (props) => {
     return (        
         <>
             {loading && <LoadingModal />}
-            <SymptomModal 
+            <SymptomModal                 
                 show={showSymptomModal} 
                 hideModal={hideUpdateSymptomModal}   
                 issueData = {props.issueData}    
                 symptomData = {currentSymptomData}
+                bodypartsData={bodypartsData}
                 getSymptomsData = {getSymptomsData}
             />       
 
-            <NewSymptomModal 
+            <NewSymptomModal                 
                 show={showNewSymptomModal} 
                 toggleModal={toggleNewSymptomModal}   
-                issueData = {props.issueData}    
+                issueData = {props.issueData}
+                bodypartsData={bodypartsData}    
                 getSymptomsData = {getSymptomsData}
             />
             <div className="my-3 mx-auto component-big">
