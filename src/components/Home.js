@@ -32,7 +32,13 @@ const Home = () => {
 
     useEffect(() => {  
         if (auth.userObj) {
-            getOrgData(auth.userObj.org_id);  
+            //imediately log out user if active===false
+            if (!auth.userObj.active) {
+                alert("Your account is not active.");
+                auth.logout();
+            } else {
+                getOrgData(auth.userObj.org_id);  
+            }            
         }                   
     }, [auth.userObj])
 

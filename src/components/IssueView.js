@@ -162,11 +162,45 @@ const IssueView = () => {
     }
 
     const setEndNull = () => {
-        setEnd(null);
+        const nullEnd = null;
+        setEnd(nullEnd);
+
+        setLoading(true);
+        const queryData = await supabase
+            .from('issues')
+            .update({                
+                end: nullEnd                       
+            })
+            .eq('id', location.state.issueData.id)
+
+        if (queryData.error) {
+            setLoading(false);
+            alert(queryData.error.message);
+        }else {
+            setLoading(false);
+            getIssueData();
+        }        
     }    
 
     const setEndNow = () => {
-        setEnd(moment().toDate());
+        const newEnd = moment().toDate();
+        setEnd(newEnd);
+
+        setLoading(true);
+        const queryData = await supabase
+            .from('issues')
+            .update({                
+                end: newEnd                       
+            })
+            .eq('id', location.state.issueData.id)
+
+        if (queryData.error) {
+            setLoading(false);
+            alert(queryData.error.message);
+        }else {
+            setLoading(false);
+            getIssueData();
+        }        
     }    
 
     const toggleConfirmDelete = () => {
