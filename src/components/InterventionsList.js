@@ -73,9 +73,12 @@ const InterventionsList = (props) => {
    
     //on component mount find all interventions for this issue
     useEffect(() => {
-      getInterventionsData();
-      getUsers();
-    }, [])
+        if (props.issueData) {
+            getInterventionsData();
+            getUsers();
+        }
+      
+    }, [props.issueData])
 
     // only show intervention modal afer current intervention data is updated
     useEffect(() => {

@@ -146,10 +146,12 @@ const AppointmentsList = (props) => {
     }, [eventsList, searchQuery, showOnlyMine])
 
     useEffect(() => {
-      getEvents();
-      getPatients();
-      getUsers();
-    }, [props])
+        if (props.currentPatientData) {
+            getEvents();
+            getPatients();
+            getUsers();
+        }      
+    }, [props.currentPatientData])
 
     useEffect(()=>{
         if (currentEvent){

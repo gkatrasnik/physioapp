@@ -77,9 +77,11 @@ const SymptomsList = (props) => {
 
     //on component mount find all symptoms for this issue
     useEffect(() => {
-      getSymptomsData();
-      getBodypartsData();
-    }, [])
+        if(props.props.issueData) {
+            getSymptomsData();
+            getBodypartsData();
+        }      
+    }, [props.issueData])
 
     //show modal after current symptom data changes
     useEffect(() => {
