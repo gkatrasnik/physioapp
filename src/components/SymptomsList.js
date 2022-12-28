@@ -77,7 +77,7 @@ const SymptomsList = (props) => {
 
     //on component mount find all symptoms for this issue
     useEffect(() => {
-        if(props.props.issueData) {
+        if(props.issueData) {
             getSymptomsData();
             getBodypartsData();
         }      
