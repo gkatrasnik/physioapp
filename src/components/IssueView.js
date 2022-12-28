@@ -161,7 +161,7 @@ const IssueView = () => {
         }     
     }
 
-    const setEndNull = () => {
+    const setEndNull = async () => {
         const nullEnd = null;
         setEnd(nullEnd);
 
@@ -182,7 +182,7 @@ const IssueView = () => {
         }        
     }    
 
-    const setEndNow = () => {
+    const setEndNow = async () => {
         const newEnd = moment().toDate();
         setEnd(newEnd);
 
