@@ -246,7 +246,7 @@ const IssueView = () => {
                  <Tabs 
                     defaultActiveKey="Info" 
                     onSelect={handleSelectTab}   
-                    justify            
+                    fill            
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big ">

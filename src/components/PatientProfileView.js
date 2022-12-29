@@ -273,7 +273,7 @@ const PatientProfileView = () => {
                 <h1 className="text-center custom-page-heading-1 mt-5 mb-4">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
                  <Tabs 
                     defaultActiveKey="Issues" 
-                    justify                   
+                    fill                   
                  >
                     <Tab title="Info" eventKey="Info">
                         <Form className="my-3 mx-auto component-big">
