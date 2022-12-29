@@ -203,7 +203,7 @@ const AppointmentsList = (props) => {
                                     setSearchQuery(e.target.value);                                            
                                 }}/>
                                 
-                                <Button  className="custom-new-button" variant="primary" onClick={toggleNewAppointmentModal}>
+                                <Button  className="custom-new-button" variant="secondary" onClick={toggleNewAppointmentModal}>
                                     New Appointment
                                 </Button>       
                         </div>               

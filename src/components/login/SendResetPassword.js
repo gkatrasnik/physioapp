@@ -57,7 +57,7 @@ const SendResetPassword = () => {
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit" className="float-end mx-3">
+            <Button variant="secondary" type="submit" className="float-end mx-3">
               Reset Password
             </Button>
           </Form>

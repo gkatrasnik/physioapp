@@ -256,23 +256,23 @@ const IssueView = () => {
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                     Delete
                                 </Button>}                
-                                {editing && <Button  className="m-2" variant="primary"  onClick={handleUpdateIssue}>
+                                {editing && <Button  className="m-2" variant="secondary"  onClick={handleUpdateIssue}>
                                     Save
                                 </Button> }   
 
                                 {!editing && 
                                 <>
-                                    {resolved ? <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNull()}}>
+                                    {resolved ? <Button className="m-2 mr-5" variant="outline-secondary" onClick={() => {setEndNull()}}>
                                         Set Not Resolved
                                     </Button> :
-                                    <Button className="m-2 mr-5" variant="primary" onClick={() => {setEndNow()}}>
+                                    <Button className="m-2 mr-5" variant="secondary" onClick={() => {setEndNow()}}>
                                         Set Resolved
                                     </Button>
                                     }
                                 </>
                                 }
                                 
-                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                <Button className="m-2 " variant="outline-secondary" onClick={toggleEdit}>
                                     {editing ? "Cancel" : "Edit Issue"}
                                 </Button>   
                             </div>

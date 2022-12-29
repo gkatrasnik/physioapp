@@ -29,6 +29,7 @@ const PatientProfileView = () => {
     const [issuesData, setIssuesData] = useState([]);
     const [filteredIssuesData, setFilteredIssuesData] = useState([]);
     const [filterIssues, setFilterIssues] = useState(false);
+    const [activeTab, setActiveTab] = useState("Issues");
 
 
 
@@ -272,7 +273,8 @@ const PatientProfileView = () => {
             <Container fluid={true} className="min-h-100-without-navbar">
                 <h1 className="text-center custom-page-heading-1 mt-5 mb-4">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
                  <Tabs 
-                    defaultActiveKey="Issues" 
+                    defaultActiveKey={activeTab} 
+                    onSelect={(tab) => setActiveTab(tab)}
                     fill                   
                  >
                     <Tab title="Info" eventKey="Info">
@@ -282,10 +284,10 @@ const PatientProfileView = () => {
                                 {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                     Delete
                                 </Button>}
-                                {editing && <Button  className="m-2" variant="primary" type="submit" onClick={handleUpdatePatient}>
+                                {editing && <Button  className="m-2" variant="secondary" type="submit" onClick={handleUpdatePatient}>
                                     Save
                                 </Button> }                                
-                                <Button className="m-2 " variant="secondary" onClick={toggleEdit}>
+                                <Button className="m-2 " variant="outline-secondary" onClick={toggleEdit}>
                                     {editing ? "Cancel" : "Edit Patient"}
                                 </Button> 
                             </div>              

@@ -113,7 +113,7 @@ const InterventionsList = (props) => {
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center mt-4 mb-4'>Interventions</h2>
                 <div className='buttons-container'>
-                    <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewInterventionModal}>
+                    <Button  className="m-2" variant="secondary" type="submit" onClick={toggleNewInterventionModal}>
                             New Intervention
                     </Button>
                 </div>

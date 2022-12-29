@@ -95,7 +95,7 @@ const PatientSearchView = () => {
                             setSearchQuery(e.target.value);
                             }}/>              
                                              
-                            <Button variant="primary" onClick={toggleModal} className="custom-new-button">
+                            <Button variant="secondary" onClick={toggleModal} className="custom-new-button">
                                 New Patient
                             </Button>                        
                     </div>               

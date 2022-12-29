@@ -6,6 +6,7 @@ $font-family-base: "Open Sans";
 
 //$primary: #00c086;
 $primary: #0272EC;
+$secondary: #003c7c;
 
 /*! Import Bootstrap 5 variables */
 a {
@@ -115,7 +116,7 @@ $nav-link-font-size:14px;
   justify-content: center;
   align-items: center;
   max-width: 60px;
-  color: #000;
+  color: $secondary;
   font-size: 13px;
 }
 
@@ -167,6 +168,7 @@ $nav-link-font-size:14px;
     font-size: large;
     max-width: none;
     font-size: 16px;
+    color: $secondary;
   }
 
   .custom-navigation-item svg {
@@ -191,7 +193,7 @@ $nav-link-font-size:14px;
   left: 0;
   right: 0;
   margin: auto;    
-  color: $primary;
+  color: $secondary;
   width: 4rem;
   height: 4rem;
   z-index: 10000;

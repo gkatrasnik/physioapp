@@ -183,15 +183,15 @@ const SymptomModal = (props) => {
                             <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                 Delete
                             </Button> 
-                            <Button  className="m-2" variant="primary" type="submit">
+                            <Button  className="m-2" variant="secondary" type="submit">
                                 Save
                             </Button>                                
                         </> :
-                        <Button className="m-2 " variant="secondary" onClick={toggleEditing}>
+                        <Button className="m-2 " variant="outline-secondary" onClick={toggleEditing}>
                             Edit
                         </Button>
                     }
-                    <Button className="m-2 " variant="secondary" onClick={handleClose}>
+                    <Button className="m-2 " variant="outline-secondary" onClick={handleClose}>
                         {!editing ? "Close" : "Cancel"}
                     </Button>               
                 </div>

@@ -155,10 +155,10 @@ const NewPatientModal = (props) => {
                 />                
                 </Form.Group>
                 <div className='buttons-container'>                    
-                    <Button className="m-2" variant="primary" type="submit">
+                    <Button className="m-2" variant="secondary" type="submit">
                         Add Patient
                     </Button>
-                    <Button className="m-2 " variant="secondary" onClick={props.handleToggleModal}>
+                    <Button className="m-2 " variant="outline-secondary" onClick={props.handleToggleModal}>
                         Close
                     </Button>                
                 </div>

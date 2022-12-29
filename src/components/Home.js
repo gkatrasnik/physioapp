@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import {useAuth} from "../auth";
 import Layout from "./Layout";
-import { Container, Card, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Container, Card } from 'react-bootstrap';
 import LoadingModal from "./modals/LoadingModal"
 
 
@@ -56,16 +55,12 @@ const Home = () => {
         <>
         {loading && <LoadingModal />}
         <Layout>
-            <Container>
-                <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Home</h1>
+            <Container>                
 
                 {orgData &&                 
-                <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
-                
-                   
-                
+                <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "5rem"}}>                               
                 <Card.Body>
-                    <Card.Title className='text-center'>Organization</Card.Title>                    
+                    <Card.Title className='text-center'><h2>Organization</h2></Card.Title>                    
                     <Card.Text>{orgData.name}</Card.Text> 
                     <Card.Text>{orgData.address}</Card.Text> 
                     <Card.Text>{orgData.zip_code}, {orgData.city}</Card.Text>                     
@@ -75,7 +70,7 @@ const Home = () => {
                 {auth.userObj && 
                 <Card className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "2rem"}}>                
                 <Card.Body>
-                    <Card.Title className='text-center'>Therapist</Card.Title>
+                    <Card.Title className='text-center'><h2>Therapist</h2></Card.Title>
                     <Card.Text>{auth.userObj.name}</Card.Text> 
                     <Card.Text>{auth.userObj.email}</Card.Text> 
                     <Card.Text>{auth.userObj.phone}</Card.Text>                   

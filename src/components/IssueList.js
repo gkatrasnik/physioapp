@@ -71,7 +71,7 @@ const IssueList = (props) => {
                                 setSearchQuery(e.target.value);                                            
                             }}/>
                             
-                            <Button   variant="primary" onClick={toggleShowNewIssue} className="custom-new-button">
+                            <Button   variant="secondary" onClick={toggleShowNewIssue} className="custom-new-button">
                                 New Issue
                             </Button>     
                     </div>               

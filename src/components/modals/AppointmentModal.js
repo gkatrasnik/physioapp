@@ -241,20 +241,20 @@ const AppointmentModal = (props) => {
                         Delete
                     </Button> 
 
-                    <Button className="m-2" variant="primary" onClick={handleUpdatePatient}>
+                    <Button className="m-2" variant="secondary" onClick={handleUpdatePatient}>
                         Save
                     </Button> 
                     </> :
-                    <Button className="m-2" variant="secondary" onClick={setEditingTrue}>
+                    <Button className="m-2" variant="outline-secondary" onClick={setEditingTrue}>
                         Edit
                     </Button> 
                 }     
                     {showToPatientBtn && !editing &&
-                    <Button className="m-2" variant="primary" onClick={()=>{toPatientProfile(eventPatient)}}>
+                    <Button className="m-2" variant="secondary" onClick={()=>{toPatientProfile(eventPatient)}}>
                         Patient Profile
                     </Button>}    
 
-                    <Button className="m-2 " variant="secondary" onClick={handleCloseBtn}>
+                    <Button className="m-2 " variant="outline-secondary" onClick={handleCloseBtn}>
                         Close
                     </Button>
                 </div>

@@ -118,7 +118,7 @@ const SymptomsList = (props) => {
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center mt-4 mb-4'>Symptoms</h2>
                 <div className='buttons-container'>
-                    <Button  className="m-2" variant="primary" type="submit" onClick={toggleNewSymptomModal}>
+                    <Button  className="m-2" variant="secondary" type="submit" onClick={toggleNewSymptomModal}>
                             New Symptom
                     </Button>
                 </div>
