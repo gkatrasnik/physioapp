@@ -42,7 +42,7 @@ const Login = () => {
       {loading && <LoadingModal />}
       <h1 className="login-logo lobster-font">PhysioApp</h1>
       <Card
-        style={{ width: "90%", maxWidth: "32rem", margin: "auto", top:"10rem"}}
+        style={{ width: "90%", maxWidth: "32rem", margin: "auto", top:"6rem"}}
         className="box-shadow"
       >
         <Card.Body>

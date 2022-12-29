@@ -5,8 +5,8 @@
 $font-family-base: "Open Sans";
 
 //$primary: #00c086;
-$primary: #0272EC;
-$secondary: #003c7c;
+$primary: #003c7c;
+$secondary: #0272EC;
 
 /*! Import Bootstrap 5 variables */
 a {
@@ -14,9 +14,14 @@ a {
 }
 
 $nav-link-padding-x:0.4rem;
+$nav-link-font-size:14px;
+$nav-link-color: $secondary;
+
 $navbar-padding-y: 0;
 $navbar-brand-padding-y: 0;
-$nav-link-font-size:14px;
+
+$link-color:$secondary;
+
 
 
 @import "../node_modules/bootstrap/scss/functions";
@@ -44,6 +49,13 @@ $nav-link-font-size:14px;
 
 
 // Add SASS theme customizations here..
+
+.form-check-input:checked {
+    background-color: $secondary;
+    border-color: $secondary;
+}
+
+
 
 .btn-primary {
   color: #fff;
@@ -116,8 +128,12 @@ $nav-link-font-size:14px;
   justify-content: center;
   align-items: center;
   max-width: 60px;
-  color: $secondary;
+  color: $primary;
   font-size: 13px;
+}
+
+.custom-navigation-item:hover {
+  color: #0272EC;
 }
 
 .custom-navigation-item p{
@@ -167,8 +183,7 @@ $nav-link-font-size:14px;
     margin-top: 1rem;
     font-size: large;
     max-width: none;
-    font-size: 16px;
-    color: $secondary;
+    font-size: 16px;    
   }
 
   .custom-navigation-item svg {
@@ -319,7 +334,7 @@ $nav-link-font-size:14px;
 
 .login-logo {
   text-align: center !important;
-    top: 5rem;
+    top: 3rem;
     position: relative;
     font-size: 4rem;
     font-style: italic ;
@@ -329,4 +344,20 @@ $nav-link-font-size:14px;
 .navbar-brand-logo {
   font-style: italic;
   font-size: x-large;
+}
+
+.settings-link {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;    
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+    font-size: large;
+    max-width: none;
+  }
+
+.settings-link p{
+  margin-left: 1rem;
+  margin-bottom: 0;
 }
