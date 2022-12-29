@@ -24,15 +24,13 @@ const IssueList = (props) => {
     }
 
     const handleSearch = () => {   
-        if (props.issuesData.length) {
             if (searchQuery.length === 0) { //show all issues 
                 setFilteredIssuesData(props.issuesData);
             } else if (searchQuery.length) {//auto filter issues when typing in search      
             const newArr = props.issuesData.filter(
                 issue => issue.name.toLowerCase().includes(searchQuery.toLowerCase()) || issue.diagnosis.toLowerCase().includes(searchQuery.toLowerCase()));
-            setFilteredIssuesData(newArr);
+                setFilteredIssuesData(newArr);
             }
-        }
     }
 
     useEffect(() => { //on search query change, handle search

@@ -20,13 +20,11 @@ const PatientSearchView = () => {
     const navigate = useNavigate();
 
     const handleSearch = () => {   
-        if (patientsData.length) {
-            if (searchQuery.length === 0) { //show all patients - whole original data we get from db (patients of this org)
-                setFilteredPatients(patientsData);
-            } else if (searchQuery.length) {//auto filter patients when typing in search      
+        if (searchQuery.length === 0) { //show all patients - whole original data we get from db (patients of this org)
+            setFilteredPatients(patientsData);
+        } else if (searchQuery.length) {//auto filter patients when typing in search      
             const newArr = patientsData.filter(patient => patient.name.toLowerCase().includes(searchQuery.toLowerCase()));
             setFilteredPatients(newArr);
-            }
         }
     }
 
