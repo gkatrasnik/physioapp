@@ -254,7 +254,7 @@ const AppointmentModal = (props) => {
                         Patient Profile
                     </Button>}    
 
-                    <Button className="m-2 " variant="outline-secondary" onClick={handleCloseBtn}>
+                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={handleCloseBtn}>
                         Close
                     </Button>
                 </div>

@@ -158,7 +158,7 @@ const NewPatientModal = (props) => {
                     <Button className="m-2" variant="secondary" type="submit">
                         Add Patient
                     </Button>
-                    <Button className="m-2 " variant="outline-secondary" onClick={props.handleToggleModal}>
+                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={props.handleToggleModal}>
                         Close
                     </Button>                
                 </div>

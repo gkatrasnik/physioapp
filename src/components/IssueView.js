@@ -272,7 +272,7 @@ const IssueView = () => {
                                 </>
                                 }
                                 
-                                <Button className="m-2 " variant="outline-secondary" onClick={toggleEdit}>
+                                <Button className="ms-2 my-2" variant="outline-secondary" onClick={toggleEdit}>
                                     {editing ? "Cancel" : "Edit Issue"}
                                 </Button>   
                             </div>

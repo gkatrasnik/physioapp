@@ -193,7 +193,7 @@ const InterventionModal = (props) => {
                                 Edit
                         </Button>
                     }
-                    <Button className="m-2 " variant="outline-secondary" onClick={handleClose}>
+                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={handleClose}>
                         {!editing ? "Close" : "Cancel"}
                     </Button>
                 </div>

@@ -287,7 +287,7 @@ const PatientProfileView = () => {
                                 {editing && <Button  className="m-2" variant="secondary" type="submit" onClick={handleUpdatePatient}>
                                     Save
                                 </Button> }                                
-                                <Button className="m-2 " variant="outline-secondary" onClick={toggleEdit}>
+                                <Button className="ms-2 my-2" variant="outline-secondary" onClick={toggleEdit}>
                                     {editing ? "Cancel" : "Edit Patient"}
                                 </Button> 
                             </div>              

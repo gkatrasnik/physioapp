@@ -29,7 +29,7 @@ function ConfirmDeleteModal(props) {
             <Button className="mx-2" variant="danger" onClick={callbackAndHide}>
               Delete
             </Button>
-            <Button className="mx-2" variant="outline-secondary" onClick={props.cancelCallback}>
+            <Button className="ms-2 my-2" variant="outline-secondary" onClick={props.cancelCallback}>
               Close
             </Button>
           </div>

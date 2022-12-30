@@ -75,7 +75,7 @@ const Login = () => {
               />
             </Form.Group>
 
-            <Button variant="secondary" type="submit" className="float-end mx-3">
+            <Button variant="secondary" type="submit" className="float-end">
               Login
             </Button>
           </Form>

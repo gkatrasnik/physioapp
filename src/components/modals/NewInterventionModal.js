@@ -131,7 +131,7 @@ const NewInterventionModal = (props) => {
                     <Button className="m-2" variant="secondary" type="submit">
                         Add Intervention
                     </Button>
-                    <Button className="m-2 " variant="outline-secondary" onClick={props.toggleModal}>
+                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={props.toggleModal}>
                         Close
                     </Button>     
                 </div>

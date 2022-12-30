@@ -74,7 +74,7 @@ const UpdatePassword = () => {
               />
             </Form.Group>
 
-            <Button variant="secondary" type="submit" className="float-end mx-3">
+            <Button variant="secondary" type="submit" className="float-end">
               Set New Password
             </Button>
           </Form>
