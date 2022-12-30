@@ -12,6 +12,18 @@ import moment from "moment";
 import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
 import LoadingModal from "./modals/LoadingModal";
 import { Check2Square, Square } from 'react-bootstrap-icons';
+import { useSwipeable } from 'react-swipeable';
+
+//for swipable tabs
+const config = {
+  delta: 5,                            // min distance(px) before a swipe starts
+  preventDefaultTouchmoveEvent: false,  // call e.preventDefault *See Details*
+  trackTouch: true,                     // track touch input
+  trackMouse: true,                    // track mouse input
+  rotationAngle: 0,                     // set a rotation angle
+}
+
+const tabs = ["Info", "Symptoms", "Interventions"];
 
 const IssueView = () => {
     const auth = useAuth();
@@ -34,7 +46,24 @@ const IssueView = () => {
     const [userId, setUserId] = useState("");
     const [patientId, setPatientId] = useState("");
     const [patientData, setPatientData] =useState();  
-    const [activeTab, setActiveTab] = useState(""); 
+    const [activeTab, setActiveTab] = useState(tabs.currentTab()); 
+
+
+ //swipable tabs
+    const handlers = useSwipeable({
+        onSwiped: (e) => {
+            if(e.dir==="Right") {    
+            setActiveTab(tabs.previousTab());  
+            }
+            else if(e.dir==="Left") {   
+            setActiveTab(tabs.nextTab());      
+            }          
+    }, ...config, });
+      
+    const handlerSetTab = (i) => {
+        setActiveTab(tabs.jumpTab(i));
+    }      
+
 
     const getIssueData = async () => {
         setLoading(true);
@@ -241,11 +270,11 @@ const IssueView = () => {
         />
 
         <Layout>
-            <Container fluid={true} className={"min-h-100-without-navbar"}>
+            <Container fluid={true} className={"min-h-100-without-navbar"} {...handlers}>
                 <h1 className="text-center custom-page-heading-1 mt-5 mb-4">Issue {location.state ? ( " - " + location.state.issueData.name ) : null} {resolved ? <Check2Square className="custom-color-success"/> : <Square className="custom-color-warning"/>}</h1>
-                 <Tabs 
-                    defaultActiveKey="Info" 
-                    onSelect={handleSelectTab}   
+                 <Tabs  
+                    activeKey={activeTab} 
+                    onSelect={(tab) => handlerSetTab(tab)} 
                     fill            
                  >
                     <Tab title="Info" eventKey="Info">

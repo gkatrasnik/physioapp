@@ -16,6 +16,19 @@ import IssueList from './IssueList';
 import IssuesCalendar from './IssuesCalendar';
 import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
 import LoadingModal from "./modals/LoadingModal"; 
+import { useSwipeable } from 'react-swipeable';
+
+
+//for swipable tabs
+const config = {
+  delta: 5,                            // min distance(px) before a swipe starts
+  preventDefaultTouchmoveEvent: false,  // call e.preventDefault *See Details*
+  trackTouch: true,                     // track touch input
+  trackMouse: true,                    // track mouse input
+  rotationAngle: 0,                     // set a rotation angle
+}
+
+const tabs = ["Info", "Appointments", "Issues", "Issues Calendar"];
 
 
 const PatientProfileView = () => {
@@ -29,7 +42,7 @@ const PatientProfileView = () => {
     const [issuesData, setIssuesData] = useState([]);
     const [filteredIssuesData, setFilteredIssuesData] = useState([]);
     const [filterIssues, setFilterIssues] = useState(false);
-    const [activeTab, setActiveTab] = useState("Issues");
+    const [activeTab, setActiveTab] = useState(tabs.currentTab());
 
 
 
@@ -42,6 +55,22 @@ const PatientProfileView = () => {
     const [zip, setZip] = useState();
     const [birthDate, setBirdhDate] = useState();
     const [occupation, setOccupation] = useState("");
+
+
+    //swipable tabs
+    const handlers = useSwipeable({
+      onSwiped: (e) => {
+          if(e.dir==="Right") {    
+            setActiveTab(tabs.previousTab());  
+          }
+          else if(e.dir==="Left") {   
+            setActiveTab(tabs.nextTab());      
+          }          
+      }, ...config, });
+      
+      const handlerSetTab = (i) => {
+          setActiveTab(tabs.jumpTab(i));
+      }      
 
     
 
@@ -270,149 +299,150 @@ const PatientProfileView = () => {
             cancelCallback={toggleConfirmDelete}            
         />
         <Layout>
-            <Container fluid={true} className="min-h-100-without-navbar">
+            <Container fluid={true} className="min-h-100-without-navbar" {...handlers}>
                 <h1 className="text-center custom-page-heading-1 mt-5 mb-4">Patient Profile {location.state ? (" - " + location.state.patientData.name) : null}</h1>
-                 <Tabs 
-                    defaultActiveKey={activeTab} 
-                    onSelect={(tab) => setActiveTab(tab)}
-                    fill                   
-                 >
-                    <Tab title="Info" eventKey="Info">
-                        <Form className="my-3 mx-auto component-big">
-                            <h2 className='text-center mt-4 mb-4'>Patient Info</h2>                            
-                            <div className='buttons-container'>                               
-                                {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
-                                    Delete
-                                </Button>}
-                                {editing && <Button  className="m-2" variant="secondary" type="submit" onClick={handleUpdatePatient}>
-                                    Save
-                                </Button> }                                
-                                <Button className="ms-2 my-2" variant="outline-secondary" onClick={toggleEdit}>
-                                    {editing ? "Cancel" : "Edit Patient"}
-                                </Button> 
-                            </div>              
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control
-                                defaultValue = {name}
-                                disabled = {!editing}
-                                type="text"
-                                autoFocus
-                                onChange={(e) => {
-                                setName(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
-                           
-                            
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Email Address</Form.Label>
-                            <Form.Control
-                                defaultValue = {email}
-                                disabled = {!editing}
-                                type="email"
-                                onChange={(e) => {
-                                setEmail(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
+                
+                <Tabs                     
+                activeKey={activeTab} 
+                onSelect={(tab) => handlerSetTab(tab)}
+                fill                   
+                >
+                <Tab title="Info" eventKey="Info">
+                    <Form className="my-3 mx-auto component-big">
+                        <h2 className='text-center mt-4 mb-4'>Patient Info</h2>                            
+                        <div className='buttons-container'>                               
+                            {editing && <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
+                                Delete
+                            </Button>}
+                            {editing && <Button  className="m-2" variant="secondary" type="submit" onClick={handleUpdatePatient}>
+                                Save
+                            </Button> }                                
+                            <Button className="ms-2 my-2" variant="outline-secondary" onClick={toggleEdit}>
+                                {editing ? "Cancel" : "Edit Patient"}
+                            </Button> 
+                        </div>              
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                            defaultValue = {name}
+                            disabled = {!editing}
+                            type="text"
+                            autoFocus
+                            onChange={(e) => {
+                            setName(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
+                        
+                        
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
+                        <Form.Label>Email Address</Form.Label>
+                        <Form.Control
+                            defaultValue = {email}
+                            disabled = {!editing}
+                            type="email"
+                            onChange={(e) => {
+                            setEmail(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
 
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                            <Form.Label>Phone Number</Form.Label>
-                            <Form.Control
-                                defaultValue = {phone}
-                                disabled = {!editing}
-                                type="tel"
-                                onChange={(e) => {
-                                setPhone(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
+                        <Form.Label>Phone Number</Form.Label>
+                        <Form.Control
+                            defaultValue = {phone}
+                            disabled = {!editing}
+                            type="tel"
+                            onChange={(e) => {
+                            setPhone(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
 
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
-                            <Form.Label>Address</Form.Label>
-                            <Form.Control
-                                defaultValue = {address}
-                                disabled = {!editing}
-                                type="text"
-                                onChange={(e) => {
-                                setAddress(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput4">
+                        <Form.Label>Address</Form.Label>
+                        <Form.Control
+                            defaultValue = {address}
+                            disabled = {!editing}
+                            type="text"
+                            onChange={(e) => {
+                            setAddress(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
 
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
-                            <Form.Label>City</Form.Label>
-                            <Form.Control
-                                defaultValue = {city}
-                                disabled = {!editing}
-                                type="text"
-                                onChange={(e) => {
-                                setCity(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
+                        <Form.Label>City</Form.Label>
+                        <Form.Control
+                            defaultValue = {city}
+                            disabled = {!editing}
+                            type="text"
+                            onChange={(e) => {
+                            setCity(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
 
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput6">
-                            <Form.Label>ZIP Code</Form.Label>
-                            <Form.Control
-                                defaultValue = {zip}
-                                disabled = {!editing}
-                                type="number"
-                                onChange={(e) => {
-                                setZip(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput6">
+                        <Form.Label>ZIP Code</Form.Label>
+                        <Form.Control
+                            defaultValue = {zip}
+                            disabled = {!editing}
+                            type="number"
+                            onChange={(e) => {
+                            setZip(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
 
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
-                            <Form.Label>Birth Date</Form.Label>
-                            <Form.Control
-                                defaultValue = {birthDate}
-                                disabled = {!editing}
-                                type="date"
-                                onChange={(e) => {
-                                setBirdhDate(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput7">
+                        <Form.Label>Birth Date</Form.Label>
+                        <Form.Control
+                            defaultValue = {birthDate}
+                            disabled = {!editing}
+                            type="date"
+                            onChange={(e) => {
+                            setBirdhDate(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
 
-                            <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
-                            <Form.Label>Occupation</Form.Label>
-                            <Form.Control
-                                defaultValue = {occupation}
-                                disabled = {!editing}
-                                type="text"
-                                onChange={(e) => {
-                                setOccupation(e.target.value);
-                                }}
-                            />                
-                            </Form.Group>
-                                   
-                        </Form>
-                    </Tab>
-                    <Tab title="Appointments" eventKey="Appointments">
-                        <AppointmentsList
-                            currentPatientData={location.state ? location.state.patientData : null}
-                        />
-                    </Tab>
-                    <Tab title="Issues" eventKey="Issues">
-                        <IssueList                         
-                        getIssuesData={getIssuesData}
-                        patientData={location.state ? location.state.patientData : null}
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
+                        <Form.Label>Occupation</Form.Label>
+                        <Form.Control
+                            defaultValue = {occupation}
+                            disabled = {!editing}
+                            type="text"
+                            onChange={(e) => {
+                            setOccupation(e.target.value);
+                            }}
+                        />                
+                        </Form.Group>
+                                
+                    </Form>
+                </Tab>
+                <Tab title="Appointments" eventKey="Appointments">
+                    <AppointmentsList
+                        currentPatientData={location.state ? location.state.patientData : null}
+                    />
+                </Tab>
+                <Tab title="Issues" eventKey="Issues">
+                    <IssueList                         
+                    getIssuesData={getIssuesData}
+                    patientData={location.state ? location.state.patientData : null}
+                    issuesData={filteredIssuesData}
+                    filterIssues={filterIssues}
+                    toggleFilterIssues={toggleFilterIssues}
+                    />                        
+                </Tab>
+                <Tab title="Issues Calendar" eventKey="Issues Calendar">
+                        <IssuesCalendar
                         issuesData={filteredIssuesData}
                         filterIssues={filterIssues}
                         toggleFilterIssues={toggleFilterIssues}
-                        />                        
-                    </Tab>
-                    <Tab title="Issues Calendar" eventKey="Issues Calendar">
-                         <IssuesCalendar
-                            issuesData={filteredIssuesData}
-                            filterIssues={filterIssues}
-                            toggleFilterIssues={toggleFilterIssues}
-                        />
-                    </Tab>
-                </Tabs>
+                    />
+                </Tab>
+            </Tabs>
             </Container>
         </Layout>
         </>
