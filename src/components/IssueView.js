@@ -16,10 +16,10 @@ import { useSwipeable } from 'react-swipeable';
 
 //for swipable tabs
 const config = {
-  delta: 5,                            // min distance(px) before a swipe starts
+  delta: 10,                            // min distance(px) before a swipe starts
   preventDefaultTouchmoveEvent: false,  // call e.preventDefault *See Details*
   trackTouch: true,                     // track touch input
-  trackMouse: true,                    // track mouse input
+  trackMouse: false,                    // track mouse input
   rotationAngle: 0,                     // set a rotation angle
 }
 

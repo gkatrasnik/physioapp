@@ -19,7 +19,7 @@ const Settings = () => {
             <Container>       
                 <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "5rem"}}>                               
                 <Card.Body>
-                    <Card.Title className='text-center'><h1>Settings</h1></Card.Title>                    
+                    <Card.Title className='text-center'><h1>Options</h1></Card.Title>                    
                     <Link onClick={auth.logout} className="settings-link"><BoxArrowLeft/><p>Logout</p></Link>                  
                 </Card.Body>
                 </Card>                          
