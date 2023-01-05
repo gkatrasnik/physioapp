@@ -349,7 +349,7 @@ $link-color:$secondary;
   font-size: x-large;
 }
 
-.settings-link {
+.options-link {
     display: flex;
     flex-direction: row;
     justify-content: start;
@@ -360,7 +360,7 @@ $link-color:$secondary;
     max-width: none;
   }
 
-.settings-link p{
+.options-link p{
   margin-left: 1rem;
   margin-bottom: 0;
 }

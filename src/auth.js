@@ -26,7 +26,7 @@ function useProvideAuth() {
         })
 
         if(error) {
-            console.log(error);
+            alert(error);
         }
 
         return {error, user}
@@ -39,7 +39,7 @@ function useProvideAuth() {
         })
 
         if(error) {
-            console.log(error);
+            alert(error);
         }
 
         return {error, user}
@@ -49,7 +49,7 @@ function useProvideAuth() {
         const {error} = await supabase.auth.signOut();
 
         if(error) {
-            console.log(error);
+            alert(error);
         }
 
         setUser(null);
@@ -61,7 +61,7 @@ function useProvideAuth() {
         })
 
         if(error) {
-            console.log(error);
+            alert(error);
         }
 
         return {error, user}
@@ -71,7 +71,7 @@ function useProvideAuth() {
         const {error, user} = await supabase.auth.updateUser({password: newPassword })
 
         if(error) {
-            console.log(error);
+            alert(error);
         }
 
         return {error, user}
@@ -91,6 +91,20 @@ function useProvideAuth() {
             setUserObj(queryData.data)
         }                      
     }
+
+    //update user metadata
+    const updateUserMetadata = async(data) => {
+        const {error, user} = await supabase.auth.updateUser({
+            data: {...data}
+        })
+
+        if(error) {
+            alert(error);
+        }
+
+        return {error, user}
+    }
+    
 
 
     useEffect(() => {        
@@ -119,7 +133,8 @@ function useProvideAuth() {
         login,
         logout,
         resetPassword,
-        updatePassword
+        updatePassword,
+        updateUserMetadata
     }
 
 }

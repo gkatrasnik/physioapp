@@ -48,7 +48,7 @@ function Layout({children}) {
                 <Link to={"/"} className="custom-navigation-item"><House/><p>Home</p></Link>
                 <Link to={"/patients"} className="custom-navigation-item"><People/><p>Patients</p></Link>
                 <Link to={"/appointments"} className="custom-navigation-item"><CalendarWeek/><p>Appointments</p></Link>
-                <Link to={"/settings"} className="custom-navigation-item"><ThreeDots/><p>More</p></Link>                  
+                <Link to={"/options"} className="custom-navigation-item"><ThreeDots/><p>More</p></Link>                  
               </nav>            
             
           </Container>

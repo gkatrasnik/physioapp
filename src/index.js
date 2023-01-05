@@ -17,7 +17,7 @@ import Appointments from './components/Appointments';
 import SendResetPassword from './components/login/SendResetPassword';
 import PatientProfileView from './components/PatientProfileView';
 import IssueView from './components/IssueView';
-import Settings from './components/Settings';
+import Options from './components/Options';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -30,7 +30,7 @@ root.render(
                 <Route path={"appointments"} element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
                 <Route path={"profile"} element={<ProtectedRoute><PatientProfileView/></ProtectedRoute>}/>
                 <Route path={"issue"} element={<ProtectedRoute><IssueView/></ProtectedRoute>}/>
-                <Route path={"settings"} element={<ProtectedRoute><Settings/></ProtectedRoute>}/>
+                <Route path={"options"} element={<ProtectedRoute><Options/></ProtectedRoute>}/>
 
 
                 <Route path={"login"} element={<Login/>}/>
