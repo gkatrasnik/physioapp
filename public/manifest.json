@@ -20,6 +20,6 @@
   ],
   "start_url": "https://physioapp.netlify.app",
   "display": "standalone",
-  "theme_color": "#0272EC",
+  "theme_color": "#003c7c",
   "background_color": "#b4b4b4"
 }
