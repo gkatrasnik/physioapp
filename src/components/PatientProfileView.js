@@ -52,8 +52,8 @@ const PatientProfileView = () => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [city, setCity] = useState("");
-    const [zip, setZip] = useState();
-    const [birthDate, setBirdhDate] = useState();
+    const [zip, setZip] = useState(null);
+    const [birthDate, setBirthDate] = useState(null);
     const [occupation, setOccupation] = useState("");
 
 
@@ -93,7 +93,7 @@ const PatientProfileView = () => {
             setAddress(queryData.data[0].address);
             setCity(queryData.data[0].city);
             setZip(queryData.data[0].zip_code);
-            setBirdhDate(queryData.data[0].birthdate);
+            setBirthDate(queryData.data[0].birthdate);
             setOccupation((queryData.data[0].occupation));
         }     
     }
@@ -402,7 +402,7 @@ const PatientProfileView = () => {
                             disabled = {!editing}
                             type="date"
                             onChange={(e) => {
-                            setBirdhDate(e.target.value);
+                            setBirthDate(e.target.value);
                             }}
                         />                
                         </Form.Group>
