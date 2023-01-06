@@ -149,14 +149,14 @@ const AppointmentModal = (props) => {
             cancelCallback={toggleConfirmDelete}
         />
 
-        <Modal centered backdrop="static" show={props.show} onHide={props.hideAppointmentModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={handleCloseBtn}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Appointment</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form   >
+            <Form>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                <Form.Label>From</Form.Label>
+                <Form.Label>Start</Form.Label>
                 <Form.Control
                     disabled={!editing}
                     required

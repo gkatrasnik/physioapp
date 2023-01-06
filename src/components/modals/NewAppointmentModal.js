@@ -16,10 +16,8 @@ const NewAppointmentModal = (props) => {
     const [title, setTitle] = useState("");
     const [patientFieldDisabled, setPatientFieldDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [durationH, setDurationH] = useState("0");
     const [durationM, setDurationM] = useState("0");
     const [therapistId, setTherapistId] = useState(null);
-
 
 
     const auth = useAuth();
@@ -34,15 +32,17 @@ const NewAppointmentModal = (props) => {
         }
        
         addAppointment();
+        handleClose();
+    }
+
+    const handleClose = () => {
         props.toggleModal(); 
-        setDurationH("0");
         setDurationM("0");
         setStart(null);
         setEnd(null);
         setPatientId(props.currentPatientData ? props.currentPatientData.id : 1);  
-        setTitle("");        
+        setTitle("");       
     }
-
 
     const addAppointment = async () => {  
         setLoading(true);      
@@ -77,18 +77,17 @@ const NewAppointmentModal = (props) => {
     }, [props.selectedSlot]);
 
     useEffect(()=>{
-        //if durationM and durationH are not "0"
-        if (parseInt(durationH) || parseInt(durationM)) {
-
+        //if durationM is not "0"
+        if (parseInt(durationM)) {
             // if start is not null, end can be set by adding duration to start
             if (start) {
-            setEnd(moment(start).add((parseInt(durationH)*60 + parseInt(durationM)), 'm').toDate()); 
+            setEnd(moment(start).add((parseInt(durationM)), 'm').toDate()); 
             } else {
                 alert('Please set appointment "Start" first')
             }
         }
              
-    },[durationH, durationM, start])
+    },[durationM, start])
 
     //if NewAppointmentModalis opened from patientProfile, set patientId,
     useEffect(() => {
@@ -104,12 +103,12 @@ const NewAppointmentModal = (props) => {
         <>   
         {loading && <LoadingModal />}
 
-        <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={handleClose}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Add New Appointment</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={handleNewAppointment} >
+            <Form>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Start</Form.Label>
                 <Form.Control
@@ -123,22 +122,13 @@ const NewAppointmentModal = (props) => {
                 </Form.Group>
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                <Form.Label>Duration (h:m)</Form.Label>
+                <Form.Label>Duration (min)</Form.Label>
                 <div className="d-flex duration-picker">
+                
                 <Form.Control
                     required
                     type="number"
                     min="0"                    
-                    defaultValue={durationH}                    
-                    onChange={(e) => {
-                    setDurationH(e.target.value)                  
-                    }}
-                />
-                <Form.Control
-                    required
-                    type="number"
-                    min="0"
-                    max="59"
                     defaultValue={durationM}                    
                     onChange={(e) => setDurationM(e.target.value)}
                 />   
@@ -196,10 +186,10 @@ const NewAppointmentModal = (props) => {
                 />                
                 </Form.Group>
                 <div className='buttons-container'>
-                    <Button className="m-2" variant="secondary" type="submit">
+                    <Button className="m-2" variant="secondary" onClick={handleNewAppointment}>
                         Add Appointment
                     </Button>     
-                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={props.toggleModal}>
+                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={handleClose}>
                         Close
                     </Button>
                 </div>

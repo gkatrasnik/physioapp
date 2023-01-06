@@ -111,12 +111,12 @@ const SymptomModal = (props) => {
             cancelCallback={toggleConfirmDelete}
         />
 
-        <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={handleClose}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Symptom</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form onSubmit={handleUpdateSymptom}>
+            <Form>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Symptom</Form.Label>
                 <Form.Control
@@ -137,7 +137,7 @@ const SymptomModal = (props) => {
                     label={intensity}                   
                     min={0}
                     max={10}
-                    defaultValue={intensity}
+                    value={intensity}
                     disabled={!editing}
                     onChange={(e) => {
                     setIntensity(e.target.valueAsNumber);
@@ -182,7 +182,7 @@ const SymptomModal = (props) => {
                             <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                 Delete
                             </Button> 
-                            <Button  className="m-2" variant="secondary" type="submit">
+                            <Button  className="m-2" variant="secondary" onClick={handleUpdateSymptom}>
                                 Save
                             </Button>                                
                         </> :

@@ -268,8 +268,8 @@ const PatientProfileView = () => {
         }
     }
 
-    const toggleFilterIssues = () => {
-        setFilterIssues(!filterIssues);
+    const toggleFilterIssues = (value) => {
+        setFilterIssues(value);
     }
 
     //in event change or switch change filter events

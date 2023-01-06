@@ -68,7 +68,7 @@ const NewIssueModal = (props) => {
             <Modal.Title className='text-center'>Add New Issue</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form onSubmit={handleNewIssue}>
+            <Form>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Title</Form.Label>
                 <Form.Control
@@ -125,7 +125,7 @@ const NewIssueModal = (props) => {
                     />                
                 </Form.Group>
                 <div className='buttons-container'>                    
-                    <Button className="m-2" variant="secondary" type="submit">
+                    <Button className="m-2" variant="secondary" onClick={handleNewIssue}>
                         Add Issue
                     </Button>
                     <Button className="ms-2 my-2" variant="outline-secondary" onClick={props.toggleShowNewIssue}>

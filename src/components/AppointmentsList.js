@@ -8,6 +8,7 @@ import NewAppointmentModal from './modals/NewAppointmentModal';
 import AppointmentModal from './modals/AppointmentModal';
 import LoadingModal from "./modals/LoadingModal"
 import { Link } from 'react-router-dom';
+import Select from 'react-select';
 
 
 
@@ -22,8 +23,10 @@ const AppointmentsList = (props) => {
     const [usersData, setUsersData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredEventsList, setFilteredEventsList] = useState([]);
-    const [showOnlyMine, setShowOnlyMine] = useState(false);
+    const [showOnlyUsers, setShowOnlyUsers] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
+
 
     const getEvents = async () => {
         if (props.currentPatientData) { //handle if there is o props.currentPatientData
@@ -117,19 +120,19 @@ const AppointmentsList = (props) => {
     const handleSearch = () => {   
         if (eventsList.length) {
             if (searchQuery.length === 0) { //show all events 
-                if (showOnlyMine) {
-                    const myEvents =  eventsList.filter((event) => {                        
-                        return event.user_id === auth.userObj.id;
+                if (showOnlyUsers) {
+                    const usersEvents =  eventsList.filter((event) => {                        
+                        return event.user_id === selectedUserId;
                     })
-                    setFilteredEventsList(myEvents)
+                    setFilteredEventsList(usersEvents)
                 } else {
                     setFilteredEventsList(eventsList);
                 }
                 
             } else if (searchQuery.length) {//auto filter events when typing in search  
 
-                if (showOnlyMine) {//show filtered by search + mine
-                    const myFileredEvents = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()) && event.user_id === auth.userObj.id);
+                if (showOnlyUsers) {//show filtered by search + mine
+                    const myFileredEvents = eventsList.filter(event => event.title.toLowerCase().includes(searchQuery.toLowerCase()) && event.user_id === selectedUserId);
                     setFilteredEventsList(myFileredEvents);
 
                 } else { //show only filtered by search
@@ -143,7 +146,7 @@ const AppointmentsList = (props) => {
 
     useEffect(() => { //on search query change, handle search
         handleSearch(searchQuery);
-    }, [eventsList, searchQuery, showOnlyMine])
+    }, [eventsList, searchQuery, showOnlyUsers, selectedUserId])
 
     useEffect(() => {
         if (props.currentPatientData) {
@@ -183,31 +186,55 @@ const AppointmentsList = (props) => {
 
             <div className='mx-auto my-3 component-big'>
                 <h2 className='text-center mt-4 mb-4'>Appointments</h2>
-                    <Form>
+                <div className='buttons-container flex-nowrap'>
+                    <Form className='mx-2'>
                         <Form.Check 
-                            defaultValue={showOnlyMine}
+                            defaultValue={showOnlyUsers}
                             type="switch"
                             id="custom-switch"
-                            label="Show only my appointments"
-                            onChange={()=>{setShowOnlyMine(!showOnlyMine)}}
+                            label="Filter Appointments"
+                            onChange={(e)=>{setShowOnlyUsers(e.target.checked)}}
                             className="custom-filter-switch"
                         />
                     </Form>
-                    <Form className='my-4' onSubmit={e => {e.preventDefault()}}>
-                        <div className="d-flex">                      
-                                <Form.Control 
-                                className="col"
-                                type="search" 
-                                placeholder="Search by title..." 
-                                onChange={(e) => {    
-                                    setSearchQuery(e.target.value);                                            
-                                }}/>
+                    <Select
+                            styles={{
+                                control: (baseStyles, state) => ({
+                                ...baseStyles,
                                 
-                                <Button  className="custom-new-button" variant="secondary" onClick={toggleNewAppointmentModal}>
-                                    New Appointment
-                                </Button>       
-                        </div>               
-                    </Form>   
+                                }),
+                                menu: (baseStyles) => ({
+                                ...baseStyles, 
+                                zIndex: 9999
+                                })
+                            }
+                            }                            
+                            options={usersData}          
+                            defaultValue={usersData.find((user) => user.id === auth.userObj.id)}
+                            getOptionLabel={(option)=>option.name}
+                            getOptionValue={(option)=>option.id}                    
+                            onChange={(option) => {
+                                setSelectedUserId(option.id);
+                            }}
+                        >
+                    </Select> 
+                </div>
+                
+                <Form className='my-4' onSubmit={e => {e.preventDefault()}}>
+                    <div className="d-flex">                      
+                            <Form.Control 
+                            className="col"
+                            type="search" 
+                            placeholder="Search by title..." 
+                            onChange={(e) => {    
+                                setSearchQuery(e.target.value);                                            
+                            }}/>
+                            
+                            <Button  className="custom-new-button" variant="secondary" onClick={toggleNewAppointmentModal}>
+                                New Appointment
+                            </Button>       
+                    </div>               
+                </Form>   
                                  
                 <div className='table-container mb-5'>                
                     <Table>

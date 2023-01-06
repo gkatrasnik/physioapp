@@ -27,6 +27,13 @@ const NewSymptomModal = (props) => {
         setBodypartId(null);
     }
 
+    const handleClose = () => {
+        props.toggleModal();
+        setName("");
+        setIntensity(0);
+        setDuration("");
+        setBodypartId(1); 
+    }
 
     const addSymptom = async () => {  
         setLoading(true);       
@@ -63,12 +70,12 @@ const NewSymptomModal = (props) => {
     return (        
         <>
         {loading && <LoadingModal />}
-        <Modal centered backdrop="static" show={props.show} onHide={props.toggleModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={handleClose}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Add New Symptom</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form disabled={true} onSubmit={handleNewSymptom} >
+            <Form disabled={true}>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Symptom</Form.Label>
                 <Form.Control
@@ -126,10 +133,10 @@ const NewSymptomModal = (props) => {
                 </Select>                          
                 </Form.Group>
                 <div className='buttons-container'>
-                    <Button className="m-2" variant="secondary" type="submit">
+                    <Button className="m-2" variant="secondary" onClick={handleNewSymptom}>
                         Add Symptom
                     </Button>
-                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={props.toggleModal}>
+                    <Button className="ms-2 my-2" variant="outline-secondary" onClick={handleClose}>
                         Close
                     </Button>     
                 </div>

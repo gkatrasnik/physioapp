@@ -118,7 +118,6 @@
             if (filterEvents) { // if switch is turned ON
                 const newArr =  eventList.filter((event) => {
                     //if event user_id = selected user, push to cloned arr
-                    console.log("event userid: ", event.user_id, " , selecteduserid: ", selectedUserId)
                     return event.user_id === selectedUserId;
                 })
                 
@@ -170,16 +169,22 @@
                                 type="switch"
                                 id="custom-switch"
                                 label="Filter Appointments"
-                                onChange={()=>{setFilterEvents(!filterEvents)}}
+                                onChange={(e)=>{setFilterEvents(e.target.checked)}}
                                 className="custom-filter-switch"
                             />
                         </Form>   
                         <Select
                             styles={{
                                 control: (baseStyles, state) => ({
-                                ...baseStyles
+                                ...baseStyles,
+                                
                                 }),
-                            }}
+                                menu: (baseStyles) => ({
+                                 ...baseStyles, 
+                                 zIndex: 9999
+                                })
+                            }
+                            }                            
                             options={usersData}          
                             defaultValue={usersData.find((user) => user.id === auth.userObj.id)}
                             getOptionLabel={(option)=>option.name}

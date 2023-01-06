@@ -55,7 +55,9 @@ const IssueList = (props) => {
                         type="switch"
                         id="custom-switch"
                         label="Show only not resolved issues"
-                        onChange={props.toggleFilterIssues}
+                        onChange={(e) => {
+                            props.toggleFilterIssues(e.target.checked);
+                        }}
                         className="custom-filter-switch"
                     />
                 </Form>

@@ -114,12 +114,12 @@ const InterventionModal = (props) => {
             cancelCallback={toggleConfirmDelete}
         />
 
-        <Modal centered backdrop="static" show={props.show} onHide={props.hideModal}>
+        <Modal centered backdrop="static" show={props.show} onHide={handleClose}>
             <Modal.Header className="py-2" closeButton>
             <Modal.Title className='text-center'>Intervention</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form onSubmit={handleUpdateIntervention}>
+            <Form>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Treatment</Form.Label>
                 <Form.Control
@@ -184,7 +184,7 @@ const InterventionModal = (props) => {
                             <Button className="m-2 mr-5" variant="danger" onClick={toggleConfirmDelete}>
                                 Delete
                             </Button>   
-                            <Button  className="m-2" variant="secondary" type="submit">
+                            <Button  className="m-2" variant="secondary" onClick={handleUpdateIntervention}>
                                 Save
                             </Button>                             
                         </> :                

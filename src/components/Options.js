@@ -47,8 +47,7 @@ const Options = () => {
                     <Card.Title className='text-center'><h1>Options</h1></Card.Title>                    
                     <Link onClick={handleShowUserInfoModal} className="options-link"><Person/><p>My Info</p></Link>
                     {auth.userObj.org_admin && <Link onClick={handleShowManageOrgModal} className="options-link"><Building/><p>Manage Organization</p></Link>}
-                    <Link onClick={auth.logout} className="options-link"><BoxArrowLeft/><p>Logout</p></Link>          
-                        
+                    <Link onClick={auth.logout} className="options-link"><BoxArrowLeft/><p>Logout</p></Link>                        
                 </Card.Body>      
                 </Card>                          
             </Container>

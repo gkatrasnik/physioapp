@@ -72,7 +72,7 @@ const NewPatientModal = (props) => {
             <Modal.Title className='text-center'>Add New Patient</Modal.Title>
             </Modal.Header>
             <Modal.Body className="py-2">
-            <Form onSubmit={handleNewPatient}>
+            <Form >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
@@ -155,7 +155,7 @@ const NewPatientModal = (props) => {
                 />                
                 </Form.Group>
                 <div className='buttons-container'>                    
-                    <Button className="m-2" variant="secondary" type="submit">
+                    <Button className="m-2" variant="secondary" onClick={handleNewPatient}>
                         Add Patient
                     </Button>
                     <Button className="ms-2 my-2" variant="outline-secondary" onClick={props.handleToggleModal}>
