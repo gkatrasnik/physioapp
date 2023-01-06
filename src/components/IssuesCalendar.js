@@ -5,6 +5,8 @@
     import { useNavigate } from 'react-router-dom';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
+    import 'moment/locale/en-gb'; 
+
 
     
     const IssuesCalendar = (props) => {

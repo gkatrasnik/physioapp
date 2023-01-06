@@ -12,7 +12,7 @@ import Select from 'react-select';
 const NewAppointmentModal = (props) => {
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
-    const [patientId, setPatientId] = useState(1);
+    const [patientId, setPatientId] = useState(null);
     const [title, setTitle] = useState("");
     const [patientFieldDisabled, setPatientFieldDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -30,6 +30,10 @@ const NewAppointmentModal = (props) => {
         if (!patientId) {
             return alert("Please choose a patient");
         }
+
+        if (!title) {
+            return alert('Please add appointment title');
+        }
        
         addAppointment();
         handleClose();
@@ -40,7 +44,7 @@ const NewAppointmentModal = (props) => {
         setDurationM("0");
         setStart(null);
         setEnd(null);
-        setPatientId(props.currentPatientData ? props.currentPatientData.id : 1);  
+        setPatientId(props.currentPatientData ? props.currentPatientData.id : null);  
         setTitle("");       
     }
 
@@ -111,8 +115,7 @@ const NewAppointmentModal = (props) => {
             <Form>
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Start</Form.Label>
-                <Form.Control
-                    required
+                <Form.Control                    
                     defaultValue={moment(start).format("YYYY-MM-DDTHH:mm")}
                     type="datetime-local"                    
                     onChange={(e) => {
@@ -125,8 +128,7 @@ const NewAppointmentModal = (props) => {
                 <Form.Label>Duration (min)</Form.Label>
                 <div className="d-flex duration-picker">
                 
-                <Form.Control
-                    required
+                <Form.Control                    
                     type="number"
                     min="0"                    
                     defaultValue={durationM}                    
@@ -177,7 +179,7 @@ const NewAppointmentModal = (props) => {
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput5">
                 <Form.Label>Title</Form.Label>
-                <Form.Control
+                <Form.Control                    
                     type="text"
                     defaultValue={title}
                     onChange={(e) => {

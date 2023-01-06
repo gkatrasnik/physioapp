@@ -110,9 +110,13 @@ const AppointmentModal = (props) => {
         return url.includes("/profile")
     }
 
-    const handleUpdatePatient = () => {
+    const handleUpdateAppointment = () => {
         if (!start || !end || start >= end) {
             return alert('Please adjust "From" and "To" dates');
+        }
+
+        if (!title) {
+            return alert('Please add appointment title');
         }
 
         updateAppointment();        
@@ -158,8 +162,7 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                 <Form.Label>Start</Form.Label>
                 <Form.Control
-                    disabled={!editing}
-                    required
+                    disabled={!editing}                    
                     defaultValue={moment(start).format("YYYY-MM-DDTHH:mm")}
                     type="datetime-local"                
                     onChange={(e) => {
@@ -171,8 +174,7 @@ const AppointmentModal = (props) => {
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>To</Form.Label>
                 <Form.Control
-                    disabled={!editing}
-                    required
+                    disabled={!editing}                    
                     defaultValue={moment(end).format("YYYY-MM-DDTHH:mm")}
                     type="datetime-local"                   
                     onChange={(e) => {
@@ -223,7 +225,7 @@ const AppointmentModal = (props) => {
 
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                 <Form.Label>Title</Form.Label>
-                <Form.Control
+                <Form.Control                    
                     disabled={!editing}
                     type="text"
                     defaultValue={title}
@@ -239,7 +241,7 @@ const AppointmentModal = (props) => {
                         Delete
                     </Button> 
 
-                    <Button className="m-2" variant="secondary" onClick={handleUpdatePatient}>
+                    <Button className="m-2" variant="secondary" onClick={handleUpdateAppointment}>
                         Save
                     </Button> 
                     </> :

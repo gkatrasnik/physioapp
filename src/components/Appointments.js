@@ -7,13 +7,14 @@
     import { supabase } from '../supabase';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
+    import 'moment/locale/en-gb'; 
     import LoadingModal from "./modals/LoadingModal";
     import Select from 'react-select';
     import NewAppointmentModal from './modals/NewAppointmentModal';
     import AppointmentModal from './modals/AppointmentModal';
     
     const Appointments = () => {
-        const auth = useAuth();
+        const auth = useAuth();        
         const localizer = momentLocalizer(moment)
         const [eventList, setEventList] = useState([]);
         const [filteredEventList, setFilteredEventList] = useState([]);
@@ -54,7 +55,8 @@
             let backgroundColor = event.user_id === auth.userObj.id ? "#0272EC" :"#6c757d";//"#0051ff" : "00caff";            
             let style = {
                 backgroundColor: backgroundColor,                               
-                color: "white",             
+                color: "white",      
+                fontSize: 13       
             };
             return {
                 style: style
@@ -222,7 +224,7 @@
                         localizer={localizer}
                         events={filteredEventList}
                         startAccessor="start"
-                        endAccessor="end"
+                        endAccessor="end"                        
                         style={{ height: 500 }}
                         onSelectEvent={handleSelectEvent}
                         onSelectSlot={handleSelectSlot}
