@@ -111,7 +111,7 @@ const NewAppointmentModal = (props) => {
             <Modal.Body className="py-2">
             <Form disabled={true} onSubmit={handleNewAppointment} >
                 <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
-                <Form.Label>From</Form.Label>
+                <Form.Label>Start</Form.Label>
                 <Form.Control
                     required
                     defaultValue={moment(start).format("YYYY-MM-DDTHH:mm")}

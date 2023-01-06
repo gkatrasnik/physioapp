@@ -159,6 +159,11 @@
             <Layout>
                 <Container className="min-h-100-without-navbar">
                     <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Appointments</h1> 
+                    <div className='buttons-container'>
+                        <Button  className="ms-2 my-2" variant="secondary" onClick={toggleNewAppointmentModal}>
+                                New Appointment
+                        </Button>
+                    </div>
                     <Form>
                         <Form.Check 
                             checked={filterEvents}
@@ -168,12 +173,7 @@
                             onChange={()=>{setFilterEvents(!filterEvents)}}
                             className="custom-filter-switch"
                         />
-                    </Form>
-                    <div className='buttons-container'>
-                        <Button  className="ms-2 my-2" variant="secondary" onClick={toggleNewAppointmentModal}>
-                                New Appointment
-                        </Button>
-                    </div>
+                    </Form>                    
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
                         patientsData={patientsData}
@@ -192,7 +192,7 @@
                         getEvents={getEvents}       
                     />
                     
-                    <div className='my-5'>
+                    <div className='my-3'>
                         <Calendar
                         localizer={localizer}
                         events={filteredEventList}
