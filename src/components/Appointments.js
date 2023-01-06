@@ -25,7 +25,7 @@
         const [loading, setLoading] = useState(false);
         const [filterEvents, setFilterEvents] = useState(false);
         const [usersData, setUsersData] = useState([]);
-
+        const [selectedUserId, setSelectedUserId] = useState(null);
 
         
         const handleSelectSlot = (slot) => {
@@ -117,8 +117,8 @@
         const filterEventList = async() => {
             if (filterEvents) { // if switch is turned ON
                 const newArr =  eventList.filter((event) => {
-                    //if event user_id = me, push to cloned arr
-                    return event.user_id === auth.userObj.id;
+                    //if event user_id = selected user, push to cloned arr
+                    return event.user_id === selectedUserId;
                 })
                 setFilteredEventList(newArr);
 
@@ -132,6 +132,7 @@
             getPatients(); 
             getEvents();
             getUsers();
+            setSelectedUserId(auth.userObj.id)
         }, [])    
         
         useEffect(()=>{
@@ -160,6 +161,21 @@
                 <Container className="min-h-100-without-navbar">
                     <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Appointments</h1> 
                     <div className='buttons-container'>
+                            <Select
+                            styles={{
+                                control: (baseStyles, state) => ({
+                                ...baseStyles
+                                }),
+                            }}
+                            options={usersData}          
+                            defaultValue={usersData.find((user) => user.id === auth.userObj.id)}
+                            getOptionLabel={(option)=>option.name}
+                            getOptionValue={(option)=>option.id}                    
+                            onChange={(option) => {
+                                setSelectedUserId(option.id);
+                            }}
+                        >
+                        </Select>  
                         <Button  className="ms-2 my-2" variant="secondary" onClick={toggleNewAppointmentModal}>
                                 New Appointment
                         </Button>

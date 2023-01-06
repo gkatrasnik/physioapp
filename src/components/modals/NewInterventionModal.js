@@ -88,8 +88,7 @@ const NewInterventionModal = (props) => {
                 <Select
                     styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderRadius: 0,
+                        ...baseStyles
                         }),
                     }}
                     options={props.usersData}                    

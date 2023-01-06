@@ -186,8 +186,7 @@ const AppointmentModal = (props) => {
                 <Select
                     styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderRadius: 0,
+                        ...baseStyles
                         }),
                     }}
                     options={props.patientsData}                    
@@ -207,8 +206,7 @@ const AppointmentModal = (props) => {
                 <Select
                     styles={{
                         control: (baseStyles, state) => ({
-                        ...baseStyles,
-                        borderRadius: 0,
+                        ...baseStyles
                         }),
                     }}
                     options={props.usersData}                    
