@@ -44,7 +44,7 @@ const PatientSearchView = () => {
             alert(queryData.error.message);
         } else {
             setLoading(false);
-            queryData.data.forEach(patient => patient.birthdate = moment(patient.birthdate).toDate())
+            queryData.data.forEach(patient => patient.birthdate ? patient.birthdate = moment(patient.birthdate).toDate() : null)
             setPatientsData(queryData.data); 
         }
                       
@@ -115,9 +115,9 @@ const PatientSearchView = () => {
                         {filteredPatients && filteredPatients.length ? filteredPatients.map((patient, index) => {
                             return (
                                 <tr key={index} onClick={()=>{toPatientProfile(patient)}}>
-                                <td>{patient.id}</td>
-                                <td>{patient.name}</td>
-                                <td>{patient.birthdate.toLocaleDateString("sl")}</td>
+                                    <td>{patient.id}</td>
+                                    <td>{patient.name}</td>
+                                    <td>{patient.birthdate ? patient.birthdate.toLocaleDateString("sl") : "No Data"}</td>
                                 </tr>
                                 )
                             }):                     
