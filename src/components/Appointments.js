@@ -118,8 +118,10 @@
             if (filterEvents) { // if switch is turned ON
                 const newArr =  eventList.filter((event) => {
                     //if event user_id = selected user, push to cloned arr
+                    console.log("event userid: ", event.user_id, " , selecteduserid: ", selectedUserId)
                     return event.user_id === selectedUserId;
                 })
+                
                 setFilteredEventList(newArr);
 
             } else { //if switch turned OFF
@@ -133,6 +135,7 @@
             getEvents();
             getUsers();
             setSelectedUserId(auth.userObj.id)
+            console.log("useeffect load, auth user onj id", auth.userObj.id)
         }, [])    
         
         useEffect(()=>{
@@ -147,10 +150,10 @@
           }
         }, [selectedSlot])
 
-        //in event change or switch change filter events
+        //in event change or switch change, or selected user switch filter events
         useEffect(() => {
           filterEventList();
-        }, [filterEvents, eventList])
+        }, [filterEvents, eventList, selectedUserId])
         
     
         return (
