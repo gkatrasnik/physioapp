@@ -164,7 +164,17 @@
                 <Container className="min-h-100-without-navbar">
                     <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Appointments</h1> 
                     <div className='buttons-container'>
-                            <Select
+                        <Form>
+                            <Form.Check 
+                                checked={filterEvents}
+                                type="switch"
+                                id="custom-switch"
+                                label="Filter Appointments"
+                                onChange={()=>{setFilterEvents(!filterEvents)}}
+                                className="custom-filter-switch"
+                            />
+                        </Form>   
+                        <Select
                             styles={{
                                 control: (baseStyles, state) => ({
                                 ...baseStyles
@@ -183,16 +193,7 @@
                                 New Appointment
                         </Button>
                     </div>
-                    <Form>
-                        <Form.Check 
-                            checked={filterEvents}
-                            type="switch"
-                            id="custom-switch"
-                            label="Show only my appointments"
-                            onChange={()=>{setFilterEvents(!filterEvents)}}
-                            className="custom-filter-switch"
-                        />
-                    </Form>                    
+                                     
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
                         patientsData={patientsData}
