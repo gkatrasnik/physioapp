@@ -82,8 +82,7 @@ const IssueList = (props) => {
                 <div className='table-container mx-n2'>                
                     <Table>
                         <thead>                            
-                            <tr>
-                            <th>Id</th>
+                            <tr>                            
                             <th>Issue</th>
                             <th>From</th>
                             <th>To</th>
@@ -95,8 +94,7 @@ const IssueList = (props) => {
                         <tbody className='cursor-pointer'>                                                        
                         {filteredIssuesData && filteredIssuesData.length ? filteredIssuesData.map((issue, index) => {
                             return (
-                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.end ?'table-success' : 'table-warning'}>
-                                <td>{issue.id}</td>
+                                <tr key={index} onClick={()=>{toIssueView(issue)}} className={issue.end ?'table-success' : 'table-warning'}>                                
                                 <td>{issue.name}</td>
                                 <td>{issue.start ? moment(issue.start).toDate().toLocaleDateString("sl") : ""}</td>
                                 <td>{issue.end ? moment(issue.end).toDate().toLocaleDateString("sl") : ""}</td>
@@ -106,8 +104,8 @@ const IssueList = (props) => {
                                 )
                             }):                     
                                 <tr>
-                                    <td colSpan={6}>
-                                        No results
+                                    <td colSpan={5}>
+                                        No Issues
                                     </td>                               
                                 </tr>
                         }   

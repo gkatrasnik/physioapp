@@ -118,15 +118,14 @@ const SymptomsList = (props) => {
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center mt-4 mb-4'>Symptoms</h2>
                 <div className='buttons-container'>
-                    <Button  className="ms-2 my-2" variant="secondary" type="submit" onClick={toggleNewSymptomModal}>
+                    <Button  className="ms-2 my-2" variant="secondary" onClick={toggleNewSymptomModal}>
                             New Symptom
                     </Button>
                 </div>
                 <div className='table-container mb-5'>  
                     <Table striped hover>
                         <thead>
-                            <tr>
-                            <th>Id</th>
+                            <tr>                            
                             <th>Symptom</th>
                             <th>Date</th>
                             <th>Duration</th>
@@ -138,8 +137,7 @@ const SymptomsList = (props) => {
                         <tbody className='cursor-pointer'>                        
                             {symptomsData.length ? symptomsData.map((symptom, index) => {
                                 return (
-                                    <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>
-                                    <td>{symptom.id}</td>
+                                    <tr key={index} onClick={()=>{showUpdateSymptomModal(symptom)}}>                                    
                                     <td>{symptom.name}</td>
                                     <td>{moment(symptom.created_at).toDate().toLocaleDateString("sl")}</td>
                                     <td>{symptom.duration}</td>
@@ -149,7 +147,7 @@ const SymptomsList = (props) => {
                                 )
                             }):                     
                                 <tr>
-                                    <td colSpan={6}>
+                                    <td colSpan={5}>
                                         No Symptoms
                                     </td>                               
                                 </tr>

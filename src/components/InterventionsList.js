@@ -113,15 +113,14 @@ const InterventionsList = (props) => {
             <div className="my-3 mx-auto component-big">
                 <h2 className='text-center mt-4 mb-4'>Interventions</h2>
                 <div className='buttons-container'>
-                    <Button  className="ms-2 my-2" variant="secondary" type="submit" onClick={toggleNewInterventionModal}>
+                    <Button  className="ms-2 my-2" variant="secondary" onClick={toggleNewInterventionModal}>
                             New Intervention
                     </Button>
                 </div>
                 <div className='table-container mb-5'>  
                     <Table striped hover>
                         <thead>
-                            <tr>
-                            <th>Id</th>
+                            <tr>                            
                             <th>Intervention</th>
                             <th>Date</th>                    
                             <th>Duration</th>
@@ -134,7 +133,6 @@ const InterventionsList = (props) => {
                             {interventionsData.length ? interventionsData.map((intervention, index) => {
                                 return (
                                     <tr key={index} onClick={()=>{showUpdateInterventionModal(intervention)}}>
-                                    <td>{intervention.id}</td>
                                     <td>{intervention.treatment}</td>
                                     <td>{moment(intervention.created_at).toDate().toLocaleDateString("sl")}</td>
                                     <td>{intervention.duration}</td>
@@ -144,7 +142,7 @@ const InterventionsList = (props) => {
                                 )
                             }):                     
                                 <tr>
-                                    <td colSpan={6}>
+                                    <td colSpan={5}>
                                         No Interventions
                                     </td>                               
                                 </tr>

@@ -104,8 +104,7 @@ const PatientSearchView = () => {
                 <div className='table-container mb-5'>                
                     <Table hover>
                         <thead>
-                            <tr>
-                            <th>Patient Id</th>
+                            <tr>                            
                             <th>Name</th>
                             <th>Birth Date</th>
                             </tr>
@@ -115,14 +114,13 @@ const PatientSearchView = () => {
                         {filteredPatients && filteredPatients.length ? filteredPatients.map((patient, index) => {
                             return (
                                 <tr key={index} onClick={()=>{toPatientProfile(patient)}}>
-                                    <td>{patient.id}</td>
                                     <td>{patient.name}</td>
                                     <td>{patient.birthdate ? patient.birthdate.toLocaleDateString("sl") : "No Data"}</td>
                                 </tr>
                                 )
                             }):                     
                                 <tr>
-                                    <td colSpan={3}>
+                                    <td colSpan={2}>
                                         No results
                                     </td>                               
                                 </tr>

@@ -213,7 +213,6 @@ const AppointmentsList = (props) => {
                     <Table>
                         <thead>                            
                             <tr>
-                            <th>Id</th>
                             <th>Title</th>                            
                             <th>Date</th>
                             <th>Duration</th>  
@@ -225,7 +224,6 @@ const AppointmentsList = (props) => {
                         {filteredEventsList && filteredEventsList.length ? filteredEventsList.map((event, index) => {
                             return (
                                 <tr key={index}  className={isEventPast(event.end) ? 'event-past' : 'event-future'} onClick={() => {setCurrentEvent(event)}}>
-                                <td>{event.id}</td>
                                 <td>{event.title}</td>                             
                                 <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
                                 <td>{getDuration(event.start, event.end) + ' min'}</td>
@@ -234,8 +232,8 @@ const AppointmentsList = (props) => {
                                 )
                             }):                     
                                 <tr>
-                                    <td colSpan={5}>
-                                        No results
+                                    <td colSpan={4}>
+                                        No Appointments
                                     </td>                               
                                 </tr>
                         }   

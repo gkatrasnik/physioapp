@@ -3,7 +3,7 @@
     import React, {useState, useEffect} from 'react';
     import Layout from "./Layout";
     import {useAuth} from "../auth";
-    import { Container, Form } from 'react-bootstrap';
+    import { Container, Form, Button } from 'react-bootstrap';
     import { supabase } from '../supabase';
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
@@ -169,6 +169,11 @@
                             className="custom-filter-switch"
                         />
                     </Form>
+                    <div className='buttons-container'>
+                        <Button  className="ms-2 my-2" variant="secondary" onClick={toggleNewAppointmentModal}>
+                                New Appointment
+                        </Button>
+                    </div>
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
                         patientsData={patientsData}
