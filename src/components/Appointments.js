@@ -164,7 +164,7 @@
                 <Container className="min-h-100-without-navbar">
                     <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Appointments</h1> 
                     <div className='buttons-container'>
-                        <Form>
+                        <Form className="mx-2">
                             <Form.Check 
                                 checked={filterEvents}
                                 type="switch"
