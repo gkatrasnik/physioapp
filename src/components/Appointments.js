@@ -8,7 +8,7 @@
     import { Calendar, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
     import LoadingModal from "./modals/LoadingModal";
-
+    import Select from 'react-select';
     import NewAppointmentModal from './modals/NewAppointmentModal';
     import AppointmentModal from './modals/AppointmentModal';
     
