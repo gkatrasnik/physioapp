@@ -3,29 +3,29 @@ import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { Button, Table, Form} from "react-bootstrap";
 import moment from 'moment';
-import { useAuth } from '../auth';
+import { useAuth } from '../contexts/auth';
+import { useAppData } from '../contexts/appDataContext';
 import NewAppointmentModal from './modals/NewAppointmentModal';
 import AppointmentModal from './modals/AppointmentModal';
 import LoadingModal from "./modals/LoadingModal"
-import { Link } from 'react-router-dom';
 import Select from 'react-select';
 
 
 
 const AppointmentsList = (props) => {
     const auth = useAuth();
+    const appData = useAppData();
 
     const [eventsList, setEventsList] = useState([]);
     const [showAppointmentModal, setShowAppointmentModal] = useState(false);
     const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
     const [currentEvent, setCurrentEvent] = useState(null);
     const [patientsData, setPatientsData] = useState([]);
-    const [usersData, setUsersData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredEventsList, setFilteredEventsList] = useState([]);
     const [showOnlyUsers, setShowOnlyUsers] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [selectedUserId, setSelectedUserId] = useState(null);
+    const [selectedUserId, setSelectedUserId] = useState(auth.userObj.id);
 
 
     const getEvents = async () => {
@@ -77,26 +77,8 @@ const AppointmentsList = (props) => {
         setCurrentEvent(null);
     }
 
-     //therapsis data
-    const getUsers = async () => {  
-        setLoading(true); 
-        const queryData = await supabase
-            .from('users')
-            .select()
-            .eq("rec_deleted", false)
-            .eq("active", true)
-        if (queryData.error) {
-            setLoading(false); 
-            alert(queryData.error.message);
-        } else {
-            setLoading(false); 
-            setUsersData(queryData.data);     
-        }
-                  
-    }
-
     const getUserName = (userId) => {
-        const userObj = usersData.find(user => user.id === userId);
+        const userObj = appData.orgUsers.find(user => user.id === userId);
         return userObj ? userObj.name : "Unknown";
     }
 
@@ -153,7 +135,6 @@ const AppointmentsList = (props) => {
         if (props.currentPatientData) {
             getEvents();
             getPatients();
-            getUsers();
         }      
     }, [props.currentPatientData])
 
@@ -164,13 +145,13 @@ const AppointmentsList = (props) => {
     }, [currentEvent])   
     
     
+    
     return (
         <>
             {loading && <LoadingModal />}  
             <NewAppointmentModal 
                 currentPatientData={props.currentPatientData}
                 patientsData={patientsData}
-                usersData={usersData}
                 show={showNewAppointmentModal} 
                 toggleModal={toggleNewAppointmentModal} 
                 getEvents={getEvents}                                       
@@ -179,7 +160,6 @@ const AppointmentsList = (props) => {
             <AppointmentModal                
                 currentEvent={currentEvent}
                 patientsData={patientsData}
-                usersData={usersData}  
                 show={showAppointmentModal}
                 hideAppointmentModal={hideAppointmentModal}                
                 getEvents={getEvents}                     
@@ -210,8 +190,8 @@ const AppointmentsList = (props) => {
                                 })
                             }
                             }                            
-                            options={usersData}          
-                            value={usersData.find((user) => user.id === auth.userObj.id)}
+                            options={appData.orgUsers}          
+                            defaultValue={appData.orgUsers.find((user) => user.id === selectedUserId)}
                             getOptionLabel={(option)=>option.name}
                             getOptionValue={(option)=>option.id}                    
                             onChange={(option) => {
@@ -255,7 +235,7 @@ const AppointmentsList = (props) => {
                                 <td>{event.title}</td>                             
                                 <td>{moment(event.start).format("DD-MM-YYYY HH:mm")}</td>
                                 <td>{getDuration(event.start, event.end) + ' min'}</td>
-                                <td>{usersData && getUserName(event.user_id)}</td>
+                                <td>{appData.orgUsers && getUserName(event.user_id)}</td>
                                 </tr>
                                 )
                             }):                     

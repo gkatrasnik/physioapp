@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import { Button, Table} from "react-bootstrap";
+import { useAppData } from '../contexts/appDataContext';
 import SymptomModal from './modals/SymptomModal';
 import NewSymptomModal from './modals/NewSymptomModal';
 import moment from 'moment'
@@ -11,10 +12,11 @@ import BodyPicture from './BodyPicture';
 
 
 const SymptomsList = (props) => {
+    const appData = useAppData();
+
     const [showSymptomModal, setShowSymptomModal] = useState(false);
     const [showNewSymptomModal, setShowNewSymptomModal] = useState(false);
     const [symptomsData, setSymptomsData] = useState([]);  
-    const [bodypartsData, setBodypartsData] = useState([]);  
     const [currentSymptomData, setCurrentSymptomData] = useState(null);
     const [loading, setLoading] = useState(false);
 
@@ -51,31 +53,12 @@ const SymptomsList = (props) => {
         }     
     }
 
-    const getBodypartsData = async() => {
-        setLoading(true); 
-        const queryData = await supabase
-            .from('bodyparts')
-            .select()    
-            .eq('rec_deleted', false)      
-
-        if (queryData.error) {
-            setLoading(false); 
-            alert(queryData.error.message);
-        } else {
-            setLoading(false); 
-            const arr = queryData.data.map((bodypart) => {
-                bodypart.label = bodypart.body_side ? bodypart.body_side + " " + bodypart.name : bodypart.name
-                return bodypart
-            })
-            setBodypartsData(arr);
-        }     
-    }
 
     const getBodypartName = (bodypartId) => {
-        if (!bodypartsData.length) {
+        if (!appData.bodyParts.length) {
             return "No data"; 
         }
-        const bodypartObj = bodypartsData.find(bodypart => bodypart.id === bodypartId);
+        const bodypartObj = appData.bodyParts.find(bodypart => bodypart.id === bodypartId);
         return bodypartObj  ? (bodypartObj.body_side || "") + " "+ bodypartObj.name : "No data";
     }
 
@@ -84,7 +67,6 @@ const SymptomsList = (props) => {
     useEffect(() => {
         if(props.issueData) {
             getSymptomsData();
-            getBodypartsData();
         }      
     }, [props.issueData])
 
@@ -104,7 +86,6 @@ const SymptomsList = (props) => {
                 hideModal={hideUpdateSymptomModal}   
                 issueData = {props.issueData}    
                 symptomData = {currentSymptomData}
-                bodypartsData={bodypartsData}
                 getSymptomsData = {getSymptomsData}
             />       
 
@@ -112,7 +93,6 @@ const SymptomsList = (props) => {
                 show={showNewSymptomModal} 
                 toggleModal={toggleNewSymptomModal}   
                 issueData = {props.issueData}
-                bodypartsData={bodypartsData}    
                 getSymptomsData = {getSymptomsData}
             />
             <div className="my-3 mx-auto component-big">
@@ -157,7 +137,6 @@ const SymptomsList = (props) => {
                 </div>  
             </div>         
             <BodyPicture
-                bodypartsData={bodypartsData}
                 symptomsData={symptomsData}
                 activeTab={props.activeTab}
             />

@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useAuth } from '../../auth';
+import { useAuth } from '../../contexts/auth';
+import {useAppData} from "../../contexts/appDataContext";
 import moment from 'moment';
 import LoadingModal from "./LoadingModal"
 import Select from 'react-select';
@@ -10,6 +11,9 @@ import Select from 'react-select';
 
 
 const NewAppointmentModal = (props) => {
+    const auth = useAuth();
+    const appData = useAppData();
+    
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
     const [patientId, setPatientId] = useState(null);
@@ -20,7 +24,7 @@ const NewAppointmentModal = (props) => {
     const [therapistId, setTherapistId] = useState(null);
 
 
-    const auth = useAuth();
+    
 
     const handleNewAppointment = (e) => {
         e.preventDefault();
@@ -165,8 +169,8 @@ const NewAppointmentModal = (props) => {
                         ...baseStyles                        
                         }),
                     }}
-                    options={props.usersData}                    
-                    defaultValue={props.usersData.find((user) => user.id === therapistId)}
+                    options={appData.orgUsers}                    
+                    defaultValue={appData.orgUsers.find((user) => user.id === therapistId)}
                     isDisabled={false}
                     getOptionLabel={(option)=>option.name}
                     getOptionValue={(option)=>option.id}

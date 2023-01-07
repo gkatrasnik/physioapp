@@ -3,13 +3,17 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useAuth } from '../../auth';
+import { useAuth } from '../../contexts/auth';
+import { useAppData } from '../../contexts/appDataContext';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LoadingModal from "./LoadingModal"
 import Select from "react-select"
 
 
 const SymptomModal = (props) => {
+    const auth = useAuth();
+    const appData = useAppData();
+
     const [editing, setEditing] = useState(false);
     const [showConfirmDelete, setShowConfirmDelete] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -19,7 +23,7 @@ const SymptomModal = (props) => {
     const [duration, setDuration] = useState("");
     const [bodypartId, setBodypartId] = useState(0);    
     
-    const auth = useAuth();
+    
 
     const toggleConfirmDelete = () => {
         setShowConfirmDelete(!showConfirmDelete);
@@ -166,8 +170,8 @@ const SymptomModal = (props) => {
                         }),
                     }}
                     isDisabled={!editing}
-                    options={props.bodypartsData}          
-                    defaultValue={props.bodypartsData.find((bodypart) => bodypart.id === bodypartId)}
+                    options={appData.bodyParts}          
+                    defaultValue={appData.bodyParts.find((bodypart) => bodypart.id === bodypartId)}
                     getOptionLabel={(option)=>option.label}
                     getOptionValue={(option)=>option.id}                    
                     onChange={(option) => {

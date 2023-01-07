@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {useAuth} from "../auth";
+import {useAuth} from "../contexts/auth";
 import Layout from "./Layout";
 import { Container, Card, Button } from 'react-bootstrap';
 import LoadingModal from "./modals/LoadingModal"

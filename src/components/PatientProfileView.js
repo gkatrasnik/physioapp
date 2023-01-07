@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
 import { Container, Button, Form, Tab, Tabs } from 'react-bootstrap';
-import { useAuth } from '../auth';
+import { useAuth } from '../contexts/auth';
 import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
 import IssuesCalendar from './IssuesCalendar';

@@ -7,11 +7,15 @@ import moment from 'moment'
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import LoadingModal from "./LoadingModal"
 import Select from "react-select"
-import { useAuth } from '../../auth';
+import { useAuth } from '../../contexts/auth';
+import {useAppData} from "../../contexts/appDataContext";
+
 
 
 const AppointmentModal = (props) => {
-    
+    const auth = useAuth();
+    const appData = useAppData();
+
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
     const [patientId, setPatientId] = useState(null);
@@ -25,8 +29,7 @@ const AppointmentModal = (props) => {
 
 
     const navigate = useNavigate();
-    const auth = useAuth();
-
+    
 
     const toggleConfirmDelete = () => {
         setShowConfirmDelete(!showConfirmDelete);
@@ -211,8 +214,8 @@ const AppointmentModal = (props) => {
                         ...baseStyles
                         }),
                     }}
-                    options={props.usersData}                    
-                    defaultValue={props.usersData.find((user) => user.id === therapistId)}
+                    options={appData.orgUsers}                    
+                    defaultValue={appData.orgUsers.find((user) => user.id === therapistId)}
                     isDisabled={!editing}
                     getOptionLabel={(option)=>option.name}
                     getOptionValue={(option)=>option.id}

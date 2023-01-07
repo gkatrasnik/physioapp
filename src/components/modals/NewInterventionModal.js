@@ -2,20 +2,22 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useAuth } from '../../auth';
+import { useAuth } from '../../contexts/auth';
+import { useAppData } from '../../contexts/appDataContext';
 import LoadingModal from "./LoadingModal";
 import Select from 'react-select';
 
 
 const NewInterventionModal = (props) => {
+    const auth = useAuth();
+    const appData = useAppData();
+    
     const [treatment, setTreatment] = useState("");
     const [duration, setDuration] = useState("");
     const [notes, setNotes] = useState("");    
     const [loading, setLoading] = useState(false);
     const [therapistId, setTherapistId] = useState(null);
-
-
-    const auth = useAuth();
+    
 
     const handleNewIntervention = (e) => {
         e.preventDefault();
@@ -99,8 +101,8 @@ const NewInterventionModal = (props) => {
                         ...baseStyles
                         }),
                     }}
-                    options={props.usersData}                    
-                    defaultValue={props.usersData.find((user) => user.id === therapistId)}
+                    options={appData.orgUsers}                    
+                    defaultValue={appData.orgUsers.find((user) => user.id === therapistId)}
                     isDisabled={false}
                     getOptionLabel={(option)=>option.name}
                     getOptionValue={(option)=>option.id}

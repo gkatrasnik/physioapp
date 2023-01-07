@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { useNavigate } from "react-router-dom";
-import {useAuth} from "../../auth";
+import {useAuth} from "../../contexts/auth";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BoxArrowInUp, Key } from "react-bootstrap-icons";

@@ -2,7 +2,8 @@
 
     import React, {useState, useEffect} from 'react';
     import Layout from "./Layout";
-    import {useAuth} from "../auth";
+    import {useAuth} from "../contexts/auth";
+    import {useAppData} from "../contexts/appDataContext";
     import { Container, Form, Button } from 'react-bootstrap';
     import { supabase } from '../supabase';
     import { Calendar, Views, momentLocalizer } from 'react-big-calendar'
@@ -15,6 +16,8 @@
     
     const Appointments = () => {
         const auth = useAuth();        
+        const appData= useAppData();
+
         const localizer = momentLocalizer(moment)
         const [eventList, setEventList] = useState([]);
         const [filteredEventList, setFilteredEventList] = useState([]);
@@ -25,8 +28,7 @@
         const [selectedSlot, setSelectedSlot] = useState(null);
         const [loading, setLoading] = useState(false);
         const [filterEvents, setFilterEvents] = useState(true);
-        const [usersData, setUsersData] = useState([]);
-        const [selectedUserId, setSelectedUserId] = useState(null);
+        const [selectedUserId, setSelectedUserId] = useState(auth.userObj.id);
 
         
         const handleSelectSlot = (slot) => {
@@ -98,24 +100,6 @@
             setPatientsData(queryData.data);               
         }
 
-        //therapsis data
-        const getUsers = async () => {  
-            setLoading(true); 
-            const queryData = await supabase
-                .from('users')
-                .select()
-                .eq("rec_deleted", false)
-                .eq("active", true)
-            if (queryData.error) {
-                setLoading(false); 
-                alert(queryData.error.message);
-            } else {
-                setLoading(false); 
-                setUsersData(queryData.data);     
-            }
-                  
-        }
-
         //filter event list to only contain my events
         const filterEventList = async() => {
             if (filterEvents) { // if switch is turned ON
@@ -135,9 +119,6 @@
         useEffect(() => {
             getPatients(); 
             getEvents();
-            getUsers();
-            setSelectedUserId(auth.userObj.id)
-            console.log(usersData.find((user) => user.id === selectedUserId))
         }, [])    
         
         useEffect(()=>{
@@ -188,8 +169,8 @@
                                 })
                             }
                             }                            
-                            options={usersData}          
-                            value={usersData.find((user) => user.id === selectedUserId)}
+                            options={appData.orgUsers}          
+                            defaultValue={appData.orgUsers.find((user) => user.id === selectedUserId)}
                             getOptionLabel={(option)=>option.name}
                             getOptionValue={(option)=>option.id}                    
                             onChange={(option) => {
@@ -205,7 +186,6 @@
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
                         patientsData={patientsData}
-                        usersData={usersData}  
                         show={showNewAppointmentModal} 
                         toggleModal={toggleNewAppointmentModal} 
                         getEvents={getEvents}                    
@@ -213,7 +193,6 @@
     
                     <AppointmentModal
                         patientsData={patientsData}
-                        usersData={usersData}  
                         currentEvent={currentEvent}
                         hideAppointmentModal={hideAppointmentModal}
                         show={showAppointmentModal}

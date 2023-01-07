@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../auth';
+import { useAuth } from '../contexts/auth';
 import { ChevronLeft, House, People, CalendarWeek, ThreeDots   } from "react-bootstrap-icons";
 
 function Layout({children}) {

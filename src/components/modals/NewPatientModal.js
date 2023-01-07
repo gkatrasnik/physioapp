@@ -8,7 +8,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useAuth } from '../../auth';
+import { useAuth } from '../../contexts/auth';
 import LoadingModal from "./LoadingModal"
 
 

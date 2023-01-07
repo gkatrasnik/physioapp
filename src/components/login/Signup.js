@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { supabase } from '../../supabase';
 import { useNavigate } from "react-router-dom";
-import {useAuth} from "../../auth";
+import {useAuth} from "../../contexts/auth";
 import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BoxArrowInRight } from "react-bootstrap-icons";

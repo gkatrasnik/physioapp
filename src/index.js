@@ -6,7 +6,8 @@ import "./custom.scss";
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import {AuthProvider} from "./auth";
+import {AuthProvider} from "./contexts/auth";
+import {AppDataProvider} from "./contexts/appDataContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/login/Login";
 import Signup from './components/login/Signup';
@@ -23,15 +24,17 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   //<React.StrictMode>
     <AuthProvider>
+    <AppDataProvider>
         <BrowserRouter>
-            <Routes>                
-                <Route index element={<ProtectedRoute><Home/></ProtectedRoute>}/>
-                <Route path={"patients"} element={<ProtectedRoute><PatientSearchView/></ProtectedRoute>}/>
-                <Route path={"appointments"} element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
-                <Route path={"profile"} element={<ProtectedRoute><PatientProfileView/></ProtectedRoute>}/>
-                <Route path={"issue"} element={<ProtectedRoute><IssueView/></ProtectedRoute>}/>
-                <Route path={"options"} element={<ProtectedRoute><Options/></ProtectedRoute>}/>
-
+            <Routes>      
+                
+                    <Route index element={<ProtectedRoute><Home/></ProtectedRoute>}/>
+                    <Route path={"patients"} element={<ProtectedRoute><PatientSearchView/></ProtectedRoute>}/>
+                    <Route path={"appointments"} element={<ProtectedRoute><Appointments/></ProtectedRoute>}/>
+                    <Route path={"profile"} element={<ProtectedRoute><PatientProfileView/></ProtectedRoute>}/>
+                    <Route path={"issue"} element={<ProtectedRoute><IssueView/></ProtectedRoute>}/>
+                    <Route path={"options"} element={<ProtectedRoute><Options/></ProtectedRoute>}/>
+                
 
                 <Route path={"login"} element={<Login/>}/>
                 <Route path={"signup"} element={<Signup/>}/>          
@@ -41,6 +44,7 @@ root.render(
     />
             </Routes>
         </BrowserRouter>
+    </AppDataProvider>
     </AuthProvider>
     
  // </React.StrictMode>

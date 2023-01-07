@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { supabase } from '../../supabase';
-import {useAuth} from "../../auth";
+import {useAuth} from "../../contexts/auth";
 import { Form, Button, Modal } from "react-bootstrap";
 import LoadingModal from "./LoadingModal";
 

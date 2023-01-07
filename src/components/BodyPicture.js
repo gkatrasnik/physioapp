@@ -3,9 +3,12 @@
 // symptom intensity - red - 10, white - 0 
 
 import { useRef, useEffect, useState } from "react";
+import { useAppData } from "../contexts/appDataContext";
 import humanbody from '../assets/humanbody.png';
 
 const BodyPicture = (props) => {
+    const appData = useAppData();
+
     const bodyImage = useRef();
     const [symptomDivs, setSymptomDivs] = useState([]);
 
@@ -42,7 +45,7 @@ const BodyPicture = (props) => {
 
      const getBodypartCoordinates = (bodypartId) => {        
         let coordinates = [0,0];
-        const bodypartObj = props.bodypartsData.find(bodypart => bodypart.id === bodypartId);
+        const bodypartObj = appData.bodyParts.find(bodypart => bodypart.id === bodypartId);
         coordinates[0] = bodypartObj  ? bodypartObj.xcoordinate : null;
         coordinates[1] = bodypartObj  ? bodypartObj.ycoordinate : null;
         return coordinates

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../supabase';
 import Layout from "./Layout";
-import { useAuth } from '../auth';
+import { useAuth } from '../contexts/auth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Container, Button, Form, Tab, Tabs } from 'react-bootstrap';
 import SymptomsList from './SymptomsList';
@@ -27,6 +27,8 @@ const tabs = ["Info", "Symptoms", "Interventions"];
 
 const IssueView = () => {
     const auth = useAuth();
+
+    
     const location = useLocation();
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
