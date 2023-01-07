@@ -1,14 +1,17 @@
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../contexts/auth';
 import { ChevronLeft, House, People, CalendarWeek, ThreeDots   } from "react-bootstrap-icons";
 
 function Layout({children}) {
     const auth = useAuth();
     const navigate = useNavigate();
+    let location = useLocation();
+
     const [showBackBtn, setShowBackBtn] = useState(false);
+    const [currentLoc, setCurrentLoc] = useState(null);
 
     const goHome = () => {
       navigate("/");
@@ -32,6 +35,14 @@ function Layout({children}) {
     useEffect(() => {
       handleShowBackBtn();
     }, [])
+
+    //monitor current location and color nav btn
+    useEffect(() => {
+      console.log(location.pathname)
+      setCurrentLoc(location.pathname)
+    }, [location]);
+
+    
     
 
   return (
@@ -45,10 +56,10 @@ function Layout({children}) {
           
               
               <nav className="custom-navigation-nav">
-                <Link to={"/"} className="custom-navigation-item"><House/><p>Home</p></Link>
-                <Link to={"/patients"} className="custom-navigation-item"><People/><p>Patients</p></Link>
-                <Link to={"/appointments"} className="custom-navigation-item"><CalendarWeek/><p>Appointments</p></Link>
-                <Link to={"/options"} className="custom-navigation-item"><ThreeDots/><p>More</p></Link>                  
+                <Link to={"/"} className={"custom-navigation-item" + (currentLoc === "/" ? " active-url": "")}><House/><p>Home</p></Link>
+                <Link to={"/patients"} className={"custom-navigation-item" + ((["/patients", "/profile", "/issue"]).includes(currentLoc) ? " active-url": "")}><People/><p>Patients</p></Link>
+                <Link to={"/appointments"} className={"custom-navigation-item"+ (currentLoc === "/appointments" ? " active-url": "")}><CalendarWeek/><p>Appointments</p></Link>
+                <Link to={"/options"} className={"custom-navigation-item" + (currentLoc === "/options" ? " active-url": "")}><ThreeDots/><p>More</p></Link>                  
               </nav>            
             
           </Container>
