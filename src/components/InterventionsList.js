@@ -56,6 +56,7 @@ const InterventionsList = (props) => {
             .from('users')
             .select()
             .eq("rec_deleted", false)
+            .eq("active", true)
         if (queryData.error) {
             setLoading(false); 
             alert(queryData.error.message);

@@ -84,6 +84,7 @@ const AppointmentsList = (props) => {
             .from('users')
             .select()
             .eq("rec_deleted", false)
+            .eq("active", true)
         if (queryData.error) {
             setLoading(false); 
             alert(queryData.error.message);
@@ -210,7 +211,7 @@ const AppointmentsList = (props) => {
                             }
                             }                            
                             options={usersData}          
-                            defaultValue={usersData.find((user) => user.id === auth.userObj.id)}
+                            value={usersData.find((user) => user.id === auth.userObj.id)}
                             getOptionLabel={(option)=>option.name}
                             getOptionValue={(option)=>option.id}                    
                             onChange={(option) => {

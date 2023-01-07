@@ -5,7 +5,7 @@
     import {useAuth} from "../auth";
     import { Container, Form, Button } from 'react-bootstrap';
     import { supabase } from '../supabase';
-    import { Calendar, momentLocalizer } from 'react-big-calendar'
+    import { Calendar, Views, momentLocalizer } from 'react-big-calendar'
     import moment from 'moment'
     import 'moment/locale/en-gb'; 
     import LoadingModal from "./modals/LoadingModal";
@@ -24,7 +24,7 @@
         const [currentEvent, setCurrentEvent] = useState(null);
         const [selectedSlot, setSelectedSlot] = useState(null);
         const [loading, setLoading] = useState(false);
-        const [filterEvents, setFilterEvents] = useState(false);
+        const [filterEvents, setFilterEvents] = useState(true);
         const [usersData, setUsersData] = useState([]);
         const [selectedUserId, setSelectedUserId] = useState(null);
 
@@ -105,6 +105,7 @@
                 .from('users')
                 .select()
                 .eq("rec_deleted", false)
+                .eq("active", true)
             if (queryData.error) {
                 setLoading(false); 
                 alert(queryData.error.message);
@@ -136,7 +137,7 @@
             getEvents();
             getUsers();
             setSelectedUserId(auth.userObj.id)
-            console.log("useeffect load, auth user onj id", auth.userObj.id)
+            console.log(usersData.find((user) => user.id === selectedUserId))
         }, [])    
         
         useEffect(()=>{
@@ -188,7 +189,7 @@
                             }
                             }                            
                             options={usersData}          
-                            defaultValue={usersData.find((user) => user.id === auth.userObj.id)}
+                            value={usersData.find((user) => user.id === selectedUserId)}
                             getOptionLabel={(option)=>option.name}
                             getOptionValue={(option)=>option.id}                    
                             onChange={(option) => {
@@ -225,12 +226,13 @@
                         events={filteredEventList}
                         startAccessor="start"
                         endAccessor="end"                        
-                        style={{ height: 500 }}
+                        style={{ height: 600 }}
                         onSelectEvent={handleSelectEvent}
                         onSelectSlot={handleSelectSlot}
                         eventPropGetter={(eventStyleGetter)}
                         longPressThreshold={250} 
                         selectable
+                        defaultView={Views.WEEK}
                         />
                     </div>
                 </Container>                    

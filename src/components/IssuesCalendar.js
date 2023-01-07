@@ -34,7 +34,8 @@
             let backgroundColor = event.hasEnd ? "#d1e7dd" : "#fff3cd";
             let style = {
                 backgroundColor: backgroundColor,                              
-                color: "black"
+                color: "black",
+                fontSize: 13  
             };
             return {
                 style: style
@@ -89,7 +90,7 @@
                         events={calendarIssues}
                         startAccessor="start"
                         endAccessor="end"
-                        style={{ height: 500 }}
+                        style={{ height: 600 }}
                         titleAccessor="name"
                         onSelectEvent={handleSelectEvent}
                         eventPropGetter={(eventStyleGetter)}
