@@ -27,7 +27,6 @@ const tabs = ["Info", "Symptoms", "Interventions"];
 
 const IssueView = () => {
     const auth = useAuth();
-
     
     const location = useLocation();
     const navigate = useNavigate();
@@ -143,7 +142,7 @@ const IssueView = () => {
             setLoading(false);
             alert(queryData.error.message);
         } else {
-            setLoading(false);
+            setLoading(false);            
             navigate(-1);
         }
         

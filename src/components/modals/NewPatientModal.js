@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 import { supabase } from '../../supabase';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useAuth } from '../../contexts/auth';
+import { useAppData } from '../../contexts/appDataContext';
 import LoadingModal from "./LoadingModal"
 
 
@@ -24,6 +25,7 @@ const NewPatientModal = (props) => {
     const [occupation, setOccupation] = useState("");
     const [loading, setLoading] = useState(false);
     const auth = useAuth();
+    const appData = useAppData();
 
     const handleNewPatient = (e) => {
         e.preventDefault();
@@ -54,7 +56,7 @@ const NewPatientModal = (props) => {
             alert(queryData.error.message);            
         }else {
             setLoading(false); 
-            props.getPatients();
+            appData.getOrgPatients();
         }     
         
         

@@ -20,7 +20,6 @@ const AppointmentsList = (props) => {
     const [showAppointmentModal, setShowAppointmentModal] = useState(false);
     const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
     const [currentEvent, setCurrentEvent] = useState(null);
-    const [patientsData, setPatientsData] = useState([]);
     const [searchQuery, setSearchQuery] = useState("");
     const [filteredEventsList, setFilteredEventsList] = useState([]);
     const [showOnlyUsers, setShowOnlyUsers] = useState(false);
@@ -82,26 +81,7 @@ const AppointmentsList = (props) => {
         return userObj ? userObj.name : "Unknown";
     }
 
-
-    //patients data
-    const getPatients = async () => {  
-        setLoading(true); 
-        const queryData = await supabase
-            .from('patients')
-            .select()
-            .eq("rec_deleted", false)
-        if (queryData.error) {
-            setLoading(false); 
-            alert(queryData.error.message);
-        } else {
-            setLoading(false); 
-            setPatientsData(queryData.data);     
-        }
-                  
-    }
-
     const handleSearch = () => {   
-        if (eventsList.length) {
             if (searchQuery.length === 0) { //show all events 
                 if (showOnlyUsers) {
                     const usersEvents =  eventsList.filter((event) => {                        
@@ -124,7 +104,6 @@ const AppointmentsList = (props) => {
                 }
                 
             }
-        }
     }
 
     useEffect(() => { //on search query change, handle search
@@ -134,7 +113,6 @@ const AppointmentsList = (props) => {
     useEffect(() => {
         if (props.currentPatientData) {
             getEvents();
-            getPatients();
         }      
     }, [props.currentPatientData])
 
@@ -151,7 +129,6 @@ const AppointmentsList = (props) => {
             {loading && <LoadingModal />}  
             <NewAppointmentModal 
                 currentPatientData={props.currentPatientData}
-                patientsData={patientsData}
                 show={showNewAppointmentModal} 
                 toggleModal={toggleNewAppointmentModal} 
                 getEvents={getEvents}                                       
@@ -159,7 +136,6 @@ const AppointmentsList = (props) => {
 
             <AppointmentModal                
                 currentEvent={currentEvent}
-                patientsData={patientsData}
                 show={showAppointmentModal}
                 hideAppointmentModal={hideAppointmentModal}                
                 getEvents={getEvents}                     

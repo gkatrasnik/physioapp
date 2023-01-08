@@ -2,28 +2,27 @@
 // list of search results
 
 import React, { useState, useEffect } from 'react';
-import { supabase } from '../supabase';
 import Layout from "./Layout";
 import { useNavigate } from 'react-router-dom';
 import { Form, Button, Container, Table} from "react-bootstrap";
 import NewPatientModal from './modals/NewPatientModal';
-import moment from 'moment'
 import LoadingModal from "./modals/LoadingModal";
+import { useAppData } from '../contexts/appDataContext';
 
 const PatientSearchView = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [showNewPatientModal, setShowNewPatientModal] = useState(false);
-    const [patientsData, setPatientsData] = useState([]);  
     const [filteredPatients, setFilteredPatients] = useState([]);  
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+    const appData = useAppData();
 
     const handleSearch = () => {   
         if (searchQuery.length === 0) { //show all patients - whole original data we get from db (patients of this org)
-            setFilteredPatients(patientsData);
+            setFilteredPatients(appData.orgPatients);
         } else if (searchQuery.length) {//auto filter patients when typing in search      
-            const newArr = patientsData.filter(patient => patient.name.toLowerCase().includes(searchQuery.toLowerCase()));
+            const newArr = appData.orgPatients.filter(patient => patient.name.toLowerCase().includes(searchQuery.toLowerCase()));
             setFilteredPatients(newArr);
         }
     }
@@ -32,23 +31,6 @@ const PatientSearchView = () => {
         setShowNewPatientModal(!showNewPatientModal);
     }
 
-    const getPatients = async () => {     
-        setLoading(true);      
-        const queryData = await supabase
-            .from('patients')
-            .select()            
-            .eq("rec_deleted", false)
-        
-        if (queryData.error) {
-            setLoading(false);
-            alert(queryData.error.message);
-        } else {
-            setLoading(false);
-            queryData.data.forEach(patient => patient.birthdate ? patient.birthdate = moment(patient.birthdate).toDate() : null)
-            setPatientsData(queryData.data); 
-        }
-                      
-    }
 
 
     const toPatientProfile=(patient)=>{ 
@@ -58,17 +40,17 @@ const PatientSearchView = () => {
     
     //on component get all patients data
     useEffect(() => {
-      getPatients();    
-    }, []) 
+      appData.getOrgPatients();
+    }, [])
+    
 
     useEffect(() => { //on patients data change, show all patients
       handleSearch("");  
-    }, [patientsData]) 
+    }, [appData.orgPatients]) 
 
     useEffect(() => { //on search query change, handle search
         handleSearch(searchQuery);
     }, [searchQuery])
-    
    
 
 
@@ -80,7 +62,6 @@ const PatientSearchView = () => {
             <NewPatientModal 
                 show={showNewPatientModal} 
                 handleToggleModal={toggleModal}
-                getPatients={getPatients}
             />
             <Container className="min-h-100-without-navbar">
                 <h1 className='text-center custom-page-heading-1 mt-5 mb-4'>Patients</h1>

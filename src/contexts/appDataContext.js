@@ -1,6 +1,8 @@
 import {supabase} from "../supabase";
 import {useState, useEffect, useContext, createContext} from "react";
 import { useAuth} from "./auth"
+import moment from "moment";
+ 
 
 const appDataContext = createContext();
 
@@ -19,9 +21,7 @@ function useProvideAppData() {
     const [orgData, setOrgData] = useState(null);
     const [orgUsers, setOrgUsers] = useState([]);
     const [bodyParts, setBodyparts] = useState([]);
-
-    const [orgPatients, setOrgPatients] = useState([]) //-- implement later....first users and bodyparts
-
+    const [orgPatients, setOrgPatients] = useState([]);
     
 
     //therapsis data
@@ -55,6 +55,7 @@ function useProvideAppData() {
         }     
     }
 
+    //organization data
     const getOrgData = async (org_id) => {
         const queryData = await supabase
             .from('organizations')
@@ -65,21 +66,78 @@ function useProvideAppData() {
             alert(queryData.error.message)
         } else {
             setOrgData(queryData.data[0]);
+            console.log("INITIAL PATIENTS LOAD")
         }
         
     }
+
+    //patients data
+    const getOrgPatients = async () => {     
+        const queryData = await supabase
+            .from('patients')
+            .select()            
+            .eq("rec_deleted", false)
+        
+        if (queryData.error) {
+            alert(queryData.error.message);
+        } else {
+            queryData.data.forEach(patient => patient.birthdate ? patient.birthdate = moment(patient.birthdate).toDate() : null)
+            setOrgPatients(queryData.data); 
+        }
+                      
+    }
   
+    //load all data
     const loadAppData = async(org_id) => {
         await getOrgData(org_id);
         await getOrgUsers();
         await getBodyparts();
+        await getOrgPatients();
     }
 
 
-    //subscribe to appointments and patients changes
+/*
+    //helpers
+    const updatePatientInState = (changedPatient) => {        
+        let newPatientsState = orgPatients.map(patient => {
+            if (patient.id === changedPatient.id) {
+                return changedPatient
+            }
+            return patient
+        })
+    
+        setOrgPatients(newPatientsState);
+    }
 
+    
+    NOT WORKING, GETTING EMPTY ORGPATIENTS
+    //handling db changes
+    const handlePatientsChange = (change) => {
+
+        // patient insert
+        if (change.eventType === "INSERT") {       
+            console.log("ADDED: ", ...orgPatients)  
+            setOrgPatients(orgPatients => [...orgPatients, change.new])
+        }  
+
+        // patient update
+        if (change.eventType === "UPDATE" && change.new.rec_deleted === false) {
+            console.log("UPDATED ", ...orgPatients)
+            updatePatientInState(change.new)
+        } 
+
+        // patient delete
+        if (change.eventType === "UPDATE" && change.new.rec_deleted === true) {
+            console.log("DELETED ", ...orgPatients)
+            setOrgPatients(...orgPatients.filter(patient => patient.id !== change.new.id))
+            
+        }
+    }
+    
+
+    //subscribe to appointments and patients changes
     useEffect(() => {
-        if (auth.userObj) {
+        if (auth.user) {
             const channel = supabase
             .channel('db-changes')
             .on(
@@ -90,39 +148,33 @@ function useProvideAppData() {
                 table: 'patients',
                 },
                 (payload) => {
-                   console.log(payload) 
+                   handlePatientsChange(payload);
                 }
-            )
-            .on('postgres_changes',
-                {
-                event: '*',
-                schema: 'public',
-                table: 'appointments',
-                },
-                (payload) => {
-                    console.log(payload)
-                }
-            )
+            )            
             .subscribe()
-            console.log("subscribed to changes")
+            console.log("subscribed to db changes")          
+            
             
             return () => {
-                channel.unsubscribe();
-                console.log("UNsubscribed to changes")
+                console.log("unsubscribed from db changes")
+                supabase.removeAllChannels()
             }
         }     
     
      
-    }, [auth.userObj])
+    }, [auth.user])    
+*/
     
 
     return {
         orgData,
         orgUsers,
-        bodyParts,       
+        bodyParts,      
+        orgPatients, 
         getOrgData,
         getOrgUsers,
         getBodyparts,
+        getOrgPatients,
         loadAppData
     }
 

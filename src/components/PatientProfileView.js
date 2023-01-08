@@ -11,6 +11,7 @@ import { supabase } from '../supabase';
 import Layout from "./Layout";
 import { Container, Button, Form, Tab, Tabs } from 'react-bootstrap';
 import { useAuth } from '../contexts/auth';
+import { useAppData } from '../contexts/appDataContext';
 import AppointmentsList from './AppointmentsList';
 import IssueList from './IssueList';
 import IssuesCalendar from './IssuesCalendar';
@@ -33,6 +34,8 @@ const tabs = ["Info", "Appointments", "Issues", "Issues Calendar"];
 
 const PatientProfileView = () => {
     const auth = useAuth();
+    const appData = useAppData();
+
     const location = useLocation();
     const navigate = useNavigate();
     const [editing, setEditing] = useState(false);
@@ -102,8 +105,10 @@ const PatientProfileView = () => {
             setLoading(false);
             alert(queryData.error.message);
         } else {
-            setLoading(false);        
+            setLoading(false); 
+            appData.getOrgPatients();
             navigate("/patients");
+            
         }   
         
     }
@@ -132,6 +137,7 @@ const PatientProfileView = () => {
             alert(queryData.error.message);
         }else {
             setLoading(false);
+            appData.getOrgPatients(); 
         }            
         
     }

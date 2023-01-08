@@ -149,8 +149,8 @@ const NewAppointmentModal = (props) => {
                         ...baseStyles                        
                         }),
                     }}
-                    options={props.patientsData}                    
-                    defaultValue={props.patientsData.find((patient) => patient.id === patientId)}
+                    options={appData.orgPatients}                    
+                    defaultValue={appData.orgPatients.find((patient) => patient.id === patientId)}
                     isDisabled={patientFieldDisabled}
                     getOptionLabel={(option)=>option.name}
                     getOptionValue={(option)=>option.id}

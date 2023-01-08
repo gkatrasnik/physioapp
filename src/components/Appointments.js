@@ -21,7 +21,6 @@
         const localizer = momentLocalizer(moment)
         const [eventList, setEventList] = useState([]);
         const [filteredEventList, setFilteredEventList] = useState([]);
-        const [patientsData, setPatientsData] = useState([]);
         const [showAppointmentModal, setShowAppointmentModal] = useState(false);
         const [showNewAppointmentModal, setShowNewAppointmentModal] = useState(false);
         const [currentEvent, setCurrentEvent] = useState(null);
@@ -86,19 +85,6 @@
             }     
         }
     
-        const getPatients = async () => {  
-            setLoading(true);
-            const queryData = await supabase
-                .from('patients')
-                .select()
-                .eq("rec_deleted", false)
-            if (queryData.error) {
-                setLoading(false);
-                alert(queryData.error.message);
-            }
-            setLoading(false);
-            setPatientsData(queryData.data);               
-        }
 
         //filter event list to only contain my events
         const filterEventList = async() => {
@@ -117,7 +103,6 @@
         
         
         useEffect(() => {
-            getPatients(); 
             getEvents();
         }, [])    
         
@@ -185,14 +170,12 @@
                                      
                      <NewAppointmentModal 
                         selectedSlot={selectedSlot}
-                        patientsData={patientsData}
                         show={showNewAppointmentModal} 
                         toggleModal={toggleNewAppointmentModal} 
                         getEvents={getEvents}                    
                     />
     
                     <AppointmentModal
-                        patientsData={patientsData}
                         currentEvent={currentEvent}
                         hideAppointmentModal={hideAppointmentModal}
                         show={showAppointmentModal}

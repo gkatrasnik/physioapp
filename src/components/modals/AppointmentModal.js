@@ -66,7 +66,7 @@ const AppointmentModal = (props) => {
     }
    
     const findEventPatient = (searchedPatientId) => {
-        const eventPatient = props.patientsData.find(patient => patient.id === searchedPatientId);
+        const eventPatient = appData.orgPatients.find(patient => patient.id === searchedPatientId);
         setEventPatient(eventPatient);
     }
 
@@ -194,8 +194,8 @@ const AppointmentModal = (props) => {
                         ...baseStyles
                         }),
                     }}
-                    options={props.patientsData}                    
-                    defaultValue={props.patientsData.find((patient) => patient.id === patientId)}
+                    options={appData.orgPatients}                    
+                    defaultValue={appData.orgPatients.find((patient) => patient.id === patientId)}
                     isDisabled={!editing}
                     getOptionLabel={(option)=>option.name}
                     getOptionValue={(option)=>option.id}
