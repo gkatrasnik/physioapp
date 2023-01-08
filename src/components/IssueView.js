@@ -47,7 +47,6 @@ const IssueView = () => {
     const [lastChanged, setLastChanged] = useState("");
     const [userId, setUserId] = useState("");
     const [patientId, setPatientId] = useState("");
-    const [patientData, setPatientData] =useState();  
     const [activeTab, setActiveTab] = useState(tabs.currentTab()); 
 
 
@@ -66,6 +65,19 @@ const IssueView = () => {
         setActiveTab(tabs.jumpTab(i));
     }      
 
+
+    // on component mount set state from location.state data
+    const setLocalStateIssue = () => {
+        setTitle(location.state.issueData.name)
+        setNotes(location.state.issueData.notes)
+        setResolved(!!location.state.issueData.end)
+        setDiagnosis(location.state.issueData.diagnosis)
+        setStart(moment(location.state.issueData.start).toDate())
+        setEnd(location.state.issueData.end ? moment(location.state.issueData.end).toDate() : null)
+        setLastChanged(location.state.issueData.last_changed)
+        setUserId(location.state.issueData.user_id)
+        setPatientId(location.state.issueData.patient_id)
+    }
 
     const getIssueData = async () => {
         setLoading(true);
@@ -175,23 +187,6 @@ const IssueView = () => {
         setEditing(!editing);
     }
 
-    //patients data
-    const getPatientData = async () => {
-        setLoading(true);
-        const queryData = await supabase
-            .from('patients')
-            .select() 
-            .eq('id', location.state.issueData.patient_id)           
-            .eq("rec_deleted", false)
-        if (queryData.error) {
-            setLoading(false);
-            alert(queryData.error.message);
-        }else {
-            setLoading(false);
-            setPatientData(queryData.data[0])
-        }     
-    }
-
     const setEndNull = async () => {
         const nullEnd = null;
         setEnd(nullEnd);
@@ -244,8 +239,7 @@ const IssueView = () => {
 
     // useEffects
     useEffect(() => {
-        getIssueData();    
-        getPatientData();
+        setLocalStateIssue();    
         window.scrollTo(0, 0);
     }, []);
   
@@ -373,7 +367,7 @@ const IssueView = () => {
                             <Form.Group className="mb-1" controlId="exampleForm.ControlInput8">
                             <Form.Label>Patient</Form.Label>
                             <Form.Control
-                                defaultValue = {patientData && patientData.name}
+                                defaultValue = {location.state && location.state.patientData.name}
                                 disabled = {true}
                                 type="text"
                             />                

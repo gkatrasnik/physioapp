@@ -1,5 +1,6 @@
 import {supabase} from "../supabase";
-import {useState, useContext, createContext} from "react";
+import {useState, useEffect, useContext, createContext} from "react";
+import { useAuth} from "./auth"
 
 const appDataContext = createContext();
 
@@ -13,11 +14,13 @@ export const useAppData = () => {
 }
 
 function useProvideAppData() {
+    const auth = useAuth();
+
     const [orgData, setOrgData] = useState(null);
     const [orgUsers, setOrgUsers] = useState([]);
     const [bodyParts, setBodyparts] = useState([]);
 
-    //const [orgPatients, setOrgPatients] = useState([]) -- implement later....first users and bodyparts
+    const [orgPatients, setOrgPatients] = useState([]) //-- implement later....first users and bodyparts
 
     
 
@@ -71,6 +74,47 @@ function useProvideAppData() {
         await getOrgUsers();
         await getBodyparts();
     }
+
+
+    //subscribe to appointments and patients changes
+
+    useEffect(() => {
+        if (auth.userObj) {
+            const channel = supabase
+            .channel('db-changes')
+            .on(
+                'postgres_changes',
+                {
+                event: '*',
+                schema: 'public',
+                table: 'patients',
+                },
+                (payload) => {
+                   console.log(payload) 
+                }
+            )
+            .on('postgres_changes',
+                {
+                event: '*',
+                schema: 'public',
+                table: 'appointments',
+                },
+                (payload) => {
+                    console.log(payload)
+                }
+            )
+            .subscribe()
+            console.log("subscribed to changes")
+            
+            return () => {
+                channel.unsubscribe();
+                console.log("UNsubscribed to changes")
+            }
+        }     
+    
+     
+    }, [auth.userObj])
+    
 
     return {
         orgData,

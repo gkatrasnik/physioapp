@@ -51,7 +51,7 @@ const PatientSearchView = () => {
     }
 
 
-    const toPatientProfile=(patient)=>{
+    const toPatientProfile=(patient)=>{ 
      navigate('/profile',{state:{patientData:patient}});
     }
 

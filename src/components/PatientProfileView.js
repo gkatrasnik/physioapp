@@ -73,29 +73,16 @@ const PatientProfileView = () => {
       }      
 
     
-
-    const getPatientData = async () => {
-        setLoading(true);
-        const queryData = await supabase
-            .from('patients')
-            .select()
-            .eq('id',location.state.patientData.id)
-            .eq("rec_deleted", false)
-        if (queryData.error) {
-            setLoading(false);
-            alert(queryData.error.message);
-        }else {
-            setLoading(false);
-
-            setName(queryData.data[0].name);
-            setEmail(queryData.data[0].email);
-            setPhone(queryData.data[0].phone);
-            setAddress(queryData.data[0].address);
-            setCity(queryData.data[0].city);
-            setZip(queryData.data[0].zip_code);
-            setBirthDate(queryData.data[0].birthdate);
-            setOccupation((queryData.data[0].occupation));
-        }     
+    // on component mount set state from location.state data
+    const setLocalStatePatient = () => {
+        setName(location.state.patientData.name);
+        setEmail(location.state.patientData.email);
+        setPhone(location.state.patientData.phone);
+        setAddress(location.state.patientData.address);
+        setCity(location.state.patientData.city);
+        setZip(location.state.patientData.zip_code);
+        setBirthDate(location.state.patientData.birthdate);
+        setOccupation(location.state.patientData.occupation);
     }
     
     
@@ -250,7 +237,7 @@ const PatientProfileView = () => {
             alert(queryData.error.message);
         }else {
             setLoading(false);
-            setIssuesData(queryData.data);          
+            setIssuesData(queryData.data);  
         } 
     }
 
@@ -280,9 +267,9 @@ const PatientProfileView = () => {
 
     // useEffects
     useEffect(() => {
-        getPatientData();    
+        setLocalStatePatient();
         getIssuesData();    
-        window.scrollTo(0, 0);        
+        window.scrollTo(0, 0);    
     }, []);
 
 

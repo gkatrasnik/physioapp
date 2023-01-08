@@ -38,12 +38,8 @@ function Layout({children}) {
 
     //monitor current location and color nav btn
     useEffect(() => {
-      console.log(location.pathname)
       setCurrentLoc(location.pathname)
-    }, [location]);
-
-    
-    
+    }, [location]);    
 
   return (
     <>

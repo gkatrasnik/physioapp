@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {  Button, Table, Form} from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
 import NewIssueModal from './modals/NewIssueModal';
-import { CheckSquare } from 'react-bootstrap-icons';
 import moment from 'moment'
 import { Check2Square, Square } from 'react-bootstrap-icons';
 
@@ -16,7 +15,7 @@ const IssueList = (props) => {
     const [filteredIssuesData, setFilteredIssuesData] = useState([]);
 
     const toIssueView=(issue)=>{
-     navigate('/issue',{state:{issueData:issue}});
+     navigate('/issue',{state:{issueData:issue, patientData:props.patientData}});
     }
 
     const toggleShowNewIssue = () => {
