@@ -66,12 +66,12 @@
             };
         }
         
-
+        //handle how old data we want to get, probably not all history - setting in options view
         const handleGetEventsFrom = () => {
             let setting = localStorage.getItem("showEventsForXMonths");
 
             if (!setting) {
-                setting = 1;                
+                setting = 3;                
 
                 localStorage.setItem("showEventsForXMonths", setting);
                 console.log("no showEventsForXMonths setting found, setting now to: ", setting);

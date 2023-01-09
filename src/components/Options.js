@@ -15,6 +15,7 @@ const Options = () => {
     const [showUserInfoModal, setShowUserInfoModal] = useState(false);
     const [showManageOrg, setShowManageOrg] = useState(false);
     const [showEventsFromSetting, setShowEventsFromSetting] = useState(null);
+    const [showIssuesFromSetting, setShowIssuesFromSetting] = useState(null);
 
     
 
@@ -34,11 +35,12 @@ const Options = () => {
         setShowManageOrg(true);                      
     }
 
+    //handling get Events from
     const handleGetEventsFrom = () => {
         let setting = localStorage.getItem("showEventsForXMonths");
 
         if (!setting) {
-            setting = 1;                
+            setting = 3;                
 
             localStorage.setItem("showEventsForXMonths", setting);
             console.log("no showEventsForXMonths setting found, setting now to: ", setting);
@@ -54,8 +56,33 @@ const Options = () => {
         localStorage.setItem('showEventsForXMonths', newValue);
     }
 
+
+
+    //handling get Issues from
+    const handleGetIssuesFrom = () => {
+        let setting = localStorage.getItem("showIssuesForXMonths");
+
+        if (!setting) {
+            setting = 12;                
+
+            localStorage.setItem("showIssuesForXMonths", setting);
+            console.log("no showIssuesForXMonths setting found, setting now to: ", setting);
+        } else {
+            console.log("showIssuesForXMonths found: ", setting);
+        }
+            
+        setShowIssuesFromSetting(setting);        
+    }
+
+    const handleSetIssuesFrom = (newValue) => {        
+        setShowIssuesFromSetting(newValue);   
+        localStorage.setItem('showIssuesForXMonths', newValue);
+    }
+
+
     useEffect(() => {
         handleGetEventsFrom();
+        handleGetIssuesFrom();
     }, [])
 
     return (
@@ -74,13 +101,29 @@ const Options = () => {
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                             <Form.Label>Show appointments for last ({showEventsFromSetting}) months</Form.Label>
                             <Form.Range
-                                name="intensity"
-                                min={1}
+                                name="showEventsFrom"
+                                min={3}
                                 max={12}
+                                step={3}
                                 value={showEventsFromSetting}
                                 disabled={false}
                                 onChange={(e) => {
                                     handleSetEventsFrom(e.target.valueAsNumber);
+                                }}
+                            />                
+                        </Form.Group>
+
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
+                            <Form.Label>Show issues for last ({showIssuesFromSetting}) months</Form.Label>
+                            <Form.Range
+                                name="showIssuesFrom"
+                                min={3}
+                                max={36}
+                                step={3}
+                                value={showIssuesFromSetting}
+                                disabled={false}
+                                onChange={(e) => {
+                                    handleSetIssuesFrom(e.target.valueAsNumber);
                                 }}
                             />                
                         </Form.Group>

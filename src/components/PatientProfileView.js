@@ -59,6 +59,9 @@ const PatientProfileView = () => {
     const [birthDate, setBirthDate] = useState(null);
     const [occupation, setOccupation] = useState("");
 
+    const [showIssuesFrom, setShowIssuesFrom] = useState(null);
+
+
 
     //swipable tabs
     const handlers = useSwipeable({
@@ -230,6 +233,25 @@ const PatientProfileView = () => {
         }           
     }
 
+    //handle how old data we want to get, probably not all history - setting in options view
+    const handleGetIssuesFrom = () => {
+        let setting = localStorage.getItem("showIssuesForXMonths");
+
+        if (!setting) {
+            setting = 12;                
+
+            localStorage.setItem("showIssuesForXMonths", setting);
+            console.log("no showIssuesForXMonths setting found, setting now to: ", setting);
+        } else {
+            console.log("showIssuesForXMonths found: ", setting);
+        }
+
+
+        let showFromDate = moment().subtract(setting,'months').toISOString();                
+        setShowIssuesFrom(showFromDate);
+        console.log("showing from ", showFromDate);
+    }
+
     const getIssuesData = async () => {
         setLoading(true);
         const queryData = await supabase
@@ -237,6 +259,7 @@ const PatientProfileView = () => {
             .select()
             .eq('patient_id',location.state.patientData.id)
             .eq("rec_deleted", false)
+            .gt('start', showIssuesFrom)
             .order('start', { ascending: false })
         if (queryData.error) {
             setLoading(false);
@@ -274,10 +297,17 @@ const PatientProfileView = () => {
     // useEffects
     useEffect(() => {
         setLocalStatePatient();
-        getIssuesData();    
+        handleGetIssuesFrom();
+          
         window.scrollTo(0, 0);    
     }, []);
 
+    useEffect(() => {
+        if (showIssuesFrom) {
+            getIssuesData();
+        }        
+    }, [showIssuesFrom])
+  
 
     return (
         <>
