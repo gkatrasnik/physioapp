@@ -18,6 +18,7 @@ import IssuesCalendar from './IssuesCalendar';
 import ConfirmDeleteModal from './modals/ConfirmDeleteModal';
 import LoadingModal from "./modals/LoadingModal"; 
 import { useSwipeable } from 'react-swipeable';
+import moment from "moment";
 
 
 //for swipable tabs
