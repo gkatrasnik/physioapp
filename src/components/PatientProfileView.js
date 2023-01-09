@@ -243,14 +243,11 @@ const PatientProfileView = () => {
 
             localStorage.setItem("showIssuesForXMonths", setting);
             console.log("no showIssuesForXMonths setting found, setting now to: ", setting);
-        } else {
-            console.log("showIssuesForXMonths found: ", setting);
-        }
+        } 
 
 
         let showFromDate = moment().subtract(setting,'months').toISOString();                
         setShowIssuesFrom(showFromDate);
-        console.log("showing from ", showFromDate);
     }
 
     const getIssuesData = async () => {

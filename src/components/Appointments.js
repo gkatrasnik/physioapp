@@ -75,14 +75,10 @@
 
                 localStorage.setItem("showEventsForXMonths", setting);
                 console.log("no showEventsForXMonths setting found, setting now to: ", setting);
-            } else {
-                console.log("showEventsForXMonths found: ", setting);
-            }
-
+            } 
 
             let showFromDate = moment().subtract(setting,'months').toISOString();                
             setShowEventsFrom(showFromDate);
-            console.log("showing from ", showFromDate);
         }
     
     

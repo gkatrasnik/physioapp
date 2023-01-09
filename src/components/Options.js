@@ -44,9 +44,7 @@ const Options = () => {
 
             localStorage.setItem("showEventsForXMonths", setting);
             console.log("no showEventsForXMonths setting found, setting now to: ", setting);
-        } else {
-            console.log("showEventsForXMonths found: ", setting);
-        }
+        } 
                
         setShowEventsFromSetting(setting);        
     }
@@ -67,9 +65,7 @@ const Options = () => {
 
             localStorage.setItem("showIssuesForXMonths", setting);
             console.log("no showIssuesForXMonths setting found, setting now to: ", setting);
-        } else {
-            console.log("showIssuesForXMonths found: ", setting);
-        }
+        } 
             
         setShowIssuesFromSetting(setting);        
     }
