@@ -114,7 +114,7 @@ const Options = () => {
                             <Form.Range
                                 name="showIssuesFrom"
                                 min={1}
-                                max={15}
+                                max={20}
                                 step={1}
                                 value={showIssuesFromSetting}
                                 disabled={false}
