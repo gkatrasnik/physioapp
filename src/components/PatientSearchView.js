@@ -41,6 +41,7 @@ const PatientSearchView = () => {
     //on component get all patients data
     useEffect(() => {
       appData.getOrgPatients();
+      window.scrollTo(0, 0);
     }, [])
     
 

@@ -29,6 +29,26 @@
         const [filterEvents, setFilterEvents] = useState(true);
         const [selectedUserId, setSelectedUserId] = useState(auth.userObj.id);
 
+        const [showEventsFrom, setShowEventsFrom] = useState(null);
+
+        const getOldestEventStart = () => {
+            let setting = localStorage.getItem("showEventsForXMonths");
+
+            if (!setting) {
+                setting = 1;                
+
+                localStorage.setItem("showEventsForXMonths", setting);
+                console.log("no showEventsForXMonths setting found, setting now to: ", setting);
+            } else {
+                console.log("showEventsForXMonths found: ", setting);
+            }
+
+
+            let showFrom = moment().substract(setting,'m').toIsoString();                
+            setShowEventsFrom(showFrom);
+            console.log("showing from ", showFrom);
+        }
+
         
         const handleSelectSlot = (slot) => {
             setSelectedSlot(slot)            
@@ -72,6 +92,7 @@
                 .from('appointments')
                 .select()
                 .eq("rec_deleted", false)
+                .gt('start', showEventsFrom)
             if (queryData.error) {
                 setLoading(false);
                 alert(queryData.error.message);                
@@ -104,6 +125,7 @@
         
         useEffect(() => {
             getEvents();
+            window.scrollTo(0, 0);
         }, [])    
         
         useEffect(()=>{
