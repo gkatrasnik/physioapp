@@ -9,9 +9,6 @@ import LoadingModal from "./modals/LoadingModal"
 const Home = () => {
     const auth = useAuth();
     const appData= useAppData();
-
-    const [loading, setLoading] = useState(false);    
-
     
     
     //run after login
@@ -47,7 +44,7 @@ const Home = () => {
 
     return (
         <>
-        {loading && <LoadingModal />}
+        {appData.loadingData && <LoadingModal />}
         <Layout>
             <Container>                
 

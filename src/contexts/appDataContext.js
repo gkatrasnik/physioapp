@@ -22,6 +22,7 @@ function useProvideAppData() {
     const [orgUsers, setOrgUsers] = useState([]);
     const [bodyParts, setBodyparts] = useState([]);
     const [orgPatients, setOrgPatients] = useState([]);
+    const [loadingData, setLoadingData] = useState(false);
     
 
     //therapsis data
@@ -89,10 +90,9 @@ function useProvideAppData() {
   
     //load all data
     const loadAppData = async(org_id) => {
-        await getOrgData(org_id);
-        await getOrgUsers();
-        await getBodyparts();
-        await getOrgPatients();
+        setLoadingData(true);
+        await Promise.allSettled([getOrgData(org_id), getOrgUsers(),getOrgPatients(), getBodyparts()]);
+        setLoadingData(false);
     }
 
 
@@ -171,6 +171,7 @@ function useProvideAppData() {
         orgUsers,
         bodyParts,      
         orgPatients, 
+        loadingData,
         getOrgData,
         getOrgUsers,
         getBodyparts,
