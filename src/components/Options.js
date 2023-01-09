@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {useAuth} from "../contexts/auth";
 import Layout from "./Layout";
-import { Container, Card, Button } from 'react-bootstrap';
+import { Container, Card, Button, Form } from 'react-bootstrap';
 import LoadingModal from "./modals/LoadingModal"
 import {BoxArrowLeft, Person, Building } from "react-bootstrap-icons";
 import UserInfoModal from './modals/UserInfoModal';
@@ -69,7 +69,7 @@ const Options = () => {
                 />       
                 <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "5rem"}}>                               
                 <Card.Body>
-                    <Card.Title className='text-center'><h1>Options</h1></Card.Title>  
+                <Card.Title className='text-center'><h1>Options</h1></Card.Title>  
                     <Form>
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
                             <Form.Label>Show appointments for last ({showEventsFromSetting}) months</Form.Label>
