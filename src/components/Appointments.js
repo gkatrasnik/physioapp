@@ -80,7 +80,7 @@
             }
 
 
-            let showFromDate = moment().substract(setting,'m').toIsoString();                
+            let showFromDate = moment().subtract(setting,'m').toIsoString();                
             setShowEventsFrom(showFromDate);
             console.log("showing from ", showFromDate);
         }
