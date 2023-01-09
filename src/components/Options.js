@@ -98,11 +98,11 @@ const Options = () => {
                 <Card.Title className='text-center'><h1>Options</h1></Card.Title>  
                     <Form>
                         <div className='buttons-container'>     
-                            {editing ? <Button  className="m-2" variant="secondary"  onClick={toggleEditing}>
-                                <Lock/>
-                            </Button> :
-                            <Button  className="m-2" variant="secondary"  onClick={toggleEditing}>
+                            {editing ? <Button  className="ms-2 my-2" variant="secondary"  onClick={toggleEditing}>
                                 <Unlock/>
+                            </Button> :
+                            <Button  className="ms-2 my-2" variant="secondary"  onClick={toggleEditing}>
+                                <Lock/>
                             </Button>}                          
                         </div>
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
