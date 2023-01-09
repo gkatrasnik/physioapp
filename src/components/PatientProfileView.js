@@ -236,17 +236,17 @@ const PatientProfileView = () => {
 
     //handle how old data we want to get, probably not all history - setting in options view
     const handleGetIssuesFrom = () => {
-        let setting = localStorage.getItem("showIssuesForXMonths");
+        let setting = localStorage.getItem("showIssuesForXYears");
 
         if (!setting) {
-            setting = 12;                
+            setting = 1;                
 
-            localStorage.setItem("showIssuesForXMonths", setting);
-            console.log("no showIssuesForXMonths setting found, setting now to: ", setting);
+            localStorage.setItem("showIssuesForXYears", setting);
+            console.log("no showIssuesForXYears setting found, setting now to: ", setting);
         } 
 
 
-        let showFromDate = moment().subtract(setting,'months').toISOString();                
+        let showFromDate = moment().subtract(setting,'years').toISOString();                
         setShowIssuesFrom(showFromDate);
     }
 

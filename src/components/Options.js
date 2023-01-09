@@ -58,13 +58,13 @@ const Options = () => {
 
     //handling get Issues from
     const handleGetIssuesFrom = () => {
-        let setting = localStorage.getItem("showIssuesForXMonths");
+        let setting = localStorage.getItem("showIssuesForXYears");
 
         if (!setting) {
-            setting = 12;                
+            setting = 1;                
 
-            localStorage.setItem("showIssuesForXMonths", setting);
-            console.log("no showIssuesForXMonths setting found, setting now to: ", setting);
+            localStorage.setItem("showIssuesForXYears", setting);
+            console.log("no showIssuesForXYears setting found, setting now to: ", setting);
         } 
             
         setShowIssuesFromSetting(setting);        
@@ -72,7 +72,7 @@ const Options = () => {
 
     const handleSetIssuesFrom = (newValue) => {        
         setShowIssuesFromSetting(newValue);   
-        localStorage.setItem('showIssuesForXMonths', newValue);
+        localStorage.setItem('showIssuesForXYears', newValue);
     }
 
 
@@ -110,12 +110,12 @@ const Options = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Show issues for last ({showIssuesFromSetting}) months</Form.Label>
+                            <Form.Label>Show issues for last ({showIssuesFromSetting}) years</Form.Label>
                             <Form.Range
                                 name="showIssuesFrom"
-                                min={3}
-                                max={36}
-                                step={3}
+                                min={1}
+                                max={15}
+                                step={1}
                                 value={showIssuesFromSetting}
                                 disabled={false}
                                 onChange={(e) => {
