@@ -72,27 +72,15 @@ const Options = () => {
                     <Card.Title className='text-center'><h1>Options</h1></Card.Title>  
                     <Form>
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Appointments range ({intensity})</Form.Label>
+                            <Form.Label>Show appointments for last ({showEventsFromSetting}) months</Form.Label>
                             <Form.Range
                                 name="intensity"
-                                label={intensity}                   
-                                min={0}
-                                max={10}
-                                value={<Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                                <Form.Label>Show appointments for last {eventsDataFrom} months</Form.Label>
-                                <Form.Range
-                                    name="intensity"
-                                    min={1}
-                                    max={12}
-                                    value={showEventsFromSetting}
-                                    disabled={false}
-                                    onChange={(e) => {
-                                        handleSetEventsFrom(e.target.valueAsNumber);
-                                    }}
-                                />                
-                                </Form.Group>}                                
+                                min={1}
+                                max={12}
+                                value={showEventsFromSetting}
+                                disabled={false}
                                 onChange={(e) => {
-                                local(e.target.valueAsNumber);
+                                    handleSetEventsFrom(e.target.valueAsNumber);
                                 }}
                             />                
                         </Form.Group>
