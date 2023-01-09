@@ -31,25 +31,7 @@
 
         const [showEventsFrom, setShowEventsFrom] = useState(null);
 
-        const getOldestEventStart = () => {
-            let setting = localStorage.getItem("showEventsForXMonths");
-
-            if (!setting) {
-                setting = 1;                
-
-                localStorage.setItem("showEventsForXMonths", setting);
-                console.log("no showEventsForXMonths setting found, setting now to: ", setting);
-            } else {
-                console.log("showEventsForXMonths found: ", setting);
-            }
-
-
-            let showFrom = moment().substract(setting,'m').toIsoString();                
-            setShowEventsFrom(showFrom);
-            console.log("showing from ", showFrom);
-        }
-
-        
+                
         const handleSelectSlot = (slot) => {
             setSelectedSlot(slot)            
         }
@@ -84,6 +66,24 @@
             };
         }
         
+
+        const handleGetEventsFrom = () => {
+            let setting = localStorage.getItem("showEventsForXMonths");
+
+            if (!setting) {
+                setting = 1;                
+
+                localStorage.setItem("showEventsForXMonths", setting);
+                console.log("no showEventsForXMonths setting found, setting now to: ", setting);
+            } else {
+                console.log("showEventsForXMonths found: ", setting);
+            }
+
+
+            let showFromDate = moment().substract(setting,'m').toIsoString();                
+            setShowEventsFrom(showFromDate);
+            console.log("showing from ", showFromDate);
+        }
     
     
         const getEvents = async () => {
@@ -124,9 +124,15 @@
         
         
         useEffect(() => {
-            getEvents();
+            handleGetEventsFrom();            
             window.scrollTo(0, 0);
         }, [])    
+
+        useEffect(() => {
+            if (showEventsFrom) {
+                getEvents();
+            }
+        }, [showEventsFrom])
         
         useEffect(()=>{
             if (currentEvent){
