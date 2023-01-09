@@ -4,7 +4,7 @@ import {useAuth} from "../contexts/auth";
 import Layout from "./Layout";
 import { Container, Card, Button, Form } from 'react-bootstrap';
 import LoadingModal from "./modals/LoadingModal"
-import {BoxArrowLeft, Person, Building } from "react-bootstrap-icons";
+import {BoxArrowLeft, Person, Building, Lock, Unlock } from "react-bootstrap-icons";
 import UserInfoModal from './modals/UserInfoModal';
 
 
@@ -16,8 +16,11 @@ const Options = () => {
     const [showManageOrg, setShowManageOrg] = useState(false);
     const [showEventsFromSetting, setShowEventsFromSetting] = useState(null);
     const [showIssuesFromSetting, setShowIssuesFromSetting] = useState(null);
+    const [editing, setEditing] = useState(false);
 
-    
+    const toggleEditing = () => {
+        setEditing(!editing);
+    }
 
     const handleHideUserInfoModal = () => {
         setShowUserInfoModal(false);
@@ -94,15 +97,23 @@ const Options = () => {
                 <Card.Body>
                 <Card.Title className='text-center'><h1>Options</h1></Card.Title>  
                     <Form>
+                        <div className='buttons-container'>     
+                            {editing ? <Button  className="m-2" variant="secondary"  onClick={toggleEditing}>
+                                <Lock/>
+                            </Button> :
+                            <Button  className="m-2" variant="secondary"  onClick={toggleEditing}>
+                                <Unlock/>
+                            </Button>}                          
+                        </div>
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Show appointments for last ({showEventsFromSetting}) months</Form.Label>
+                            <Form.Label className="options-label" >Show appointments for last ({showEventsFromSetting}) months</Form.Label>
                             <Form.Range
                                 name="showEventsFrom"
                                 min={3}
                                 max={12}
                                 step={3}
                                 value={showEventsFromSetting}
-                                disabled={false}
+                                disabled={!editing}
                                 onChange={(e) => {
                                     handleSetEventsFrom(e.target.valueAsNumber);
                                 }}
@@ -110,14 +121,14 @@ const Options = () => {
                         </Form.Group>
 
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
-                            <Form.Label>Show issues for last ({showIssuesFromSetting}) years</Form.Label>
+                            <Form.Label className="options-label">Show issues for last ({showIssuesFromSetting}) years</Form.Label>
                             <Form.Range
                                 name="showIssuesFrom"
                                 min={1}
                                 max={20}
                                 step={1}
                                 value={showIssuesFromSetting}
-                                disabled={false}
+                                disabled={!editing}
                                 onChange={(e) => {
                                     handleSetIssuesFrom(e.target.valueAsNumber);
                                 }}
