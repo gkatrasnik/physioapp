@@ -90,7 +90,7 @@ const NewAppointmentModal = (props) => {
     const handleClose = () => {
         props.toggleModal(); 
         setDurationM("60");
-        setStart(null);
+        setStart(moment().toDate());
         setEnd(null);
         setPatientId(props.currentPatientData ? props.currentPatientData.id : null);  
         handleSetPatientObj(props.currentPatientData ? props.currentPatientData.id : null)
@@ -133,11 +133,7 @@ const NewAppointmentModal = (props) => {
         //if durationM is not "0"
         if (parseInt(durationM)) {
             // if start is not null, end can be set by adding duration to start
-            if (start) {
             setEnd(moment(start).add((parseInt(durationM)), 'm').toDate()); 
-            } else {
-                alert('Please set appointment "Start" first')
-            }
         }
              
     },[durationM, start])
@@ -149,6 +145,7 @@ const NewAppointmentModal = (props) => {
         handleSetPatientObj(props.currentPatientData.id)
       }
 
+      setStart(moment().toDate())
       setTherapistId(auth.userObj.id);
       handleEmailLang(); //email template language setting handeling
     }, [])
