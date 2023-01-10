@@ -59,7 +59,7 @@
             let style = {
                 backgroundColor: backgroundColor,                               
                 color: "white",      
-                fontSize: 13       
+                fontSize: 12       
             };
             return {
                 style: style
@@ -97,6 +97,7 @@
                 queryData.data.forEach(event => {
                     event.start = moment(event.start).toDate();
                     event.end = moment(event.end).toDate();
+                    event.eventTitle = getEventPatientName(event.patient_id) + " - " + event.title
                 });
                 setEventList(queryData.data);
             }     
@@ -118,6 +119,11 @@
             }
         }
         
+
+        const getEventPatientName = (patientId) => {
+            let patient = appData.orgPatients.find((patient) => patient.id === patientId);
+            return patient.name || ""
+        }
         
         useEffect(() => {
             handleGetEventsFrom();            
@@ -133,6 +139,7 @@
         useEffect(()=>{
             if (currentEvent){
                 setShowAppointmentModal(true);
+                console.log(currentEvent)
             }            
         }, [currentEvent])
 
@@ -211,7 +218,8 @@
                         localizer={localizer}
                         events={filteredEventList}
                         startAccessor="start"
-                        endAccessor="end"                        
+                        endAccessor="end"             
+                        titleAccessor={"eventTitle"}           
                         style={{ height: 600 }}
                         onSelectEvent={handleSelectEvent}
                         onSelectSlot={handleSelectSlot}
