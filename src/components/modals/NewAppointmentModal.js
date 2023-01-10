@@ -17,17 +17,69 @@ const NewAppointmentModal = (props) => {
     const [start, setStart] = useState(null);
     const [end, setEnd] = useState(null);
     const [patientId, setPatientId] = useState(null);
+    const [patientObj, setPatientObj] = useState(null);
     const [title, setTitle] = useState("");
     const [patientFieldDisabled, setPatientFieldDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
     const [durationM, setDurationM] = useState("0");
     const [therapistId, setTherapistId] = useState(null);
+    const [languageSetting, setLanguageSetting] = useState(null);
 
 
-    
+    const handleSetPatientObj = (patientId) => {
+        let patientObj = appData.orgPatients.find((patient) => patient.id === patientId);
+        setPatientObj(patientObj ? patientObj : null);
+    }
+
+    const handleSendEmail = () => {
+        if (!start) {
+            return alert("Please pick appointment start");
+        } 
+
+        if (!(end > start)) {
+            return alert("Please set appointment duration");
+        }
+        if (!patientId) {
+            return alert("Please choose a patient");
+        }
+
+        if (!title) {
+            return alert('Please add appointment title');
+        }
+
+        let emailSubject;
+        let emailBody;
+
+        if (languageSetting === "eng") {
+            emailSubject = `${appData.orgData.name} - New appointment`;        
+            emailBody = "Hello!%0D%0A%0D%0AWe would like to inform you, that your new appointment is scheduled for " +start.toLocaleString("sl-SI") + ".%0D%0AYour therapist will be " + auth.userObj.name +".%0D%0AWe look forward to seeing you. %0D%0A%0D%0A"+ appData.orgData.name;
+        } else {
+            emailSubject = `${appData.orgData.name} - Nov termin`;        
+            emailBody = "Pozdravljeni!%0D%0A%0D%0AObveščamo vas, da ste na termin naročeni " +start.toLocaleString("sl-SI") + ".%0D%0AVaš terapevt bo " + auth.userObj.name +".%0D%0AVeselimo se vašega obiska. %0D%0A%0D%0A"+ appData.orgData.name;
+        }
+       
+        window.location.href ="mailto:" + patientObj.email + "?subject=" + emailSubject + "&body=" + emailBody;
+    }
+
+    const handleEmailLang = () => {
+        let setting = localStorage.getItem("emailLang");
+
+        if (!setting) {
+            setting = "slo";                
+
+            localStorage.setItem("emailLang", setting);
+            console.log("no emailLang setting found, setting now to: ", setting);
+        } 
+                
+        setLanguageSetting(setting);
+    }
 
     const handleNewAppointment = (e) => {
         e.preventDefault();
+        if (!start) {
+            return alert("Please pick appointment start");
+        } 
+        
         if (!(end > start)) {
             return alert("Please set appointment duration");
         }
@@ -49,6 +101,7 @@ const NewAppointmentModal = (props) => {
         setStart(null);
         setEnd(null);
         setPatientId(props.currentPatientData ? props.currentPatientData.id : null);  
+        handleSetPatientObj(props.currentPatientData ? props.currentPatientData.id : null)
         setTitle("");       
     }
 
@@ -101,8 +154,11 @@ const NewAppointmentModal = (props) => {
     useEffect(() => {
       if (props.currentPatientData) {
         setPatientId(props.currentPatientData.id);
+        handleSetPatientObj(props.currentPatientData.id)
       }
+
       setTherapistId(auth.userObj.id);
+      handleEmailLang(); //email template language setting handeling
     }, [])
     
     
@@ -156,6 +212,7 @@ const NewAppointmentModal = (props) => {
                     getOptionValue={(option)=>option.id}
                     onChange={(option) => {
                         setPatientId(option.id);
+                        handleSetPatientObj(option.id);
                     }}
                 >
                 </Select>
@@ -175,7 +232,7 @@ const NewAppointmentModal = (props) => {
                     getOptionLabel={(option)=>option.name}
                     getOptionValue={(option)=>option.id}
                     onChange={(option) => {
-                        setTherapistId(option.id);                        
+                        setTherapistId(option.id);                                               
                     }}
                 >
                 </Select>
@@ -192,6 +249,11 @@ const NewAppointmentModal = (props) => {
                 />                
                 </Form.Group>
                 <div className='buttons-container'>
+                    {patientObj?.email && 
+                    <Button className="m-2" variant="secondary" onClick={handleSendEmail}>
+                        Send Email
+                    </Button>}
+                    
                     <Button className="m-2" variant="secondary" onClick={handleNewAppointment}>
                         Add Appointment
                     </Button>     

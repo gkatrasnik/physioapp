@@ -14,8 +14,9 @@ const Options = () => {
     const [loading, setLoading] = useState(false);
     const [showUserInfoModal, setShowUserInfoModal] = useState(false);
     const [showManageOrg, setShowManageOrg] = useState(false);
-    const [showEventsFromSetting, setShowEventsFromSetting] = useState(null);
-    const [showIssuesFromSetting, setShowIssuesFromSetting] = useState(null);
+    const [showEventsFromSetting, setShowEventsFromSetting] = useState("");
+    const [showIssuesFromSetting, setShowIssuesFromSetting] = useState("");
+    const [emailLanguage, setEmailLanguage] = useState("");
     const [editing, setEditing] = useState(false);
 
     const toggleEditing = () => {
@@ -78,10 +79,30 @@ const Options = () => {
         localStorage.setItem('showIssuesForXYears', newValue);
     }
 
+    //hangle email language
+    const handleEmailLang = () => {
+        let setting = localStorage.getItem("emailLang");
+
+        if (!setting) {
+            setting = "slo";                
+
+            localStorage.setItem("emailLang", setting);
+            console.log("no emailLang setting found, setting now to: ", setting);
+        } 
+                
+        setEmailLanguage(setting);
+    }
+
+    const handleSetEmailLang = (newValue) => {        
+        setEmailLanguage(newValue);   
+        localStorage.setItem('emailLang', newValue);
+    }
+
 
     useEffect(() => {
         handleGetEventsFrom();
         handleGetIssuesFrom();
+        handleEmailLang();
     }, [])
 
     return (
@@ -105,7 +126,7 @@ const Options = () => {
                                 <Lock/>
                             </Button>}                          
                         </div>
-                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput2">
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput1">
                             <Form.Label className="options-label" >Show appointments for last ({showEventsFromSetting}) months</Form.Label>
                             <Form.Range
                                 name="showEventsFrom"
@@ -133,6 +154,20 @@ const Options = () => {
                                     handleSetIssuesFrom(e.target.valueAsNumber);
                                 }}
                             />                
+                        </Form.Group>
+
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
+                            <Form.Label className="options-label">New appointment email language</Form.Label>
+                            <Form.Select aria-label="Default select example"
+                                value={emailLanguage}
+                                disabled={!editing}
+                                onChange={(e) => {
+                                    handleSetEmailLang(e.target.value);
+                                }}
+                            >
+                                <option value="slo">Slovensko</option>
+                                <option value="eng">English</option>
+                            </Form.Select>
                         </Form.Group>
                     </Form>                  
                     <Link onClick={handleShowUserInfoModal} className="options-link"><Person/><p>My Info</p></Link>
