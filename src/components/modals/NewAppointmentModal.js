@@ -21,7 +21,7 @@ const NewAppointmentModal = (props) => {
     const [title, setTitle] = useState("");
     const [patientFieldDisabled, setPatientFieldDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [durationM, setDurationM] = useState("0");
+    const [durationM, setDurationM] = useState("60");
     const [therapistId, setTherapistId] = useState(null);
     const [languageSetting, setLanguageSetting] = useState(null);
 
@@ -89,7 +89,7 @@ const NewAppointmentModal = (props) => {
 
     const handleClose = () => {
         props.toggleModal(); 
-        setDurationM("0");
+        setDurationM("60");
         setStart(null);
         setEnd(null);
         setPatientId(props.currentPatientData ? props.currentPatientData.id : null);  

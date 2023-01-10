@@ -165,7 +165,7 @@ const Options = () => {
                                     handleSetEmailLang(e.target.value);
                                 }}
                             >
-                                <option value="slo">Slovensko</option>
+                                <option value="slo">Slovenščina</option>
                                 <option value="eng">English</option>
                             </Form.Select>
                         </Form.Group>
