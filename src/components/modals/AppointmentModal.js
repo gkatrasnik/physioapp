@@ -118,9 +118,6 @@ const AppointmentModal = (props) => {
             return alert('Please adjust "From" and "To" dates');
         }
 
-        if (!title) {
-            return alert('Please add appointment title');
-        }
 
         updateAppointment();        
         findEventPatient(patientId);

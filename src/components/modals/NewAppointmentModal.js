@@ -43,10 +43,6 @@ const NewAppointmentModal = (props) => {
             return alert("Please choose a patient");
         }
 
-        if (!title) {
-            return alert('Please add appointment title');
-        }
-
         let emailSubject;
         let emailBody;
 
@@ -85,10 +81,6 @@ const NewAppointmentModal = (props) => {
         }
         if (!patientId) {
             return alert("Please choose a patient");
-        }
-
-        if (!title) {
-            return alert('Please add appointment title');
         }
        
         addAppointment();
