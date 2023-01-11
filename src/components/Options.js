@@ -6,7 +6,7 @@ import { Container, Card, Button, Form } from 'react-bootstrap';
 import LoadingModal from "./modals/LoadingModal"
 import {BoxArrowLeft, Person, Building, Lock, Unlock } from "react-bootstrap-icons";
 import UserInfoModal from './modals/UserInfoModal';
-import packageJson from '../package.json';
+import packageJson from '../../package.json';
 
 
 
