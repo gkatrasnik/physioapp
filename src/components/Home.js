@@ -48,7 +48,6 @@ const Home = () => {
         {appData.loadingData && <LoadingModal />}
         <Layout>
             <Container>                
-                <p className='text-center'>App version: {packageJson.version}</p>
                 {appData.orgData &&                 
                 <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "5rem"}}>                               
                 <Card.Body>
@@ -66,8 +65,9 @@ const Home = () => {
                     <Card.Text>{auth.userObj.name}</Card.Text> 
                     <Card.Text>{auth.userObj.email}</Card.Text> 
                     <Card.Text>{auth.userObj.phone}</Card.Text>                   
-                </Card.Body>
-                </Card>}                
+                </Card.Body>                 
+                </Card>}         
+                <p className='text-center mt-2'>App version: {packageJson.version}</p>    
             </Container>
         </Layout>
         </>

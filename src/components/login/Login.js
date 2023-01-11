@@ -89,7 +89,7 @@ const Login = () => {
 
         </Card.Body>
       </Card>
-      <p className='text-center'>{packageJson.version}</p>
+      <p className='text-center login-version'>{packageJson.version}</p>
     </Container>
   );
 };
