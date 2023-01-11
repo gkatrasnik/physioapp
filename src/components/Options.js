@@ -170,7 +170,7 @@ const Options = () => {
                             </Form.Select>
                         </Form.Group>
                         <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
-                            <Form.Label className="options-label">Clear app cache to get latest app version</Form.Label>
+                            <Form.Label className="options-label">Clear cache to get latest version of the app</Form.Label>
                             <Button  className="my-2" variant="secondary"  onClick={() => {
                                 caches.keys().then(function(names) {
                                     for (let cacheName of names) {
