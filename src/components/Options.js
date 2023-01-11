@@ -173,9 +173,10 @@ const Options = () => {
                             <Form.Label className="options-label">Clear app cache to get latest app version</Form.Label>
                             <Button  className="my-2" variant="secondary"  onClick={() => {
                                 caches.keys().then(function(names) {
-                                    for (let cacheName of names)
+                                    for (let cacheName of names) {
                                         caches.delete(cacheName);
                                         console.log("Cache deleted: ", cacheName);
+                                    }                                        
                                 });
                             }}>
                                 Clear App Cache
