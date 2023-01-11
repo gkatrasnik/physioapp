@@ -176,8 +176,11 @@ const Options = () => {
                                     for (let cacheName of names) {
                                         caches.delete(cacheName);
                                         console.log("Cache deleted: ", cacheName);
-                                    }                                        
+                                    }         
+                                    
+                                    alert("App cache successfuly cleared");
                                 });
+                                
                             }}>
                                 Clear App Cache
                             </Button>
