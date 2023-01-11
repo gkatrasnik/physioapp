@@ -169,6 +169,19 @@ const Options = () => {
                                 <option value="eng">English</option>
                             </Form.Select>
                         </Form.Group>
+                        <Form.Group className="mb-1" controlId="exampleForm.ControlInput3">
+                            <Form.Label className="options-label">Clear app cache to get latest app version</Form.Label>
+                            <Button  className="my-2" variant="secondary"  onClick={() => {
+                                caches.keys().then(function(names) {
+                                    for (let name of names)
+                                        caches.delete(name);
+                                        console.log("Cache deleted: ", name);
+                                });
+                            }}>
+                                Clear App Cache
+                            </Button>
+
+                        </Form.Group>
                     </Form>                  
                     <Link onClick={handleShowUserInfoModal} className="options-link"><Person/><p>My Info</p></Link>
                     {auth.userObj.org_admin && <Link onClick={handleShowManageOrgModal} className="options-link"><Building/><p>Manage Organization</p></Link>}
