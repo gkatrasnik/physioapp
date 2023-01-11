@@ -6,6 +6,7 @@ import { Container, Card, Button, Form } from 'react-bootstrap';
 import LoadingModal from "./modals/LoadingModal"
 import {BoxArrowLeft, Person, Building, Lock, Unlock } from "react-bootstrap-icons";
 import UserInfoModal from './modals/UserInfoModal';
+import packageJson from '../package.json';
 
 
 
@@ -117,6 +118,7 @@ const Options = () => {
                 <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "5rem"}}>                               
                 <Card.Body>
                 <Card.Title className='text-center'><h1>Options</h1></Card.Title>  
+                <p className='text-center'>App version: {packageJson.version}</p>
                     <Form>
                         <div className='buttons-container'>     
                             {editing ? <Button  className="ms-2 my-2" variant="secondary"  onClick={toggleEditing}>
