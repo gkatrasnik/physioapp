@@ -5,6 +5,7 @@ import { Form, Button, Card, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { BoxArrowInUp, Key } from "react-bootstrap-icons";
 import LoadingModal from "../modals/LoadingModal";
+import packageJson from '../../../package.json';
 
 const Login = () => {
     const auth = useAuth();
@@ -88,6 +89,7 @@ const Login = () => {
 
         </Card.Body>
       </Card>
+      <p className='text-center'>{packageJson.version}</p>
     </Container>
   );
 };

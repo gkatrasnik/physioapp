@@ -4,6 +4,7 @@ import {useAppData} from "../contexts/appDataContext";
 import Layout from "./Layout";
 import { Container, Card } from 'react-bootstrap';
 import LoadingModal from "./modals/LoadingModal"
+import packageJson from '../../package.json';
 
 
 const Home = () => {
@@ -47,7 +48,7 @@ const Home = () => {
         {appData.loadingData && <LoadingModal />}
         <Layout>
             <Container>                
-
+                <p className='text-center'>App version: {packageJson.version}</p>
                 {appData.orgData &&                 
                 <Card  className="px-5" style={{ width: "90%", maxWidth: "32rem", margin: "auto", marginTop: "5rem"}}>                               
                 <Card.Body>
